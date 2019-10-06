@@ -135,7 +135,7 @@ export default {
       immediate: true,
       handler(newValue, oldValue) {
         console.log(
-          `CapeCounter watcher evalauted. old=${oldValue}, new=${newValue}`
+          `CapeCounter watcher evalauted. old=${oldValue}, new=${newValue}`,
         );
         this.handleTheCapes(newValue);
       },
