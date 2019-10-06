@@ -1,4 +1,5 @@
 import { getHeroes, Hero } from './data';
+import { createDiv } from './dom';
 
 export async function getHeroesComponent() {
   const list = document.createElement('ul');
@@ -6,32 +7,31 @@ export async function getHeroesComponent() {
 
   const heroes = await getHeroes();
 
-  heroes.forEach((h: Hero) => {
+  heroes.forEach((hero: Hero) => {
     const li = document.createElement('li');
-
-    const card = document.createElement('div');
-    card.classList.add('card');
-
-    const cardContent = document.createElement('div');
-    cardContent.classList.add('card-content');
-    card.appendChild(cardContent);
-
-    const content = document.createElement('div');
-    content.classList.add('content');
-    cardContent.appendChild(content);
-
-    const name = document.createElement('div');
-    name.classList.add('name');
-    name.innerText = h.name;
-    content.appendChild(name);
-
-    const description = document.createElement('div');
-    description.classList.add('description');
-    description.innerText = h.description;
-    content.appendChild(description);
-
+    const card = createHeroCard(hero);
     li.appendChild(card);
     list.appendChild(li);
   });
   return list;
+}
+
+function createHeroCard(hero: Hero) {
+  const card = createDiv();
+  card.classList.add('card');
+  const cardContent = createDiv();
+  cardContent.classList.add('card-content');
+  card.appendChild(cardContent);
+  const content = createDiv();
+  content.classList.add('content');
+  cardContent.appendChild(content);
+  const name = createDiv();
+  name.classList.add('name');
+  name.innerText = hero.name;
+  content.appendChild(name);
+  const description = createDiv();
+  description.classList.add('description');
+  description.innerText = hero.description;
+  content.appendChild(description);
+  return card;
 }

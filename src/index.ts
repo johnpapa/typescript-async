@@ -1,9 +1,10 @@
 import './design/index.scss';
 
 import { getHeroesComponent } from './heroes.component';
+import { createDiv } from './dom';
 
 async function getComponent() {
-  const element = document.createElement('div');
+  const element = createDiv();
   const heroesComponent = await getHeroesComponent();
   element.appendChild(heroesComponent);
   return element;
