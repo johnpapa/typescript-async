@@ -22,36 +22,15 @@ module.exports = {
             loader: 'sass-loader',
             options: {
               sourceMap: true,
-              // options...
             },
           },
         ],
-        // use: [
-        //   // MiniCssExtractPlugin.loader,
-        //   // {
-        //   //   loader: 'css-loader',
-        //   // },
-        //   // Creates `style` nodes from JS strings
-        //   // 'style-loader',
-        //   // Translates CSS into CommonJS
-        //   // 'css-loader',
-
-        //   // // Compiles Sass to CSS
-        //   // 'sass-loader',
-        //   {
-        //     loader: 'sass-loader',
-        //     options: {
-        //       sourceMap: true,
-        //       // options...
-        //     },
-        //   },
-        // ],
       },
     ],
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'css/[name].bundle.css',
+      filename: '[name].bundle.css',
     }),
   ],
   resolve: {
