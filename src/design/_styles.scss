@@ -6,38 +6,18 @@ html > body {
   padding: 1rem 1rem;
 }
 
-.notification pre {
-  background-color: inherit;
-  color: white;
-  font-size: 16px;
-  line-height: normal;
-}
-
-div.color-line {
-  width: 160px;
-  height: 8px;
-  border: 1px #dbdbdb solid;
-  margin: 8px 0;
-}
-
-.menu-list .active-link,
-.menu-list .router-link-active {
-  color: #fff;
-  background-color: $link;
-}
-
-.not-found {
-  i {
-    font-size: 20px;
-    margin-right: 8px;
-  }
-  .title {
-    letter-spacing: 0px;
-    font-weight: normal;
-    font-size: 24px;
-    text-transform: none;
-  }
-}
+// .not-found {
+//   i {
+//     font-size: 20px;
+//     margin-right: 8px;
+//   }
+//   .title {
+//     letter-spacing: 0px;
+//     font-weight: normal;
+//     font-size: 24px;
+//     text-transform: none;
+//   }
+// }
 
 .title {
   font-size: 2rem;
@@ -93,11 +73,11 @@ header {
   }
 }
 
-.edit-detail {
-  .input[readonly] {
-    background-color: $shade-light;
-  }
-}
+// .edit-detail {
+//   .input[readonly] {
+//     background-color: $shade-light;
+//   }
+// }
 
 .content-title-group {
   margin-bottom: 16px;

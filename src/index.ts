@@ -4,10 +4,8 @@ import { getHeroesComponent } from './heroes-component';
 
 async function getComponent() {
   const element = document.createElement('div');
-
   const heroesComponent = await getHeroesComponent();
   element.appendChild(heroesComponent);
-
   return element;
 }
 
