@@ -37,7 +37,7 @@ const getHeroesCallback: (callback: (data: Hero[]) => any) => void = function(
 ) {
   return axios
     .get<Hero[]>(`${API}/heroes`)
-    .then(function(response: AxiosResponse<any>) {
+    .then((response: AxiosResponse<any>) => {
       let data = parseList(response);
       return callback(data);
     })
