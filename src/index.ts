@@ -1,19 +1,48 @@
 import './design/index.scss';
 
-import { getHeroesComponent } from './heroes.component';
+enum Mode {
+  callback,
+  promise,
+  async,
+}
+
+import {
+  getHeroesComponentAsync,
+  getHeroesComponentPromise,
+  getHeroesComponentCallback,
+} from './heroes.component';
 import { createDiv } from './dom';
 
-async function getComponent() {
-  const element = createDiv();
-  const heroesComponent = await getHeroesComponent();
-  element.appendChild(heroesComponent);
-  return element;
-}
+let mode = Mode.callback;
 
 async function render() {
   const mainContent = document.querySelector('.main-content');
-  const component = await getComponent();
-  mainContent.appendChild(component);
+  const element = createDiv();
+
+  switch (mode) {
+    case Mode.callback:
+      // Callback
+      getHeroesComponentCallback(heroesComponent => {
+        element.appendChild(heroesComponent);
+        mainContent.appendChild(heroesComponent);
+      });
+      break;
+
+    case Mode.promise:
+      // Promise
+      getHeroesComponentPromise().then(heroesComponent => {
+        element.appendChild(heroesComponent);
+        mainContent.appendChild(heroesComponent);
+      });
+      break;
+
+    case Mode.async:
+      // Async
+      const heroesComponent = await getHeroesComponentAsync();
+      element.appendChild(heroesComponent);
+      mainContent.appendChild(heroesComponent);
+      break;
+  }
 }
 
 render();

@@ -1,12 +1,31 @@
-import { getHeroes, Hero } from './data';
+import {
+  getHeroesAsync,
+  Hero,
+  getHeroesPromise,
+  getHeroesCallback,
+} from './data';
 import { createDiv } from './dom';
 
-export async function getHeroesComponent() {
+export function getHeroesComponentCallback(
+  callback: (component: HTMLUListElement) => any,
+) {
+  getHeroesCallback(data => {
+    const component = loadHeroes(data);
+    callback(component);
+  });
+}
+export function getHeroesComponentPromise() {
+  return getHeroesPromise().then(h => loadHeroes(h));
+}
+
+export async function getHeroesComponentAsync() {
+  const heroes = await getHeroesAsync();
+  return loadHeroes(heroes);
+}
+
+function loadHeroes(heroes: Hero[]) {
   const list = document.createElement('ul');
   list.classList.add('list');
-
-  const heroes = await getHeroes();
-
   heroes.forEach((hero: Hero) => {
     const li = document.createElement('li');
     const card = createHeroCard(hero);

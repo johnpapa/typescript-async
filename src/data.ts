@@ -1,7 +1,4 @@
-// import Axios, { AxiosResponse, AxiosError } from 'axios';
-
-import axios from 'axios';
-// import { AxiosPromise } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 const API = '/api';
 
@@ -11,20 +8,43 @@ interface Hero {
   description: string;
 }
 
-const getHeroes = async function() {
-  // cant just return this, because its not what we want
-  // return response.data;
-  // but what if there is bad data in the response?
-  // let data = response.data;
-  // Let's parse it better
+const getHeroesAsync = async function() {
   try {
-    const response = await axios.get(`${API}/heroes`);
+    const response: AxiosResponse<any> = await axios.get(`${API}/heroes`);
     let data = parseList(response);
     return data;
   } catch (error) {
-    // console.error(error);
+    console.error(error);
     return [];
   }
+};
+
+const getHeroesPromise: () => Promise<Hero[]> = function() {
+  return axios
+    .get<Hero[]>(`${API}/heroes`)
+    .then((response: AxiosResponse<any>) => {
+      let data = parseList(response);
+      return data;
+    })
+    .catch(error => {
+      console.error(error);
+      return [];
+    });
+};
+
+const getHeroesCallback: (callback: (data: Hero[]) => any) => void = function(
+  callback: (data: Hero[]) => any,
+) {
+  return axios
+    .get<Hero[]>(`${API}/heroes`)
+    .then(function(response: AxiosResponse<any>) {
+      let data = parseList(response);
+      return callback(data);
+    })
+    .catch(error => {
+      console.error(error);
+      return [];
+    });
 };
 
 const parseList = (response: any) => {
@@ -37,4 +57,4 @@ const parseList = (response: any) => {
   return list;
 };
 
-export { getHeroes, Hero };
+export { getHeroesCallback, getHeroesAsync, getHeroesPromise, Hero };
