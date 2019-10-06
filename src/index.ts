@@ -1,6 +1,6 @@
 import './design/index.scss';
 
-import { getHeroesComponent } from './heroes-component';
+import { getHeroesComponent } from './heroes.component';
 
 async function getComponent() {
   const element = document.createElement('div');

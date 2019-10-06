@@ -1,11 +1,12 @@
-import { getHeroes } from './data';
+import { getHeroes, Hero } from './data';
 
 export async function getHeroesComponent() {
   const list = document.createElement('ul');
   list.classList.add('list');
 
   const heroes = await getHeroes();
-  heroes.forEach(h => {
+
+  heroes.forEach((h: Hero) => {
     const li = document.createElement('li');
 
     const card = document.createElement('div');
@@ -33,6 +34,4 @@ export async function getHeroesComponent() {
     list.appendChild(li);
   });
   return list;
-  // <ul class="list" >
-  // <li>
 }

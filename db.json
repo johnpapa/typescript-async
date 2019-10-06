@@ -1,0 +1,24 @@
+{
+  "heroes": [
+    {
+      "id": "10",
+      "name": "Madelyn",
+      "description": "the cat whisperer"
+    },
+    {
+      "id": "20",
+      "name": "Haley",
+      "description": "pen wielder"
+    },
+    {
+      "id": "30",
+      "name": "Ella",
+      "description": "fashionista"
+    },
+    {
+      "id": "40",
+      "name": "Landon",
+      "description": "Mandalorian mauler"
+    }
+  ]
+}
