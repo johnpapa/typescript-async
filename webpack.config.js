@@ -16,6 +16,7 @@ module.exports = {
         use: [
           MiniCssExtractPlugin.loader,
           {
+
             loader: 'css-loader',
           },
           {
@@ -39,5 +40,9 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
+  },
+  performance: {
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000,
   },
 };
