@@ -13,7 +13,7 @@ import {
 } from './heroes.component';
 import { createDiv } from './dom';
 
-let mode = Mode.callback;
+let mode = Mode.async;
 
 async function render() {
   const mainContent = document.querySelector('.main-content');

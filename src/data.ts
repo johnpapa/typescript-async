@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse, AxiosError } from 'axios';
 
 const API = '/api';
 
@@ -14,7 +14,7 @@ const getHeroesAsync = async function() {
     let data = parseList(response);
     return data;
   } catch (error) {
-    console.error(error);
+    console.error(`Data Error: ${error?.message}`);
     return [];
   }
 };
@@ -26,8 +26,8 @@ const getHeroesPromise: () => Promise<Hero[]> = function() {
       let data = parseList(response);
       return data;
     })
-    .catch(error => {
-      console.error(error);
+    .catch((error: AxiosError) => {
+      console.error(`Data Error: ${error?.message}`);
       return [];
     });
 };
@@ -41,8 +41,8 @@ const getHeroesCallback: (callback: (data: Hero[]) => any) => void = function(
       let data = parseList(response);
       return callback(data);
     })
-    .catch(error => {
-      console.error(error);
+    .catch((error: AxiosError) => {
+      console.error(`Data Error: ${error?.message}`);
       return [];
     });
 };
