@@ -64,7 +64,7 @@ header {
       color: #ccc;
     }
     &.heroes {
-      color: $primary-light;
+      color: $primary;
     }
   }
   .navbar-item.nav-home {
@@ -78,7 +78,7 @@ header {
   .fab {
     font-size: 24px;
     &.js-logo {
-      color: $primary-light;
+      color: $primary;
     }
   }
   .buttons {
@@ -87,7 +87,7 @@ header {
       margin-left: 20px;
       margin-right: 10px;
       &:hover {
-        color: $primary-light;
+        color: $primary;
       }
     }
   }
