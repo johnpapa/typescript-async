@@ -11,35 +11,37 @@ import {
   getHeroesComponentPromise,
   getHeroesComponentCallback,
 } from './heroes.component';
-import { createDiv } from './dom';
 
-let mode = Mode.callback;
+const mode: Mode = Mode.async;
 
 async function render() {
   const mainContent = document.querySelector('.main-content');
-  // const element = createDiv();
 
   switch (mode) {
     case Mode.callback:
-      // Callback
-      getHeroesComponentCallback(heroesComponent => {
-        mainContent.appendChild(heroesComponent);
-      });
+      getHeroesComponentCallback(
+        heroesComponent => {
+          mainContent.appendChild(heroesComponent);
+        },
+        error => console.log(error)
+      );
       break;
 
     case Mode.promise:
-      // Promise
       getHeroesComponentPromise()
         .then(heroesComponent => {
           mainContent.appendChild(heroesComponent);
         })
-        .catch(error => alert(error));
+        .catch(error => console.log(error));
       break;
 
     case Mode.async:
-      // Async
-      const heroesComponent = await getHeroesComponentAsync();
-      mainContent.appendChild(heroesComponent);
+      try {
+        const heroesComponent = await getHeroesComponentAsync();
+        mainContent.appendChild(heroesComponent);
+      } catch (error) {
+        console.log(error);
+      }
       break;
   }
 }

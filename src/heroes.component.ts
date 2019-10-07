@@ -6,45 +6,96 @@ import {
   Callback,
   CallbackError,
 } from './data';
-import { createDiv } from './dom';
 
 const getHeroesComponentCallback = function(
-  callback: Callback<HTMLUListElement>,
-  callbackError?: CallbackError,
+  callback: Callback<HTMLElement>,
+  callbackError?: CallbackError
 ) {
+  let heroes: Hero[] = [];
   getHeroesCallback(
     data => {
+      heroes = data;
       const component = createHeroesComponent(data);
       callback(component);
     },
     msg => {
+      const component = createHeroesComponent([]);
+      callback(component);
       callbackError(msg);
-    },
+    }
   );
 };
 
 const getHeroesComponentPromise = function() {
-  return getHeroesPromise().then(h => {
-    const ul = createHeroesComponent(h);
+  let heroes: Hero[] = [];
+  return getHeroesPromise().then(data => {
+    heroes = data;
+    const ul = createHeroesComponent(heroes);
     return Promise.resolve(ul);
   });
-  // .catch(error => {
-  //   return Promise.reject([]);
+  // .catch(() => {
+  //   const ul = createHeroesComponent(heroes);
+  //   return Promise.resolve(ul);
+  //   // return Promise.reject([]);
+  // });
+  // .finally(() => {
+  //   const ul = createHeroesComponent(heroes);
+  //   return Promise.resolve(ul);
   // });
 };
 
 const getHeroesComponentAsync = async function() {
-  // try {
-  const heroes = await getHeroesAsync();
-  return createHeroesComponent(heroes);
-  // } catch (error) {
-  //   alert(error);
-  // }
+  let heroes: Hero[] = [];
+  try {
+    heroes = await getHeroesAsync();
+  } finally {
+    return createHeroesComponent(heroes);
+  }
 };
 
+function createHeroHeader() {
+  const header = createDiv();
+  header.classList.add('content-title-group');
+  const h2 = document.createElement('h2');
+  h2.classList.add('title');
+  h2.innerText = 'Heroes';
+  header.appendChild(h2);
+  const refreshButton = createRefreshButton();
+  header.appendChild(refreshButton);
+  return header;
+}
+
+function createRefreshButton() {
+  const button = document.createElement('button');
+  button.classList.add('button', 'refresh-button');
+  const icon = document.createElement('i');
+  icon.classList.add('fas', 'fa-sync');
+  button.appendChild(icon);
+
+  button.addEventListener('click', async () => {
+    let heroList = document.querySelector('ul.list.hero-list');
+    heroList && heroList.remove();
+    const heroes = await getHeroesAsync();
+    heroList = createHeroList(heroes);
+    const wrapper = document.querySelector('.hero-list-wrapper');
+    wrapper.appendChild(heroList);
+  });
+
+  return button;
+}
+
 function createHeroesComponent(heroes: Hero[]) {
+  const wrapper = createDiv();
+  wrapper.classList.add('hero-list-wrapper');
+  wrapper.appendChild(createHeroHeader());
+  const heroList = createHeroList(heroes);
+  wrapper.appendChild(heroList);
+  return wrapper;
+}
+
+function createHeroList(heroes: Hero[]) {
   const ul = document.createElement('ul');
-  ul.classList.add('list');
+  ul.classList.add('list', 'hero-list');
   heroes.forEach((hero: Hero) => {
     const li = document.createElement('li');
     const card = createHeroCard(hero);
@@ -73,6 +124,8 @@ function createHeroCard(hero: Hero) {
   content.appendChild(description);
   return card;
 }
+
+const createDiv = () => document.createElement('div');
 
 export {
   getHeroesComponentAsync,

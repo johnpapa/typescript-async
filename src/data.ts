@@ -1,6 +1,7 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
 
 const API = '/api';
+const DELAY = 500;
 
 interface Hero {
   id: number;
@@ -13,16 +14,17 @@ interface Callback<T> {
 }
 
 interface CallbackError {
-  (msg: string): void;
+  (msg?: string): void;
 }
 
 const getHeroesAsync = async function() {
+  await delay(DELAY);
   try {
     const response = await axios.get(`${API}/heroes`);
-    let data = parseList(response);
+    const data = parseList(response);
     return data;
   } catch (error) {
-    const msg = `Data Error: ${error?.message}`;
+    const msg = `Async Data Error: ${error.message}`;
     console.error(msg);
     return [];
   }
@@ -32,29 +34,34 @@ const getHeroesPromise = function() {
   return axios
     .get<Hero[]>(`${API}/heroes`)
     .then((response: AxiosResponse<any>) => {
-      let data = parseList(response);
+      const data = parseList(response);
       return Promise.resolve(data);
     })
     .catch((error: AxiosError) => {
-      const msg = `Data Error: ${error?.message}`;
+      const msg = `Promise Data Error: ${error.message}`;
       console.error(msg);
-      return Promise.reject(msg)
+      return Promise.reject();
     });
 };
 
-const getHeroesCallback = function (callback: Callback<Hero[]>, callbackError?: CallbackError) {
+const getHeroesCallback = function(
+  callback: Callback<Hero[]>,
+  callbackError?: CallbackError
+) {
   axios
     .get<Hero[]>(`${API}/heroes`)
     .then((response: AxiosResponse<any>) => {
-      let data = parseList(response);
+      const data = parseList(response);
       callback(data);
     })
     .catch((error: AxiosError) => {
-      const msg = `Data Error: ${error?.message}`;
+      const msg = `Callback Data Error: ${error.message}`;
       console.error(msg);
-      callbackError(msg);
+      callbackError();
     });
 };
+
+const delay = (ms: any) => new Promise(res => setTimeout(res, ms));
 
 const parseList = (response: any) => {
   if (response.status !== 200) throw Error(response.message);
@@ -66,11 +73,38 @@ const parseList = (response: any) => {
   return list;
 };
 
+const getHeroesDelayedAsync = async function() {
+  await delay(DELAY);
+  return await [
+    {
+      id: 10,
+      name: 'Madelyn',
+      description: 'the cat whisperer',
+    },
+    {
+      id: 20,
+      name: 'Haley',
+      description: 'pen wielder',
+    },
+    {
+      id: 30,
+      name: 'Ella',
+      description: 'fashionista',
+    },
+    {
+      id: 40,
+      name: 'Landon',
+      description: 'arc trooper',
+    },
+  ];
+};
+
 export {
   getHeroesCallback,
-   getHeroesAsync,
-   getHeroesPromise,
-   Hero,
-   Callback,
-   CallbackError
-  };
+  getHeroesAsync,
+  getHeroesPromise,
+  getHeroesDelayedAsync,
+  Hero,
+  Callback,
+  CallbackError,
+};
