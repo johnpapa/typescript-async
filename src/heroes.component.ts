@@ -15,7 +15,7 @@ const getHeroesComponentCallback = function(
   getHeroesCallback(
     data => {
       heroes = data;
-      const component = createHeroesComponent(data);
+      const component = createHeroesComponent(heroes);
       callback(component);
     },
     msg => {
@@ -28,20 +28,16 @@ const getHeroesComponentCallback = function(
 
 const getHeroesComponentPromise = function() {
   let heroes: Hero[] = [];
-  return getHeroesPromise().then(data => {
-    heroes = data;
-    const ul = createHeroesComponent(heroes);
-    return Promise.resolve(ul);
-  });
-  // .catch(() => {
-  //   const ul = createHeroesComponent(heroes);
-  //   return Promise.resolve(ul);
-  //   // return Promise.reject([]);
-  // });
-  // .finally(() => {
-  //   const ul = createHeroesComponent(heroes);
-  //   return Promise.resolve(ul);
-  // });
+  return getHeroesPromise()
+    .then(data => {
+      heroes = data;
+      const ul = createHeroesComponent(heroes);
+      return Promise.resolve(ul);
+    })
+    .catch(() => {
+      const ul = createHeroesComponent(heroes);
+      return Promise.resolve(ul);
+    });
 };
 
 const getHeroesComponentAsync = async function() {
@@ -73,7 +69,7 @@ function createRefreshButton() {
   button.appendChild(icon);
 
   button.addEventListener('click', async () => {
-    let heroList = document.querySelector('ul.list.hero-list');
+    let heroList = document.getElementById('hero-list');
     heroList && heroList.remove();
     const heroes = await getHeroesAsync();
     heroList = createHeroList(heroes);
@@ -93,8 +89,16 @@ function createHeroesComponent(heroes: Hero[]) {
   return wrapper;
 }
 
-function createHeroList(heroes: Hero[]) {
+function createHeroList(heroes: Hero[]): HTMLElement {
+  if (!heroes.length) {
+    const div = createDiv();
+    div.id = 'hero-list';
+    div.innerText = 'No heroes found';
+    return div;
+  }
+
   const ul = document.createElement('ul');
+  ul.id = 'hero-list';
   ul.classList.add('list', 'hero-list');
   heroes.forEach((hero: Hero) => {
     const li = document.createElement('li');
