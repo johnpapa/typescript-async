@@ -1,38 +1,57 @@
 import {
   getHeroesAsync,
-  Hero,
   getHeroesPromise,
   getHeroesCallback,
+  Hero,
+  Callback,
+  CallbackError,
 } from './data';
 import { createDiv } from './dom';
 
-export function getHeroesComponentCallback(
-  callback: (component: HTMLUListElement) => any,
+const getHeroesComponentCallback = function(
+  callback: Callback<HTMLUListElement>,
+  callbackError?: CallbackError,
 ) {
-  getHeroesCallback(data => {
-    const component = loadHeroes(data);
-    callback(component);
+  getHeroesCallback(
+    data => {
+      const component = createHeroesComponent(data);
+      callback(component);
+    },
+    msg => {
+      callbackError(msg);
+    },
+  );
+};
+
+const getHeroesComponentPromise = function() {
+  return getHeroesPromise().then(h => {
+    const ul = createHeroesComponent(h);
+    return Promise.resolve(ul);
   });
-}
-export function getHeroesComponentPromise() {
-  return getHeroesPromise().then(h => loadHeroes(h));
-}
+  // .catch(error => {
+  //   return Promise.reject([]);
+  // });
+};
 
-export async function getHeroesComponentAsync() {
+const getHeroesComponentAsync = async function() {
+  // try {
   const heroes = await getHeroesAsync();
-  return loadHeroes(heroes);
-}
+  return createHeroesComponent(heroes);
+  // } catch (error) {
+  //   alert(error);
+  // }
+};
 
-function loadHeroes(heroes: Hero[]) {
-  const list = document.createElement('ul');
-  list.classList.add('list');
+function createHeroesComponent(heroes: Hero[]) {
+  const ul = document.createElement('ul');
+  ul.classList.add('list');
   heroes.forEach((hero: Hero) => {
     const li = document.createElement('li');
     const card = createHeroCard(hero);
     li.appendChild(card);
-    list.appendChild(li);
+    ul.appendChild(li);
   });
-  return list;
+  return ul;
 }
 
 function createHeroCard(hero: Hero) {
@@ -54,3 +73,9 @@ function createHeroCard(hero: Hero) {
   content.appendChild(description);
   return card;
 }
+
+export {
+  getHeroesComponentAsync,
+  getHeroesComponentPromise,
+  getHeroesComponentCallback,
+};
