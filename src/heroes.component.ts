@@ -13,6 +13,7 @@ function getHeroesComponentCallback(
   // always create component tho
 
   // const getHeroesComponentCallback = function(
+  // ,
   callback: Callback<HTMLElement>,
   callbackError?: CallbackError
 ) {
@@ -20,11 +21,11 @@ function getHeroesComponentCallback(
   getHeroesCallback(
     data => {
       heroes = data;
-      const component = createHeroesComponent(heroes);
+      const component = createHeroesComponent(); //heroes);
       callback(component);
     },
     msg => {
-      const component = createHeroesComponent(heroes);
+      const component = createHeroesComponent(); //heroes);
       callback(component);
       callbackError(msg);
     }
@@ -36,41 +37,42 @@ const getHeroesComponentPromise = function() {
   return getHeroesPromise()
     .then(data => {
       heroes = data;
-      const ul = createHeroesComponent(heroes);
-      return Promise.resolve(ul);
+      const ul = createHeroesComponent(); //heroes);
+      return ul;
     })
     .catch(() => {
-      // caller decides what to do with no data
-      // const ul = createHeroesComponent(heroes);
-      return Promise.reject(); // reject
+      const ul = createHeroesComponent(); //heroes);
+      // return Promise.reject();
+      return Promise.resolve(ul);
     });
-
-  // .catch(() => {
-  // return Promise.reject(); // reject
-  // })
   // .finally(() => {
-  // return createHeroesComponent(heroes);
+  //   // promise finally does not return
+  //   // const ul = createHeroesComponent(heroes);
+  //   return undefined;
   // });
 };
 
-const getHeroesComponentAsync = async function() {
-  let heroes: Hero[] = [];
-  try {
-    heroes = await getHeroesAsync();
-  } finally {
-    return createHeroesComponent(heroes);
-  }
-  // TODO: throw? is it rethrowing?
-};
+// function createHeroesComponent(heroes: Hero[]) {
+function createHeroesComponent() {
+  const wrapper = createDiv('hero-list-wrapper');
+  wrapper.appendChild(createHeroHeaderComponent());
+  wrapper.appendChild(createDiv('hero-list'));
+  // createHeroList(heroes);
+  return wrapper;
+}
 
-function createHeroHeader() {
+// code below here is not interesting
+
+function createHeroHeaderComponent() {
   const header = createDiv('content-title-group');
   const h2 = document.createElement('h2');
+
   h2.classList.add('title');
   h2.innerText = 'Heroes';
   header.appendChild(h2);
   const refreshButton = createRefreshButton();
   header.appendChild(refreshButton);
+
   return header;
 }
 
@@ -80,45 +82,33 @@ function createRefreshButton() {
   const icon = document.createElement('i');
   icon.classList.add('fas', 'fa-sync');
   button.appendChild(icon);
-
-  button.addEventListener('click', async () => {
-    let heroList = document.getElementById('hero-list');
-    heroList && heroList.remove();
-    const heroes = await getHeroesAsync();
-    heroList = createHeroList(heroes);
-    const wrapper = document.querySelector('.hero-list-wrapper');
-    wrapper.appendChild(heroList);
-  });
-
   return button;
 }
 
-function createHeroesComponent(heroes: Hero[]) {
-  const wrapper = createDiv('hero-list-wrapper');
-  wrapper.appendChild(createHeroHeader());
-  const heroList = createHeroList(heroes);
-  wrapper.appendChild(heroList);
-  return wrapper;
-}
+function replaceHeroListComponent(heroes?: Hero[]) {
+  const heroPlaceholder = document.querySelector('.hero-list');
 
-function createHeroList(heroes: Hero[]): HTMLElement {
-  if (!heroes.length) {
-    const div = createDiv();
-    div.id = 'hero-list';
+  const el = heroes && heroes.length ? createList() : createNoneFound();
+
+  heroPlaceholder.replaceWith(el);
+
+  function createList() {
+    const ul = document.createElement('ul');
+    ul.classList.add('list', 'hero-list');
+    heroes.forEach((hero: Hero) => {
+      const li = document.createElement('li');
+      const card = createHeroCard(hero);
+      li.appendChild(card);
+      ul.appendChild(li);
+    });
+    return ul;
+  }
+
+  function createNoneFound() {
+    const div = createDiv('hero-list');
     div.innerText = 'No heroes found';
     return div;
   }
-
-  const ul = document.createElement('ul');
-  ul.id = 'hero-list';
-  ul.classList.add('list', 'hero-list');
-  heroes.forEach((hero: Hero) => {
-    const li = document.createElement('li');
-    const card = createHeroCard(hero);
-    li.appendChild(card);
-    ul.appendChild(li);
-  });
-  return ul;
 }
 
 function createHeroCard(hero: Hero) {
@@ -143,7 +133,7 @@ const createDiv = (...classList: string[]) => {
 };
 
 export {
-  getHeroesComponentAsync,
-  getHeroesComponentPromise,
-  getHeroesComponentCallback,
+  createHeroHeaderComponent,
+  replaceHeroListComponent,
+  createHeroesComponent
 };

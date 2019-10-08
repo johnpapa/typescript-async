@@ -6,7 +6,7 @@
     // "module": "es6",
     "module": "commonjs",
     "target": "es5",
-    "allowJs": true,
+    // "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "lib": ["es2018", "dom"]
   }

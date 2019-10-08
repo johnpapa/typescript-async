@@ -17,6 +17,21 @@ interface CallbackError {
   (msg?: string): void;
 }
 
+// we could pass this back every time.
+// the argument here is you can avoid try/catch everywhere but you instead have to package the error.
+// interface Message {
+//   response: any;
+//   error: string;
+// }
+
+// first show without any try/catch as we explain how errors bubble upo.
+// then introduce try/catch to show how we can do other stuff
+// const getHeroesAsync2 = async function() {
+//   const response = await axios.get(`${API}/heroes`);
+//   const data = parseList(response);
+//   return data;
+// };
+
 const getHeroesAsync = async function() {
   await delay(DELAY);
   try {
@@ -24,10 +39,20 @@ const getHeroesAsync = async function() {
     const data = parseList(response);
     return data;
   } catch (error) {
-    const msg = `Async Data Error: ${error?.message}`;
-    console.error(msg);
-    // return [];
-    throw new Error('TODO');
+    // This is a technical error, targeting the developers.
+    // You should always log it here (lowest level). This serves the developer.
+    // If I want to propogate this back to the callers,
+    // I should determine how to propogate it out and if I want to transform it.
+    console.error(`Developer Error: Async Data Error: ${error?.message}`);
+
+    // How do I feel about errors in this path?
+    // option 1: log the error here,
+    // and let the caller know an error occurred, but dont change the return type
+    throw new Error('User Facing Error: Something bad happened');
+
+    // option 2: log the error here,
+    // return the error object to the caller
+    // return {error: msg}; // return something
   }
 };
 
@@ -41,13 +66,17 @@ const getHeroesPromise = function() {
     .catch((error: AxiosError) => {
       const msg = `Promise Data Error: ${error.message}`;
       console.error(msg);
-      return Promise.reject();
+      //TODO: handle both dev and user error
+
+      return Promise.reject(msg);
+
+      // resolve is the response object
     });
 };
 
 const getHeroesCallback = function(
   callback: Callback<Hero[]>,
-  callbackError?: CallbackError,
+  callbackError?: CallbackError
 ) {
   axios
     .get<Hero[]>(`${API}/heroes`)
