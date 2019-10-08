@@ -7,7 +7,12 @@ import {
   CallbackError,
 } from './data';
 
-const getHeroesComponentCallback = function(
+function getHeroesComponentCallback(
+  // happy path to work
+  // on error rethrow
+  // always create component tho
+
+  // const getHeroesComponentCallback = function(
   callback: Callback<HTMLElement>,
   callbackError?: CallbackError
 ) {
@@ -19,12 +24,12 @@ const getHeroesComponentCallback = function(
       callback(component);
     },
     msg => {
-      const component = createHeroesComponent([]);
+      const component = createHeroesComponent(heroes);
       callback(component);
       callbackError(msg);
     }
   );
-};
+}
 
 const getHeroesComponentPromise = function() {
   let heroes: Hero[] = [];
@@ -35,9 +40,17 @@ const getHeroesComponentPromise = function() {
       return Promise.resolve(ul);
     })
     .catch(() => {
-      const ul = createHeroesComponent(heroes);
-      return Promise.resolve(ul);
+      // caller decides what to do with no data
+      // const ul = createHeroesComponent(heroes);
+      return Promise.reject(); // reject
     });
+
+  // .catch(() => {
+  // return Promise.reject(); // reject
+  // })
+  // .finally(() => {
+  // return createHeroesComponent(heroes);
+  // });
 };
 
 const getHeroesComponentAsync = async function() {
@@ -45,8 +58,9 @@ const getHeroesComponentAsync = async function() {
   try {
     heroes = await getHeroesAsync();
   } finally {
-    return createHeroesComponent(heroes);
+    createHeroesComponent(heroes);
   }
+  // TODO: throw? is it rethrowing?
 };
 
 function createHeroHeader() {
@@ -110,26 +124,25 @@ function createHeroList(heroes: Hero[]): HTMLElement {
 }
 
 function createHeroCard(hero: Hero) {
-  const card = createDiv();
-  card.classList.add('card');
-  const cardContent = createDiv();
-  cardContent.classList.add('card-content');
+  const card = createDiv(['card']);
+  const cardContent = createDiv(['card-content']);
   card.appendChild(cardContent);
-  const content = createDiv();
-  content.classList.add('content');
+  const content = createDiv(['content']);
   cardContent.appendChild(content);
-  const name = createDiv();
-  name.classList.add('name');
+  const name = createDiv(['name']);
   name.innerText = hero.name;
   content.appendChild(name);
-  const description = createDiv();
-  description.classList.add('description');
+  const description = createDiv(['description']);
   description.innerText = hero.description;
   content.appendChild(description);
   return card;
 }
 
-const createDiv = () => document.createElement('div');
+const createDiv = (classList: string[]) => {
+  const el = document.createElement('div');
+  el.classList.add(...classList);
+  return el;
+};
 
 export {
   getHeroesComponentAsync,

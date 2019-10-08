@@ -24,9 +24,10 @@ const getHeroesAsync = async function() {
     const data = parseList(response);
     return data;
   } catch (error) {
-    const msg = `Async Data Error: ${error.message}`;
+    const msg = `Async Data Error: ${error?.message}`;
     console.error(msg);
-    return [];
+    // return [];
+    throw new Error('TODO');
   }
 };
 
@@ -46,7 +47,7 @@ const getHeroesPromise = function() {
 
 const getHeroesCallback = function(
   callback: Callback<Hero[]>,
-  callbackError?: CallbackError
+  callbackError?: CallbackError,
 ) {
   axios
     .get<Hero[]>(`${API}/heroes`)

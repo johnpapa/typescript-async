@@ -24,6 +24,7 @@ async function render() {
           mainContent.appendChild(heroesComponent);
         },
         error => console.log(error)
+        // TODO: notification service (modal?)
       );
       break;
 
@@ -39,6 +40,9 @@ async function render() {
       try {
         const heroesComponent = await getHeroesComponentAsync();
         mainContent.appendChild(heroesComponent);
+
+        // get data
+        // if data, then create compo(data)
       } catch (error) {
         console.log(error);
       }
