@@ -1,11 +1,11 @@
 {
   "eslint.enable": true,
   "workbench.colorCustomizations": {
-    "activityBar.background": "#f9e64f",
+    "activityBar.background": "#fbed80",
     "activityBar.foreground": "#15202b",
     "activityBar.inactiveForeground": "#15202b99",
-    "activityBarBadge.background": "#059a89",
-    "activityBarBadge.foreground": "#e7e7e7",
+    "activityBarBadge.background": "#06b9a5",
+    "activityBarBadge.foreground": "#15202b",
     "titleBar.activeBackground": "#f9e64f",
     "titleBar.inactiveBackground": "#f9e64f99",
     "titleBar.activeForeground": "#15202b",
@@ -13,10 +13,11 @@
     "statusBar.background": "#f9e64f",
     "statusBarItem.hoverBackground": "#f7df1e",
     "statusBar.foreground": "#15202b",
-    "panel.border": "#f9e64f",
-    "sideBar.border": "#f9e64f",
-    "editorGroup.border": "#f9e64f",
-    "tab.activeBorder": "#f9e64f"
+    "panel.border": "#fbed80",
+    "sideBar.border": "#fbed80",
+    "editorGroup.border": "#fbed80",
+    "tab.activeBorder": "#fbed80"
   },
-  "peacock.color": "#f9e64f"
+  "peacock.color": "#f9e64f",
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
