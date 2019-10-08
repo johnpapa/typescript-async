@@ -17,10 +17,10 @@ enum Mode {
 import {
   replaceHeroListComponent,
   createHeroesComponent,
-  getHeroesComponentCallback,
+  showFetching,
 } from './heroes.component';
 
-const mode: Mode = Mode.promise;
+const mode: Mode = Mode.async;
 
 async function render() {
   const mainContent = document.querySelector('.main-content');
@@ -31,16 +31,14 @@ async function render() {
   let refreshHandler: () => void;
 
   const button = document.querySelector('.refresh-button');
-  button.addEventListener('click', async () => refreshHandler());
+  button.addEventListener('click', async () => {
+    showFetching();
+    refreshHandler();
+  });
 
   switch (mode) {
     case Mode.callback:
-      getHeroesComponentCallback(
-        heroesComponent => {
-          mainContent.appendChild(heroesComponent);
-        },
-        error => console.log(error)
-      );
+      refreshHandler = refreshPageCallback;
       break;
 
     case Mode.promise:
@@ -52,6 +50,15 @@ async function render() {
       break;
   }
   refreshHandler();
+}
+
+function refreshPageCallback() {
+  // getHeroesComponentCallback(
+  //   heroesComponent => {
+  //     mainContent.appendChild(heroesComponent);
+  //   },
+  //   error => console.log(error)
+  // );
 }
 
 function refreshPagePromise() {
