@@ -18,6 +18,7 @@
     "@typescript-eslint/parser": "^2.3.2",
     "bulma": "^0.7.5",
     "concurrently": "^4.1.2",
+    "copy-webpack-plugin": "^5.0.4",
     "css-loader": "^3.2.0",
     "eslint": "^6.5.1",
     "eslint-config-prettier": "^6.4.0",

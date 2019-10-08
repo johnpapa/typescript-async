@@ -1,6 +1,7 @@
 /* eslint-disable */
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: './src/index.ts',
@@ -33,6 +34,11 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].bundle.css',
     }),
+    new CopyWebpackPlugin([
+      {
+        from: './index.html',
+      },
+    ]),
   ],
   resolve: {
     extensions: ['.ts', '.js'],
