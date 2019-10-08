@@ -58,14 +58,13 @@ const getHeroesComponentAsync = async function() {
   try {
     heroes = await getHeroesAsync();
   } finally {
-    createHeroesComponent(heroes);
+    return createHeroesComponent(heroes);
   }
   // TODO: throw? is it rethrowing?
 };
 
 function createHeroHeader() {
-  const header = createDiv();
-  header.classList.add('content-title-group');
+  const header = createDiv('content-title-group');
   const h2 = document.createElement('h2');
   h2.classList.add('title');
   h2.innerText = 'Heroes';
@@ -95,8 +94,7 @@ function createRefreshButton() {
 }
 
 function createHeroesComponent(heroes: Hero[]) {
-  const wrapper = createDiv();
-  wrapper.classList.add('hero-list-wrapper');
+  const wrapper = createDiv('hero-list-wrapper');
   wrapper.appendChild(createHeroHeader());
   const heroList = createHeroList(heroes);
   wrapper.appendChild(heroList);
@@ -124,21 +122,21 @@ function createHeroList(heroes: Hero[]): HTMLElement {
 }
 
 function createHeroCard(hero: Hero) {
-  const card = createDiv(['card']);
-  const cardContent = createDiv(['card-content']);
+  const card = createDiv('card');
+  const cardContent = createDiv('card-content');
   card.appendChild(cardContent);
-  const content = createDiv(['content']);
+  const content = createDiv('content');
   cardContent.appendChild(content);
-  const name = createDiv(['name']);
+  const name = createDiv('name');
   name.innerText = hero.name;
   content.appendChild(name);
-  const description = createDiv(['description']);
+  const description = createDiv('description');
   description.innerText = hero.description;
   content.appendChild(description);
   return card;
 }
 
-const createDiv = (classList: string[]) => {
+const createDiv = (...classList: string[]) => {
   const el = document.createElement('div');
   el.classList.add(...classList);
   return el;
