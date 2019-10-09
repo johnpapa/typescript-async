@@ -154,17 +154,14 @@ function createHeroCard(hero: Hero) {
       items: [{ name: 'Apple TV', qty: 1, price: 104.99 }],
     },
   ];
-  const orderTemplate = document.getElementById(
-    'orders-template'
-  ) as HTMLTemplateElement;
-
-  const clone = document.importNode(orderTemplate.content, true);
-  content.appendChild(clone);
 
   orders.forEach(order => {
     // orderTemplate.content.querySelector(
     //   '.order-info'
     // ).textContent = `Order #${o.num}`;
+    const orderTemplate = document.getElementById(
+      'order-template'
+    ) as HTMLTemplateElement;
 
     order.items.forEach(item => {
       const orderItemTemplate = document.getElementById(
@@ -173,18 +170,23 @@ function createHeroCard(hero: Hero) {
       orderItemTemplate.content.querySelector(
         '.order-number'
       ).textContent = `${order.num}`;
-      orderItemTemplate.content.querySelector('.order-item').textContent =
+      orderItemTemplate.content.querySelector('.item-name').textContent =
         item.name;
       orderItemTemplate.content.querySelector(
-        '.order-qty'
+        '.item-qty'
       ).textContent = item.qty.toString();
       orderItemTemplate.content.querySelector(
-        '.order-price'
+        '.item-price'
       ).textContent = item.price.toString();
 
       const itemClone = document.importNode(orderItemTemplate.content, true);
-      orderTemplate.content.querySelector('tbody').appendChild(itemClone);
+      orderTemplate.content
+        .querySelector('.order-header')
+        .parentNode.append(itemClone);
     });
+
+    const clone = document.importNode(orderTemplate.content, true);
+    content.appendChild(clone);
   });
 
   return card;

@@ -6,19 +6,6 @@ html > body {
   padding: 1rem 1rem;
 }
 
-// .not-found {
-//   i {
-//     font-size: 20px;
-//     margin-right: 8px;
-//   }
-//   .title {
-//     letter-spacing: 0px;
-//     font-weight: normal;
-//     font-size: 24px;
-//     text-transform: none;
-//   }
-// }
-
 .title {
   font-size: 2rem;
   font-weight: 600;
@@ -73,12 +60,6 @@ header {
   }
 }
 
-// .edit-detail {
-//   .input[readonly] {
-//     background-color: $shade-light;
-//   }
-// }
-
 .content-title-group {
   margin-bottom: 16px;
   h2 {
@@ -121,10 +102,6 @@ div.card-content {
   margin-bottom: 1em;
 }
 
-label.label {
-  font-weight: normal;
-}
-
 p.card-header-title {
   background-color: $primary;
   text-transform: uppercase;
@@ -133,71 +110,20 @@ p.card-header-title {
   display: block;
   padding-left: 24px;
 }
-.card-footer button {
-  font-size: 16px;
-  i {
-    margin-right: 10px;
-  }
-  color: #888;
-  &:hover {
-    color: $link;
-  }
-}
-
-.field {
-  margin-bottom: 0.75rem;
-}
 
 .navbar-burger {
   margin-left: auto;
 }
 
-button.link {
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-input.invalid,
-textarea.invalid,
-select.invalid {
-  border-left: 10px red solid !important;
-}
-
-.list-item {
-  color: #000;
-  &:hover {
-    color: $accent-color;
-  }
-  &.is-active {
-    background-color: $accent-color;
-    border-radius: 0;
-    border-top: #fff solid 1px;
-    border-bottom: #fff solid 1px;
-    color: #fff;
-  }
-}
-
-// label.input {
-//   background-color: #e5e5e5;
-//   border: 1px solid #ccc;
-// }
-
-// p.comment {
-//   margin: 8px;
-// }
-
-.order-info {
-  margin-top: 1em;
-  font-size: 12px;
-  color: #999;
-}
-
-.table {
+.columns.order-header,
+.columns.order-item {
   background-color: #fafafa;
   font-size: 12px;
   color: #999;
-  thead tr th {
-    color: #999;
-  }
+  line-height: 1px;
+}
+
+.columns.order-header {
+  border-bottom: 1px solid #ccc;
+  margin-top: 1em;
 }

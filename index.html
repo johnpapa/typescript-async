@@ -57,28 +57,22 @@
     </div>
   </div>
 
-  <template id="orders-template">
-    <table class="table is-narrow xis-bordered">
-      <thead>
-        <tr>
-          <th>Order #</th>
-          <th>Item</th>
-          <th>Qty</th>
-          <th>Price</th>
-        </tr>
-      </thead>
-      <tbody>
-      </tbody>
-    </table>
+  <template id="order-template">
+    <div class="columns order-header">
+      <div class="column">Order #</div>
+      <div class="column">Item</div>
+      <div class="column">Qty</div>
+      <div class="column">Price</div>
+    </div>
   </template>
 
   <template id="order-item-template">
-    <tr>
-      <td class="order-number"></td>
-      <td class="order-item"></th>
-      <td class="order-qty"></td>
-      <td class="order-price"></td>
-    </tr>
+    <div class="columns order-item">
+      <div class="column order-number"></div>
+      <div class="column item-name"></div>
+      <div class="column item-qty"></div>
+      <div class="column item-price"></div>
+    </div>
   </template>
 
   <script src="bundle.js"></script>
