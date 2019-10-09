@@ -45,13 +45,10 @@ import { Hero } from './data';
 //   // });
 // };
 
-// function createHeroesComponent(heroes: Hero[]) {
-
 function createHeroesComponent() {
   const wrapper = createDiv('hero-list-wrapper');
   wrapper.appendChild(createHeroHeaderComponent());
   wrapper.appendChild(createDiv('hero-list'));
-  // createHeroList(heroes);
   return wrapper;
 }
 
@@ -78,25 +75,6 @@ function createRefreshButton() {
   button.appendChild(icon);
   return button;
 }
-
-// function createExpandButton(cardId: string) {
-//   const button = document.createElement('button');
-//   button.classList.add('button', 'expand-button');
-//   const icon = document.createElement('i');
-//   icon.classList.add('fas', 'fa-angle-double-down');
-//   button.appendChild(icon);
-//   button.addEventListener('click', () => {
-//     const ordersArea = document.querySelector(
-//       `.card.${cardId} .order-area`
-//     ) as HTMLElement;
-//     // ordersArea.style.visibility = 'hidden';
-//     if (ordersArea) {
-//       ordersArea.style.display =
-//         ordersArea.style.display === 'none' ? 'block' : 'none';
-//     }
-//   });
-//   return button;
-// }
 
 function showFetching() {
   const heroPlaceholder = document.querySelector('.hero-list');
@@ -134,31 +112,6 @@ function replaceHeroListComponent(heroes?: Hero[]) {
   }
 }
 
-// function createHeroCard(hero: Hero) {
-//   const card = createDiv('card');
-//   card.classList.add(hero.name);
-//   const cardContent = createDiv('card-content');
-//   card.appendChild(cardContent);
-//   const content = createDiv('content');
-//   cardContent.appendChild(content);
-//   const name = createDiv('name');
-//   name.innerText = hero.name;
-//   content.appendChild(name);
-//   const description = createDiv('description');
-//   description.innerText = hero.description;
-//   content.appendChild(description);
-
-//   // const span = document.createElement('span');
-//   // span.classList.add('icon', 'is-small');
-//   // const icon = document.createElement('i');
-//   // icon.classList.add('fas', 'fa-angle-double-down');
-//   // span.appendChild(icon);
-//   content.appendChild(createExpandButton(hero.name));
-//   createHeroOrders(content, hero);
-
-//   return card;
-// }
-
 function createHeroCardFromTemplate(hero: Hero) {
   const heroTemplate = document.getElementById(
     'hero-template'
@@ -188,21 +141,17 @@ function createHeroCardFromTemplate(hero: Hero) {
   return heroClone;
 }
 
-// function createHeroOrders(content: DocumentFragment, hero: Hero) {
 function createHeroOrders(ordersArea: HTMLElement, hero: Hero) {
   if (!hero.orders) {
     return;
   }
-  // const ordersArea = createDiv('order-area');
-  // ordersArea.style.display = 'none';
-  // content.appendChild(ordersArea);
 
   hero.orders.forEach(order => {
     const orderTemplate = document.getElementById(
       'order-template'
     ) as HTMLTemplateElement;
     const orderClone = document.importNode(orderTemplate.content, true);
-    const itemClones = createHeroOrderItems(order); //, orderTemplate);
+    const itemClones = createHeroOrderItems(order);
 
     itemClones.forEach(ic => orderClone.appendChild(ic));
 
@@ -210,18 +159,14 @@ function createHeroOrders(ordersArea: HTMLElement, hero: Hero) {
   });
 }
 
-function createHeroOrderItems(
-  order: {
-    num: number;
-    items: { name: string; qty: number; price: number }[];
-  }
-  // orderTemplate: HTMLTemplateElement,
-) {
+function createHeroOrderItems(order: {
+  num: number;
+  items: { name: string; qty: number; price: number }[];
+}) {
   return order.items.map(item => {
     const orderItemTemplate = document.getElementById(
       'order-item-template'
     ) as HTMLTemplateElement;
-    // const oi = orderItemTemplate.content;
     const itemClone = document.importNode(orderItemTemplate.content, true);
     itemClone.querySelector('.order-number').textContent = `${order.num}`;
     itemClone.querySelector('.item-name').textContent = item.name;
