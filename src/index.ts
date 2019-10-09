@@ -31,10 +31,11 @@ async function render() {
   let refreshHandler: () => void;
 
   const button = document.querySelector('.refresh-button');
-  button.addEventListener('click', async () => {
+  const renderHeroes = async () => {
     showFetching();
     refreshHandler();
-  });
+  };
+  button.addEventListener('click', renderHeroes);
 
   switch (mode) {
     case Mode.callback:
@@ -49,7 +50,7 @@ async function render() {
       refreshHandler = refreshPageAsync;
       break;
   }
-  refreshHandler();
+  renderHeroes();
 }
 
 function refreshPageCallback() {

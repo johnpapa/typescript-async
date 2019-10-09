@@ -81,9 +81,12 @@ function createRefreshButton() {
 
 function showFetching() {
   const heroPlaceholder = document.querySelector('.hero-list');
-  const el = createDiv('hero-list');
-  el.innerHTML = '<p>Fetching Heroes</p>';
-  heroPlaceholder.replaceWith(el);
+  // const el = createDiv('hero-list');
+  const progress = document.createElement('progress');
+  progress.classList.add('hero-list', 'progress', 'is-medium', 'is-info');
+  progress.setAttribute('max', '100');
+  // el.innerHTML = '<p>Fetching Heroes</p>';
+  heroPlaceholder.replaceWith(progress);
 }
 
 function replaceHeroListComponent(heroes?: Hero[]) {

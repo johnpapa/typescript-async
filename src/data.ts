@@ -1,7 +1,7 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
 
 const API = '/api';
-const DELAY = 500;
+const DELAY = 1500;
 
 interface Hero {
   id: number;
