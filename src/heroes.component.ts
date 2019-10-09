@@ -87,11 +87,13 @@ function createExpandButton(cardId: string) {
   button.appendChild(icon);
   button.addEventListener('click', () => {
     const ordersArea = document.querySelector(
-      `.card.${cardId} .order-area`
+      `.card.${cardId} .order-area`,
     ) as HTMLElement;
     // ordersArea.style.visibility = 'hidden';
-    ordersArea.style.display =
-      ordersArea.style.display === 'none' ? 'block' : 'none';
+    if (ordersArea) {
+      ordersArea.style.display =
+        ordersArea.style.display === 'none' ? 'block' : 'none';
+    }
   });
   return button;
 }
@@ -165,32 +167,37 @@ function createHeroCard(hero: Hero) {
   // span.appendChild(icon);
   content.appendChild(createExpandButton(hero.name));
 
-  createHeroOrders(content);
+  // const orders = [
+  //   {
+  //     num: 71025,
+  //     items: [
+  //       { name: 'Firestick', qty: 1, price: 19.99 },
+  //       { name: 'Chromecast', qty: 2, price: 24.99 },
+  //     ],
+  //   },
+  //   {
+  //     num: 71880,
+  //     items: [{ name: 'Apple TV', qty: 1, price: 104.99 }],
+  //   },
+  // ];
+  // hero.orders = orders;
+
+  createHeroOrders(content, hero);
 
   return card;
 }
 
-function createHeroOrders(content: HTMLElement) {
-  const orders = [
-    {
-      num: 71025,
-      items: [
-        { name: 'Firestick', qty: 1, price: 19.99 },
-        { name: 'Chromecast', qty: 2, price: 24.99 },
-      ],
-    },
-    {
-      num: 71880,
-      items: [{ name: 'Apple TV', qty: 1, price: 104.99 }],
-    },
-  ];
-
+function createHeroOrders(content: HTMLElement, hero: Hero) {
+  if (!hero.orders) {
+    return;
+  }
   const ordersArea = createDiv('order-area');
+  ordersArea.style.display = 'none';
   content.appendChild(ordersArea);
 
-  orders.forEach(order => {
+  hero.orders.forEach(order => {
     const orderTemplate = document.getElementById(
-      'order-template'
+      'order-template',
     ) as HTMLTemplateElement;
     const orderClone = document.importNode(orderTemplate.content, true);
     const itemClones = createHeroOrderItems(order); //, orderTemplate);
@@ -204,12 +211,12 @@ function createHeroOrderItems(
   order: {
     num: number;
     items: { name: string; qty: number; price: number }[];
-  }
+  },
   // orderTemplate: HTMLTemplateElement,
 ) {
   return order.items.map(item => {
     const orderItemTemplate = document.getElementById(
-      'order-item-template'
+      'order-item-template',
     ) as HTMLTemplateElement;
     // const oi = orderItemTemplate.content;
     const itemClone = document.importNode(orderItemTemplate.content, true);

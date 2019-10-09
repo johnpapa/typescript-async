@@ -7,6 +7,7 @@ interface Hero {
   id: number;
   name: string;
   description: string;
+  orders: any[];
 }
 
 interface Callback<T> {
