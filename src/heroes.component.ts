@@ -79,6 +79,23 @@ function createRefreshButton() {
   return button;
 }
 
+function createExpandButton(cardId: string) {
+  const button = document.createElement('button');
+  button.classList.add('button', 'expand-button');
+  const icon = document.createElement('i');
+  icon.classList.add('fas', 'fa-angle-double-down');
+  button.appendChild(icon);
+  button.addEventListener('click', () => {
+    const ordersArea = document.querySelector(
+      `.card.${cardId} .order-area`
+    ) as HTMLElement;
+    // ordersArea.style.visibility = 'hidden';
+    ordersArea.style.display =
+      ordersArea.style.display === 'none' ? 'block' : 'none';
+  });
+  return button;
+}
+
 function showFetching() {
   const heroPlaceholder = document.querySelector('.hero-list');
   // const el = createDiv('hero-list');
@@ -129,6 +146,7 @@ function createHeroCard2(hero: Hero) {
 
 function createHeroCard(hero: Hero) {
   const card = createDiv('card');
+  card.classList.add(hero.name);
   const cardContent = createDiv('card-content');
   card.appendChild(cardContent);
   const content = createDiv('content');
@@ -140,62 +158,66 @@ function createHeroCard(hero: Hero) {
   description.innerText = hero.description;
   content.appendChild(description);
 
-  createHeroOrders();
+  // const span = document.createElement('span');
+  // span.classList.add('icon', 'is-small');
+  // const icon = document.createElement('i');
+  // icon.classList.add('fas', 'fa-angle-double-down');
+  // span.appendChild(icon);
+  content.appendChild(createExpandButton(hero.name));
+
+  const ordersArea = createDiv('order-area');
+  content.appendChild(ordersArea);
+  createHeroOrders(ordersArea);
 
   return card;
+}
 
-  function createHeroOrders() {
-    const orders = [
-      {
-        num: 71025,
-        items: [
-          { name: 'Firestick', qty: 1, price: 19.99 },
-          { name: 'Chromecast', qty: 2, price: 24.99 },
-        ],
-      },
-      {
-        num: 71880,
-        items: [{ name: 'Apple TV', qty: 1, price: 104.99 }],
-      },
-    ];
-    orders.forEach(order => {
-      const orderTemplate = document.getElementById(
-        'order-template'
-      ) as HTMLTemplateElement;
-      createHeroOrderItems(order, orderTemplate);
-      const clone = document.importNode(orderTemplate.content, true);
-      content.appendChild(clone);
-    });
+function createHeroOrders(ordersArea: HTMLElement) {
+  const orders = [
+    {
+      num: 71025,
+      items: [
+        { name: 'Firestick', qty: 1, price: 19.99 },
+        { name: 'Chromecast', qty: 2, price: 24.99 },
+      ],
+    },
+    {
+      num: 71880,
+      items: [{ name: 'Apple TV', qty: 1, price: 104.99 }],
+    },
+  ];
 
-    function createHeroOrderItems(
-      order: {
-        num: number;
-        items: { name: string; qty: number; price: number }[];
-      },
-      orderTemplate: HTMLTemplateElement
-    ) {
-      order.items.forEach(item => {
-        const orderItemTemplate = document.getElementById(
-          'order-item-template'
-        ) as HTMLTemplateElement;
-        orderItemTemplate.content.querySelector(
-          '.order-number'
-        ).textContent = `${order.num}`;
-        orderItemTemplate.content.querySelector('.item-name').textContent =
-          item.name;
-        orderItemTemplate.content.querySelector(
-          '.item-qty'
-        ).textContent = item.qty.toString();
-        orderItemTemplate.content.querySelector(
-          '.item-price'
-        ).textContent = item.price.toString();
-        const itemClone = document.importNode(orderItemTemplate.content, true);
-        orderTemplate.content
-          .querySelector('.order-header')
-          .parentNode.append(itemClone);
-      });
-    }
+  orders.forEach(order => {
+    const orderTemplate = document.getElementById(
+      'order-template'
+    ) as HTMLTemplateElement;
+    const orderClone = document.importNode(orderTemplate.content, true);
+    const itemClones = createHeroOrderItems(order); //, orderTemplate);
+
+    itemClones.forEach(ic => orderClone.appendChild(ic));
+
+    ordersArea.appendChild(orderClone);
+  });
+}
+function createHeroOrderItems(
+  order: {
+    num: number;
+    items: { name: string; qty: number; price: number }[];
   }
+  // orderTemplate: HTMLTemplateElement,
+) {
+  return order.items.map(item => {
+    const orderItemTemplate = document.getElementById(
+      'order-item-template'
+    ) as HTMLTemplateElement;
+    // const oi = orderItemTemplate.content;
+    const itemClone = document.importNode(orderItemTemplate.content, true);
+    itemClone.querySelector('.order-number').textContent = `${order.num}`;
+    itemClone.querySelector('.item-name').textContent = item.name;
+    itemClone.querySelector('.item-qty').textContent = item.qty.toString();
+    itemClone.querySelector('.item-price').textContent = item.price.toString();
+    return itemClone;
+  });
 }
 
 const createDiv = (...classList: string[]) => {

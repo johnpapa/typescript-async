@@ -75,12 +75,12 @@ header {
       color: $link;
     }
   }
-  button.button {
-    border: 0;
-    color: #999;
-    &:hover {
-      color: $link;
-    }
+}
+button.button {
+  border: 0;
+  color: $accent-color;
+  &:hover {
+    color: $typescript; //$link;
   }
 }
 ul.list {
