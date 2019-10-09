@@ -118,7 +118,7 @@ div.card-content {
   background-color: $shade-light;
 }
 .card {
-  margin-bottom: 2em;
+  margin-bottom: 1em;
 }
 
 label.label {
@@ -178,11 +178,26 @@ select.invalid {
   }
 }
 
-label.input {
-  background-color: #e5e5e5;
-  border: 1px solid #ccc;
-}
+// label.input {
+//   background-color: #e5e5e5;
+//   border: 1px solid #ccc;
+// }
 
 // p.comment {
 //   margin: 8px;
 // }
+
+.order-info {
+  margin-top: 1em;
+  font-size: 12px;
+  color: #999;
+}
+
+.table {
+  background-color: #fafafa;
+  font-size: 12px;
+  color: #999;
+  thead tr th {
+    color: #999;
+  }
+}

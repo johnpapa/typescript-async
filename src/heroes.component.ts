@@ -114,6 +114,19 @@ function replaceHeroListComponent(heroes?: Hero[]) {
   }
 }
 
+function createHeroCard2(hero: Hero) {
+  const card = createDiv('box');
+  const content = createDiv('content');
+  card.appendChild(content);
+  const name = createDiv('name');
+  name.innerText = hero.name;
+  content.appendChild(name);
+  const description = createDiv('description');
+  description.innerText = hero.description;
+  content.appendChild(description);
+  return card;
+}
+
 function createHeroCard(hero: Hero) {
   const card = createDiv('card');
   const cardContent = createDiv('card-content');
@@ -126,6 +139,54 @@ function createHeroCard(hero: Hero) {
   const description = createDiv('description');
   description.innerText = hero.description;
   content.appendChild(description);
+
+  // Orders
+  const orders = [
+    {
+      num: 71025,
+      items: [
+        { name: 'Firestick', qty: 1, price: 19.99 },
+        { name: 'Chromecast', qty: 2, price: 24.99 },
+      ],
+    },
+    {
+      num: 71880,
+      items: [{ name: 'Apple TV', qty: 1, price: 104.99 }],
+    },
+  ];
+  const orderTemplate = document.getElementById(
+    'orders-template'
+  ) as HTMLTemplateElement;
+
+  const clone = document.importNode(orderTemplate.content, true);
+  content.appendChild(clone);
+
+  orders.forEach(order => {
+    // orderTemplate.content.querySelector(
+    //   '.order-info'
+    // ).textContent = `Order #${o.num}`;
+
+    order.items.forEach(item => {
+      const orderItemTemplate = document.getElementById(
+        'order-item-template'
+      ) as HTMLTemplateElement;
+      orderItemTemplate.content.querySelector(
+        '.order-number'
+      ).textContent = `${order.num}`;
+      orderItemTemplate.content.querySelector('.order-item').textContent =
+        item.name;
+      orderItemTemplate.content.querySelector(
+        '.order-qty'
+      ).textContent = item.qty.toString();
+      orderItemTemplate.content.querySelector(
+        '.order-price'
+      ).textContent = item.price.toString();
+
+      const itemClone = document.importNode(orderItemTemplate.content, true);
+      orderTemplate.content.querySelector('tbody').appendChild(itemClone);
+    });
+  });
+
   return card;
 }
 

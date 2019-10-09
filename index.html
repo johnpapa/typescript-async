@@ -51,11 +51,35 @@
         </ul>
       </nav>
       <main class="column main-content">
-        
+
 
       </main>
     </div>
   </div>
+
+  <template id="orders-template">
+    <table class="table is-narrow xis-bordered">
+      <thead>
+        <tr>
+          <th>Order #</th>
+          <th>Item</th>
+          <th>Qty</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </template>
+
+  <template id="order-item-template">
+    <tr>
+      <td class="order-number"></td>
+      <td class="order-item"></th>
+      <td class="order-qty"></td>
+      <td class="order-price"></td>
+    </tr>
+  </template>
 
   <script src="bundle.js"></script>
   <link rel="stylesheet" href="main.bundle.css">
