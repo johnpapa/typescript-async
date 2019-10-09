@@ -140,56 +140,62 @@ function createHeroCard(hero: Hero) {
   description.innerText = hero.description;
   content.appendChild(description);
 
-  // Orders
-  const orders = [
-    {
-      num: 71025,
-      items: [
-        { name: 'Firestick', qty: 1, price: 19.99 },
-        { name: 'Chromecast', qty: 2, price: 24.99 },
-      ],
-    },
-    {
-      num: 71880,
-      items: [{ name: 'Apple TV', qty: 1, price: 104.99 }],
-    },
-  ];
-
-  orders.forEach(order => {
-    // orderTemplate.content.querySelector(
-    //   '.order-info'
-    // ).textContent = `Order #${o.num}`;
-    const orderTemplate = document.getElementById(
-      'order-template'
-    ) as HTMLTemplateElement;
-
-    order.items.forEach(item => {
-      const orderItemTemplate = document.getElementById(
-        'order-item-template'
-      ) as HTMLTemplateElement;
-      orderItemTemplate.content.querySelector(
-        '.order-number'
-      ).textContent = `${order.num}`;
-      orderItemTemplate.content.querySelector('.item-name').textContent =
-        item.name;
-      orderItemTemplate.content.querySelector(
-        '.item-qty'
-      ).textContent = item.qty.toString();
-      orderItemTemplate.content.querySelector(
-        '.item-price'
-      ).textContent = item.price.toString();
-
-      const itemClone = document.importNode(orderItemTemplate.content, true);
-      orderTemplate.content
-        .querySelector('.order-header')
-        .parentNode.append(itemClone);
-    });
-
-    const clone = document.importNode(orderTemplate.content, true);
-    content.appendChild(clone);
-  });
+  createHeroOrders();
 
   return card;
+
+  function createHeroOrders() {
+    const orders = [
+      {
+        num: 71025,
+        items: [
+          { name: 'Firestick', qty: 1, price: 19.99 },
+          { name: 'Chromecast', qty: 2, price: 24.99 },
+        ],
+      },
+      {
+        num: 71880,
+        items: [{ name: 'Apple TV', qty: 1, price: 104.99 }],
+      },
+    ];
+    orders.forEach(order => {
+      const orderTemplate = document.getElementById(
+        'order-template'
+      ) as HTMLTemplateElement;
+      createHeroOrderItems(order, orderTemplate);
+      const clone = document.importNode(orderTemplate.content, true);
+      content.appendChild(clone);
+    });
+
+    function createHeroOrderItems(
+      order: {
+        num: number;
+        items: { name: string; qty: number; price: number }[];
+      },
+      orderTemplate: HTMLTemplateElement
+    ) {
+      order.items.forEach(item => {
+        const orderItemTemplate = document.getElementById(
+          'order-item-template'
+        ) as HTMLTemplateElement;
+        orderItemTemplate.content.querySelector(
+          '.order-number'
+        ).textContent = `${order.num}`;
+        orderItemTemplate.content.querySelector('.item-name').textContent =
+          item.name;
+        orderItemTemplate.content.querySelector(
+          '.item-qty'
+        ).textContent = item.qty.toString();
+        orderItemTemplate.content.querySelector(
+          '.item-price'
+        ).textContent = item.price.toString();
+        const itemClone = document.importNode(orderItemTemplate.content, true);
+        orderTemplate.content
+          .querySelector('.order-header')
+          .parentNode.append(itemClone);
+      });
+    }
+  }
 }
 
 const createDiv = (...classList: string[]) => {
