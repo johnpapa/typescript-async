@@ -79,24 +79,24 @@ function createRefreshButton() {
   return button;
 }
 
-function createExpandButton(cardId: string) {
-  const button = document.createElement('button');
-  button.classList.add('button', 'expand-button');
-  const icon = document.createElement('i');
-  icon.classList.add('fas', 'fa-angle-double-down');
-  button.appendChild(icon);
-  button.addEventListener('click', () => {
-    const ordersArea = document.querySelector(
-      `.card.${cardId} .order-area`
-    ) as HTMLElement;
-    // ordersArea.style.visibility = 'hidden';
-    if (ordersArea) {
-      ordersArea.style.display =
-        ordersArea.style.display === 'none' ? 'block' : 'none';
-    }
-  });
-  return button;
-}
+// function createExpandButton(cardId: string) {
+//   const button = document.createElement('button');
+//   button.classList.add('button', 'expand-button');
+//   const icon = document.createElement('i');
+//   icon.classList.add('fas', 'fa-angle-double-down');
+//   button.appendChild(icon);
+//   button.addEventListener('click', () => {
+//     const ordersArea = document.querySelector(
+//       `.card.${cardId} .order-area`
+//     ) as HTMLElement;
+//     // ordersArea.style.visibility = 'hidden';
+//     if (ordersArea) {
+//       ordersArea.style.display =
+//         ordersArea.style.display === 'none' ? 'block' : 'none';
+//     }
+//   });
+//   return button;
+// }
 
 function showFetching() {
   const heroPlaceholder = document.querySelector('.hero-list');
@@ -134,46 +134,30 @@ function replaceHeroListComponent(heroes?: Hero[]) {
   }
 }
 
-function createHeroCard(hero: Hero) {
-  const card = createDiv('card');
-  card.classList.add(hero.name);
-  const cardContent = createDiv('card-content');
-  card.appendChild(cardContent);
-  const content = createDiv('content');
-  cardContent.appendChild(content);
-  const name = createDiv('name');
-  name.innerText = hero.name;
-  content.appendChild(name);
-  const description = createDiv('description');
-  description.innerText = hero.description;
-  content.appendChild(description);
+// function createHeroCard(hero: Hero) {
+//   const card = createDiv('card');
+//   card.classList.add(hero.name);
+//   const cardContent = createDiv('card-content');
+//   card.appendChild(cardContent);
+//   const content = createDiv('content');
+//   cardContent.appendChild(content);
+//   const name = createDiv('name');
+//   name.innerText = hero.name;
+//   content.appendChild(name);
+//   const description = createDiv('description');
+//   description.innerText = hero.description;
+//   content.appendChild(description);
 
-  // const span = document.createElement('span');
-  // span.classList.add('icon', 'is-small');
-  // const icon = document.createElement('i');
-  // icon.classList.add('fas', 'fa-angle-double-down');
-  // span.appendChild(icon);
-  content.appendChild(createExpandButton(hero.name));
+//   // const span = document.createElement('span');
+//   // span.classList.add('icon', 'is-small');
+//   // const icon = document.createElement('i');
+//   // icon.classList.add('fas', 'fa-angle-double-down');
+//   // span.appendChild(icon);
+//   content.appendChild(createExpandButton(hero.name));
+//   createHeroOrders(content, hero);
 
-  // const orders = [
-  //   {
-  //     num: 71025,
-  //     items: [
-  //       { name: 'Firestick', qty: 1, price: 19.99 },
-  //       { name: 'Chromecast', qty: 2, price: 24.99 },
-  //     ],
-  //   },
-  //   {
-  //     num: 71880,
-  //     items: [{ name: 'Apple TV', qty: 1, price: 104.99 }],
-  //   },
-  // ];
-  // hero.orders = orders;
-
-  createHeroOrders(content, hero);
-
-  return card;
-}
+//   return card;
+// }
 
 function createHeroCardFromTemplate(hero: Hero) {
   const heroTemplate = document.getElementById(
@@ -185,16 +169,33 @@ function createHeroCardFromTemplate(hero: Hero) {
   heroClone.querySelector('.email').textContent = hero.email;
   heroClone.querySelector('.card').classList.add(hero.name);
 
+  const button = heroClone.querySelector('.card-content button.expand-button');
+
+  const ordersArea = heroClone.querySelector(
+    `.card.${hero.name} .order-area`
+  ) as HTMLElement;
+
+  button.addEventListener('click', () => {
+    // ordersArea.style.visibility = 'hidden';
+    if (ordersArea) {
+      ordersArea.style.display =
+        ordersArea.style.display === 'none' ? 'block' : 'none';
+    }
+  });
+
+  createHeroOrders(ordersArea, hero);
+
   return heroClone;
 }
 
-function createHeroOrders(content: HTMLElement, hero: Hero) {
+// function createHeroOrders(content: DocumentFragment, hero: Hero) {
+function createHeroOrders(ordersArea: HTMLElement, hero: Hero) {
   if (!hero.orders) {
     return;
   }
-  const ordersArea = createDiv('order-area');
-  ordersArea.style.display = 'none';
-  content.appendChild(ordersArea);
+  // const ordersArea = createDiv('order-area');
+  // ordersArea.style.display = 'none';
+  // content.appendChild(ordersArea);
 
   hero.orders.forEach(order => {
     const orderTemplate = document.getElementById(
