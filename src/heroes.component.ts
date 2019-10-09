@@ -87,7 +87,7 @@ function createExpandButton(cardId: string) {
   button.appendChild(icon);
   button.addEventListener('click', () => {
     const ordersArea = document.querySelector(
-      `.card.${cardId} .order-area`,
+      `.card.${cardId} .order-area`
     ) as HTMLElement;
     // ordersArea.style.visibility = 'hidden';
     if (ordersArea) {
@@ -119,7 +119,8 @@ function replaceHeroListComponent(heroes?: Hero[]) {
     ul.classList.add('list', 'hero-list');
     heroes.forEach((hero: Hero) => {
       const li = document.createElement('li');
-      const card = createHeroCard(hero);
+      // const card = createHeroCard(hero);
+      const card = createHeroCardFromTemplate(hero);
       li.appendChild(card);
       ul.appendChild(li);
     });
@@ -131,19 +132,6 @@ function replaceHeroListComponent(heroes?: Hero[]) {
     div.innerText = 'No heroes found';
     return div;
   }
-}
-
-function createHeroCard2(hero: Hero) {
-  const card = createDiv('box');
-  const content = createDiv('content');
-  card.appendChild(content);
-  const name = createDiv('name');
-  name.innerText = hero.name;
-  content.appendChild(name);
-  const description = createDiv('description');
-  description.innerText = hero.description;
-  content.appendChild(description);
-  return card;
 }
 
 function createHeroCard(hero: Hero) {
@@ -187,6 +175,19 @@ function createHeroCard(hero: Hero) {
   return card;
 }
 
+function createHeroCardFromTemplate(hero: Hero) {
+  const heroTemplate = document.getElementById(
+    'hero-template'
+  ) as HTMLTemplateElement;
+  const heroClone = document.importNode(heroTemplate.content, true);
+  heroClone.querySelector('.description').textContent = hero.description;
+  heroClone.querySelector('.name').textContent = hero.name;
+  heroClone.querySelector('.email').textContent = hero.email;
+  heroClone.querySelector('.card').classList.add(hero.name);
+
+  return heroClone;
+}
+
 function createHeroOrders(content: HTMLElement, hero: Hero) {
   if (!hero.orders) {
     return;
@@ -197,7 +198,7 @@ function createHeroOrders(content: HTMLElement, hero: Hero) {
 
   hero.orders.forEach(order => {
     const orderTemplate = document.getElementById(
-      'order-template',
+      'order-template'
     ) as HTMLTemplateElement;
     const orderClone = document.importNode(orderTemplate.content, true);
     const itemClones = createHeroOrderItems(order); //, orderTemplate);
@@ -207,16 +208,17 @@ function createHeroOrders(content: HTMLElement, hero: Hero) {
     ordersArea.appendChild(orderClone);
   });
 }
+
 function createHeroOrderItems(
   order: {
     num: number;
     items: { name: string; qty: number; price: number }[];
-  },
+  }
   // orderTemplate: HTMLTemplateElement,
 ) {
   return order.items.map(item => {
     const orderItemTemplate = document.getElementById(
-      'order-item-template',
+      'order-item-template'
     ) as HTMLTemplateElement;
     // const oi = orderItemTemplate.content;
     const itemClone = document.importNode(orderItemTemplate.content, true);

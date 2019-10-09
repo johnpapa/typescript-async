@@ -1,12 +1,6 @@
 import './design/index.scss';
 
-declare global {
-  interface Window {
-    doShit: () => void;
-  }
-}
-
-import { getHeroesAsync, getHeroesPromise, Hero } from './data';
+import { getHeroesAsync, getHeroesPromise, Hero, getOrdersAsync } from './data';
 
 enum Mode {
   callback,
@@ -80,12 +74,31 @@ async function refreshPageAsync() {
 
     heroes = await getHeroesAsync();
 
+    // guest = await getGuest('wes@gmail.com'); first call
+    // hotel = await getHotel(guest.id); // 1 2nd call
+    // bags = await getbags(guest.id); // 1 2nd call
+    // friends = await getFriends(guest.id); // list 2nd call
+    // friendIDs = collectFriendIds()
+    // friendsBags = await getFriendsBags(friendIds); // list - 1 call, merge the results - 3rd call
+
+    // customer = await getCustomer('haley@johnpapa.net'); // level 1 - why? maybe id is not on the page? its a search box? -> Craig
+    // acctRep = await getAcctRep(customer.id); // level 2 - -> Heidi
+    // orders = await getOrders(customer.id); // // level 2 - -> Craig's orders and details
+    // orderIds = []; // collect the IDs
+    // shippingStatuses = await orderShippingStatus(orderIds); // level 3 - -> [1: {orderId: 1, status: good}, 2: {orderId: 2, status: bad}]
+    // Merge statuses into the data (customer.orders.forEach((o) => { o.status = statuses[o.id].status } ))
+
+    for (const hero of heroes) {
+      hero.orders = await getOrdersAsync(hero.id);
+    }
+
     // div.innerText = ''
     // get data
     // if data, then create compo(data)
   } catch (error) {
+    // report to the user, a nice message
     console.log(error);
-    // div.innerText = 'shit happened'
+    // div.innerText = 'sumtin happened'
   } finally {
     replaceHeroListComponent(heroes);
   }

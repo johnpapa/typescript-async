@@ -7,7 +7,21 @@ interface Hero {
   id: number;
   name: string;
   description: string;
-  orders: any[];
+  email: string;
+  orders?: Order[];
+}
+
+interface Order {
+  heroId: number;
+  num: number;
+  items: Item[];
+}
+
+interface Item {
+  orderNum: number;
+  name: string;
+  qty: number;
+  price: number;
 }
 
 interface Callback<T> {
@@ -37,14 +51,14 @@ const getHeroesAsync = async function() {
   await delay(DELAY);
   try {
     const response = await axios.get(`${API}/heroes`);
-    const data = parseList(response);
+    const data = parseList<Hero>(response);
     return data;
   } catch (error) {
     // This is a technical error, targeting the developers.
     // You should always log it here (lowest level). This serves the developer.
     // If I want to propogate this back to the callers,
     // I should determine how to propogate it out and if I want to transform it.
-    console.error(`Developer Error: Async Data Error: ${error?.message}`);
+    console.error(`Developer Error: Async Data Error: ${error.message}`);
 
     // How do I feel about errors in this path?
     // option 1: log the error here,
@@ -57,11 +71,23 @@ const getHeroesAsync = async function() {
   }
 };
 
+const getOrdersAsync = async function(heroId?: number) {
+  try {
+    const url = heroId ? `${API}/orders/${heroId}` : `${API}/orders`;
+    const response = await axios.get(url);
+    const data = parseList<Order>(response);
+    return data;
+  } catch (error) {
+    console.error(`Developer Error: Async Data Error: ${error.message}`);
+    throw new Error('User Facing Error: Something bad happened');
+  }
+};
+
 const getHeroesPromise = function() {
   return axios
     .get<Hero[]>(`${API}/heroes`)
     .then((response: AxiosResponse<any>) => {
-      const data = parseList(response);
+      const data = parseList<Hero>(response);
       return Promise.resolve(data);
     })
     .catch((error: AxiosError) => {
@@ -82,7 +108,7 @@ const getHeroesCallback = function(
   axios
     .get<Hero[]>(`${API}/heroes`)
     .then((response: AxiosResponse<any>) => {
-      const data = parseList(response);
+      const data = parseList<Hero>(response);
       callback(data);
     })
     .catch((error: AxiosError) => {
@@ -94,10 +120,10 @@ const getHeroesCallback = function(
 
 const delay = (ms: any) => new Promise(res => setTimeout(res, ms));
 
-const parseList = (response: any) => {
+const parseList = <T>(response: any) => {
   if (response.status !== 200) throw Error(response.message);
   if (!response.data) return [];
-  let list: Hero[] = response.data;
+  let list: T[] = response.data;
   if (typeof list !== 'object') {
     list = [];
   }
@@ -133,9 +159,12 @@ const getHeroesDelayedAsync = async function() {
 export {
   getHeroesCallback,
   getHeroesAsync,
+  getOrdersAsync,
   getHeroesPromise,
   getHeroesDelayedAsync,
   Hero,
+  Order,
+  Item,
   Callback,
   CallbackError,
 };

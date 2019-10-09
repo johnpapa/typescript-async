@@ -4,56 +4,76 @@
       "id": "10",
       "name": "Madelyn",
       "description": "the cat whisperer",
-      "orders": [
-        {
-          "num": 71025,
-          "items": [
-            { "name": "Firestick", "qty": 1, "price": 19.99 },
-            { "name": "Chromecast", "qty": 2, "price": 24.99 }
-          ]
-        },
-        {
-          "num": 71880,
-          "items": [{ "name": "Apple TV", "qty": 1, "price": 104.99 }]
-        }
-      ]
+      "email": "madelyn@acme.com"
     },
     {
       "id": "20",
       "name": "Haley",
       "description": "pen wielder",
-      "orders": [
-        {
-          "num": 34265,
-          "items": [
-            {
-              "name": "Chicken",
-              "qty": 1,
-              "price": 1.99
-            }
-          ]
-        },
-        {
-          "num": 84576,
-          "items": [
-            {
-              "name": "Apples",
-              "qty": 11,
-              "price": 111.12
-            }
-          ]
-        }
-      ]
+      "email": "haley@acme.com"
     },
     {
       "id": "30",
       "name": "Ella",
-      "description": "fashionista"
+      "description": "fashionista",
+      "email": "ella@acme.com"
     },
     {
       "id": "40",
       "name": "Landon",
-      "description": "arc trooper"
+      "description": "arc trooper",
+      "email": "landon@acme.com"
+    }
+  ],
+  "orders": [
+    {
+      "heroId": "10",
+      "num": 71025,
+      "items": [
+        {
+          "name": "Firestick",
+          "qty": 1,
+          "price": 19.99
+        },
+        {
+          "name": "Chromecast",
+          "qty": 2,
+          "price": 24.99
+        }
+      ]
+    },
+    {
+      "heroId": "10",
+      "num": 71880,
+      "items": [
+        {
+          "name": "Apple TV",
+          "qty": 1,
+          "price": 104.99
+        }
+      ]
+    },
+    {
+      "heroId": "20",
+      "num": 34265,
+      "items": [
+        {
+          "name": "Chicken",
+          "qty": 1,
+          "price": 1.99
+        }
+      ]
+    },
+    {
+      "heroId": "20",
+      "num": 84576,
+      "items": [
+        {
+          "name": "Apples",
+          "qty": 11,
+          "price": 111.12
+        }
+      ]
     }
   ]
 }
