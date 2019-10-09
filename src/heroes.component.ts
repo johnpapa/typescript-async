@@ -165,14 +165,12 @@ function createHeroCard(hero: Hero) {
   // span.appendChild(icon);
   content.appendChild(createExpandButton(hero.name));
 
-  const ordersArea = createDiv('order-area');
-  content.appendChild(ordersArea);
-  createHeroOrders(ordersArea);
+  createHeroOrders(content);
 
   return card;
 }
 
-function createHeroOrders(ordersArea: HTMLElement) {
+function createHeroOrders(content: HTMLElement) {
   const orders = [
     {
       num: 71025,
@@ -186,6 +184,9 @@ function createHeroOrders(ordersArea: HTMLElement) {
       items: [{ name: 'Apple TV', qty: 1, price: 104.99 }],
     },
   ];
+
+  const ordersArea = createDiv('order-area');
+  content.appendChild(ordersArea);
 
   orders.forEach(order => {
     const orderTemplate = document.getElementById(
