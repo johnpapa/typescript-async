@@ -1,4 +1,5 @@
 import { Hero } from './data';
+import { createDiv, setText, cloneElementsFromTemplate } from './dom';
 
 // function getHeroesComponentCallback(
 //   // happy path to work
@@ -52,30 +53,6 @@ function createHeroesComponent() {
   return wrapper;
 }
 
-// code below here is not interesting
-
-function createHeroHeaderComponent() {
-  const header = createDiv('content-title-group');
-  const h2 = document.createElement('h2');
-
-  h2.classList.add('title');
-  h2.innerText = 'Heroes';
-  header.appendChild(h2);
-  const refreshButton = createRefreshButton();
-  header.appendChild(refreshButton);
-
-  return header;
-}
-
-function createRefreshButton() {
-  const button = document.createElement('button');
-  button.classList.add('button', 'refresh-button');
-  const icon = document.createElement('i');
-  icon.classList.add('fas', 'fa-sync');
-  button.appendChild(icon);
-  return button;
-}
-
 function showFetching() {
   const heroPlaceholder = document.querySelector('.hero-list');
   const progressClone = cloneElementsFromTemplate('progress-template');
@@ -106,6 +83,30 @@ function replaceHeroListComponent(heroes?: Hero[]) {
     div.innerText = 'No heroes found';
     return div;
   }
+}
+
+// code below here is not interesting
+
+function createHeroHeaderComponent() {
+  const header = createDiv('content-title-group');
+  const h2 = document.createElement('h2');
+
+  h2.classList.add('title');
+  h2.innerText = 'Heroes';
+  header.appendChild(h2);
+  const refreshButton = createRefreshButton();
+  header.appendChild(refreshButton);
+
+  return header;
+}
+
+function createRefreshButton() {
+  const button = document.createElement('button');
+  button.classList.add('button', 'refresh-button');
+  const icon = document.createElement('i');
+  icon.classList.add('fas', 'fa-sync');
+  button.appendChild(icon);
+  return button;
 }
 
 function createHeroCardFromTemplate(hero: Hero) {
@@ -147,12 +148,6 @@ function createHeroOrders(ordersArea: HTMLElement, hero: Hero) {
   });
 }
 
-function cloneElementsFromTemplate(templateName: string) {
-  const template = document.getElementById(templateName) as HTMLTemplateElement;
-  const clone = document.importNode(template.content, true);
-  return clone;
-}
-
 function createHeroOrderItems(order: {
   num: number;
   items: { name: string; qty: number; price: number }[];
@@ -166,15 +161,5 @@ function createHeroOrderItems(order: {
     return itemClone;
   });
 }
-
-function setText(el: DocumentFragment, selector: string, text: any) {
-  el.querySelector(selector).textContent = text.toString();
-}
-
-const createDiv = (...classList: string[]) => {
-  const el = document.createElement('div');
-  el.classList.add(...classList);
-  return el;
-};
 
 export { createHeroesComponent, replaceHeroListComponent, showFetching };
