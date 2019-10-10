@@ -69,16 +69,37 @@ const getOrdersPromise = function(heroId: number) {
 
 const getHeroTreePromise = function(searchEmail: string) {
   let hero: Hero;
-  return getHeroPromise(searchEmail).then(h => {
+
+  return getHeroPromise(searchEmail)
+    .then(getOrders)
+    .then(mergeData);
+
+  function getOrders(h: Hero): Promise<Order[]> {
     hero = h;
-    return getOrdersPromise(h ? h.id : undefined).then(orders => {
-      if (orders) {
-        hero.orders = orders;
-      }
-      return hero;
-    });
-  });
+    return h ? getOrdersPromise(h.id) : undefined;
+  }
+
+  function mergeData(orders: Order[]): Hero {
+    if (orders) {
+      hero.orders = orders;
+    }
+    return hero;
+  }
 };
+
+// PROMISE NESTING
+// const getHeroTreePromise = function(searchEmail: string) {
+//   let hero: Hero;
+//   return getHeroPromise(searchEmail).then(h => {
+//     hero = h;
+//     return getOrdersPromise(h ? h.id : undefined).then(orders => {
+//       if (orders) {
+//         hero.orders = orders;
+//       }
+//       return hero;
+//     });
+//   });
+// };
 
 const getHeroPromise = function(email: string) {
   return axios

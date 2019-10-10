@@ -62,8 +62,9 @@ function refreshPagePromise() {
   getHeroTreePromise(searchEmailElement.value)
     .then(hero => replaceHeroListComponent(hero))
     .catch(error => {
-      replaceHeroListComponent();
       console.log(error);
+      showMessage(error);
+      replaceHeroListComponent();
     });
 }
 
