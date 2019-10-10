@@ -78,12 +78,8 @@ function createRefreshButton() {
 
 function showFetching() {
   const heroPlaceholder = document.querySelector('.hero-list');
-  // const el = createDiv('hero-list');
-  const progress = document.createElement('progress');
-  progress.classList.add('hero-list', 'progress', 'is-medium', 'is-info');
-  progress.setAttribute('max', '100');
-  // el.innerHTML = '<p>Fetching Heroes</p>';
-  heroPlaceholder.replaceWith(progress);
+  const progressClone = cloneElementsFromTemplate('progress-template');
+  heroPlaceholder.replaceWith(progressClone);
 }
 
 function replaceHeroListComponent(heroes?: Hero[]) {
@@ -113,10 +109,7 @@ function replaceHeroListComponent(heroes?: Hero[]) {
 }
 
 function createHeroCardFromTemplate(hero: Hero) {
-  const heroTemplate = document.getElementById(
-    'hero-template'
-  ) as HTMLTemplateElement;
-  const heroClone = document.importNode(heroTemplate.content, true);
+  const heroClone = cloneElementsFromTemplate('hero-template');
   heroClone.querySelector('.description').textContent = hero.description;
   heroClone.querySelector('.name').textContent = hero.name;
   heroClone.querySelector('.email').textContent = hero.email;
@@ -147,16 +140,17 @@ function createHeroOrders(ordersArea: HTMLElement, hero: Hero) {
   }
 
   hero.orders.forEach(order => {
-    const orderTemplate = document.getElementById(
-      'order-template'
-    ) as HTMLTemplateElement;
-    const orderClone = document.importNode(orderTemplate.content, true);
+    const orderClone = cloneElementsFromTemplate('order-template');
     const itemClones = createHeroOrderItems(order);
-
     itemClones.forEach(ic => orderClone.appendChild(ic));
-
     ordersArea.appendChild(orderClone);
   });
+}
+
+function cloneElementsFromTemplate(templateName: string) {
+  const template = document.getElementById(templateName) as HTMLTemplateElement;
+  const clone = document.importNode(template.content, true);
+  return clone;
 }
 
 function createHeroOrderItems(order: {
@@ -164,10 +158,7 @@ function createHeroOrderItems(order: {
   items: { name: string; qty: number; price: number }[];
 }) {
   return order.items.map(item => {
-    const orderItemTemplate = document.getElementById(
-      'order-item-template'
-    ) as HTMLTemplateElement;
-    const itemClone = document.importNode(orderItemTemplate.content, true);
+    const itemClone = cloneElementsFromTemplate('order-item-template');
     itemClone.querySelector('.order-number').textContent = `${order.num}`;
     itemClone.querySelector('.item-name').textContent = item.name;
     itemClone.querySelector('.item-qty').textContent = item.qty.toString();
