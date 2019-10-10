@@ -6,6 +6,7 @@ import {
   Hero,
   getHeroTreePromise,
   getHeroesCallback,
+  getOrdersCallback,
 } from './lib';
 
 enum Mode {
@@ -56,7 +57,24 @@ async function render() {
 function refreshPageCallback() {
   getHeroesCallback(
     searchEmailElement.value,
-    hero => replaceHeroListComponent(hero),
+    hero => {
+      if (hero) {
+        getOrdersCallback(
+          hero.id,
+          function(orders) {
+            hero.orders = orders;
+            replaceHeroListComponent(hero);
+          },
+          function(error) {
+            console.log(error);
+            showMessage(error);
+            replaceHeroListComponent(hero);
+          }
+        );
+      } else {
+        replaceHeroListComponent(hero);
+      }
+    },
     error => {
       console.log(error);
       showMessage(error);

@@ -135,6 +135,24 @@ const getHeroesCallback = function(
     });
 };
 
+const getOrdersCallback = function(
+  heroId: number,
+  callback: Callback<Order[]>,
+  callbackError?: CallbackError
+) {
+  const url = heroId ? `${API}/orders/${heroId}` : `${API}/orders`;
+  axios
+    .get(url)
+    .then((response: AxiosResponse<any>) => {
+      const orders = parseList<Order>(response);
+      callback(orders);
+    })
+    .catch((error: AxiosError) => {
+      console.error(`Developer Error: Async Data Error: ${error.message}`);
+      callbackError('User Facing Error: Something bad happened');
+    });
+};
+
 const delay = (ms: any) => new Promise(res => setTimeout(res, ms));
 
 const parseList = <T>(response: any) => {
@@ -174,9 +192,10 @@ const getHeroesDelayedAsync = async function() {
 };
 
 export {
+  getHeroesDelayedAsync,
   getHeroAsync,
+  getOrdersAsync,
   getHeroTreePromise,
   getHeroesCallback,
-  getOrdersAsync,
-  getHeroesDelayedAsync,
+  getOrdersCallback,
 };
