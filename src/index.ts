@@ -7,12 +7,13 @@ import {
   getHeroTreePromise,
   getHeroesCallback,
   getOrdersCallback,
+  dev,
 } from './lib';
 
 enum Mode {
-  callback,
-  promise,
-  async,
+  callback = 'callback',
+  promise = 'promise',
+  async = 'async',
 }
 
 import {
@@ -21,34 +22,47 @@ import {
   showMessage,
 } from './heroes.component';
 
-const mode: Mode = Mode.callback;
-
+const asyncModeElement = document.getElementById(
+  'async-mode'
+) as HTMLSelectElement;
+const errorModeElement = document.getElementById(
+  'error-mode'
+) as HTMLSelectElement;
 const searchEmailElement = document.getElementById(
   'search-email'
 ) as HTMLInputElement;
 const button = document.querySelector('.search-button');
-let refreshHandler: () => void;
-const renderHeroes = async () => {
-  showFetching();
-  refreshHandler();
-};
 searchEmailElement.addEventListener('keydown', (e: KeyboardEvent) => {
-  if (e.code === 'Enter') renderHeroes();
+  if (e.code === 'Enter') render();
 });
-button.addEventListener('click', renderHeroes);
+button.addEventListener('click', render);
+errorModeElement.addEventListener('input', () => {
+  switch (errorModeElement.value) {
+    case '404':
+      dev.breakAPI();
+      break;
+
+    case 'ok':
+      dev.fixAPI();
+      break;
+  }
+});
 
 async function render() {
+  let renderHeroes: () => void;
+  showFetching();
+  const mode = asyncModeElement.value;
   switch (mode) {
     case Mode.callback:
-      refreshHandler = refreshPageCallback;
+      renderHeroes = refreshPageCallback;
       break;
 
     case Mode.promise:
-      refreshHandler = refreshPagePromise;
+      renderHeroes = refreshPagePromise;
       break;
 
     case Mode.async:
-      refreshHandler = refreshPageAsync;
+      renderHeroes = refreshPageAsync;
       break;
   }
   renderHeroes();
@@ -122,12 +136,9 @@ async function refreshPageAsync() {
     hero.orders = await getOrdersAsync(hero.id);
     // }
   } catch (error) {
-    // report to the user, a nice message
     console.log(error);
     showMessage(error);
   } finally {
     replaceHeroListComponent(hero);
   }
 }
-
-render();

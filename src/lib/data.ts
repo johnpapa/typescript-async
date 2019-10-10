@@ -3,6 +3,8 @@ import axios, { AxiosResponse, AxiosError } from 'axios';
 import { DELAY, API } from './config';
 import { Order, Callback, CallbackError, Hero } from './interfaces';
 
+let apiUrl = API;
+
 // we could pass this back every time.
 // the argument here is you can avoid try/catch everywhere but you instead have to package the error.
 // interface Message {
@@ -13,7 +15,7 @@ import { Order, Callback, CallbackError, Hero } from './interfaces';
 // first show without any try/catch as we explain how errors bubble upo.
 // then introduce try/catch to show how we can do other stuff
 // const getHeroesAsync2 = async function() {
-//   const response = await axios.get(`${API}/heroes`);
+//   const response = await axios.get(`${apiUrl}/heroes`);
 //   const data = parseList(response);
 //   return data;
 // };
@@ -21,7 +23,7 @@ import { Order, Callback, CallbackError, Hero } from './interfaces';
 const getHeroAsync = async function(email: string) {
   await delay(DELAY);
   try {
-    const response = await axios.get(`${API}/heroes?email=${email}`);
+    const response = await axios.get(`${apiUrl}/heroes?email=${email}`);
     const data = parseList<Hero>(response);
     const hero = data[0];
     return hero;
@@ -45,7 +47,7 @@ const getHeroAsync = async function(email: string) {
 
 const getOrdersAsync = async function(heroId: number) {
   try {
-    const url = heroId ? `${API}/orders/${heroId}` : `${API}/orders`;
+    const url = heroId ? `${apiUrl}/orders/${heroId}` : `${apiUrl}/orders`;
     const response = await axios.get(url);
     const data = parseList<Order>(response);
     return data;
@@ -91,7 +93,7 @@ const getHeroTreePromise = function(searchEmail: string) {
 
 const getHeroPromise = function(email: string) {
   return axios
-    .get<Hero[]>(`${API}/heroes?email=${email}`)
+    .get<Hero[]>(`${apiUrl}/heroes?email=${email}`)
     .then((response: AxiosResponse<any>) => {
       const data = parseList<Hero>(response);
       const hero = data[0];
@@ -106,7 +108,7 @@ const getHeroPromise = function(email: string) {
 };
 
 const getOrdersPromise = function(heroId: number) {
-  const url = heroId ? `${API}/orders/${heroId}` : `${API}/orders`;
+  const url = heroId ? `${apiUrl}/orders/${heroId}` : `${apiUrl}/orders`;
   return axios
     .get(url)
     .then((response: AxiosResponse<any>) => parseList<Order>(response))
@@ -123,7 +125,7 @@ const getHeroesCallback = function(
   callbackError?: CallbackError
 ) {
   axios
-    .get<Hero[]>(`${API}/heroes?email=${email}`)
+    .get<Hero[]>(`${apiUrl}/heroes?email=${email}`)
     .then((response: AxiosResponse<any>) => {
       const data = parseList<Hero>(response);
       const hero = data[0];
@@ -140,7 +142,7 @@ const getOrdersCallback = function(
   callback: Callback<Order[]>,
   callbackError?: CallbackError
 ) {
-  const url = heroId ? `${API}/orders/${heroId}` : `${API}/orders`;
+  const url = heroId ? `${apiUrl}/orders/${heroId}` : `${apiUrl}/orders`;
   axios
     .get(url)
     .then((response: AxiosResponse<any>) => {
@@ -191,6 +193,15 @@ const getHeroesDelayedAsync = async function() {
   ];
 };
 
+const dev = {
+  breakAPI() {
+    apiUrl = '/badapiurl';
+  },
+  fixAPI() {
+    apiUrl = API;
+  },
+};
+
 export {
   getHeroesDelayedAsync,
   getHeroAsync,
@@ -198,4 +209,5 @@ export {
   getHeroTreePromise,
   getHeroesCallback,
   getOrdersCallback,
+  dev,
 };
