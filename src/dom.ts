@@ -1,5 +1,10 @@
-export function setText(el: DocumentFragment, selector: string, text: any) {
+export function setText(
+  el: DocumentFragment | HTMLElement,
+  selector: string,
+  text: any
+) {
   el.querySelector(selector).textContent = text.toString();
+  return el;
 }
 export const createDiv = (...classList: string[]) => {
   const el = document.createElement('div');

@@ -1,4 +1,4 @@
-import { Hero } from './data';
+import { Hero, Order } from './data';
 import { createDiv, setText, cloneElementsFromTemplate } from './dom';
 
 // function getHeroesComponentCallback(
@@ -75,10 +75,10 @@ function replaceHeroListComponent(heroes?: Hero[]) {
 }
 
 function showMessage(text: string, title = 'Info') {
-  const msgElement = document.getElementById('message-box');
-  msgElement.style.visibility = !!text ? 'visible' : 'hidden';
-  msgElement.querySelector('.message-header').innerHTML = title;
-  msgElement.querySelector('.message-body').innerHTML = text;
+  const el = document.getElementById('message-box');
+  el.style.visibility = !!text ? 'visible' : 'hidden';
+  setText(el, '.message-header', title);
+  setText(el, '.message-body', text);
 }
 
 // code below here is not interesting
@@ -90,14 +90,11 @@ function createHeroCardFromTemplate(hero: Hero) {
   setText(heroClone, '.email', hero.email);
   heroClone.querySelector('.card').classList.add(hero.name);
 
+  const selector = `.card.${hero.name} .order-area`;
+  const ordersArea = heroClone.querySelector(selector) as HTMLElement;
+
   const button = heroClone.querySelector('.card-content button.expand-button');
-
-  const ordersArea = heroClone.querySelector(
-    `.card.${hero.name} .order-area`
-  ) as HTMLElement;
-
   button.addEventListener('click', () => {
-    // ordersArea.style.visibility = 'hidden';
     if (ordersArea) {
       ordersArea.style.display =
         ordersArea.style.display === 'none' ? 'block' : 'none';
@@ -122,10 +119,7 @@ function createHeroOrders(ordersArea: HTMLElement, hero: Hero) {
   });
 }
 
-function createHeroOrderItems(order: {
-  num: number;
-  items: { name: string; qty: number; price: number }[];
-}) {
+function createHeroOrderItems(order: Order) {
   return order.items.map(item => {
     const itemClone = cloneElementsFromTemplate('order-item-template');
     setText(itemClone, '.order-number', order.num);
