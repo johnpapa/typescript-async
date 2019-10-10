@@ -55,18 +55,6 @@ const getOrdersAsync = async function(heroId: number) {
   }
 };
 
-const getOrdersPromise = function(heroId: number) {
-  const url = heroId ? `${API}/orders/${heroId}` : `${API}/orders`;
-  return axios
-    .get(url)
-    .then((response: AxiosResponse<any>) => parseList<Order>(response))
-    .catch((error: AxiosError) => {
-      console.error(`Developer Error: Async Data Error: ${error.message}`);
-      // throw new Error('User Facing Error: Something bad happened');
-      return Promise.reject('User Facing Error: Something bad happened');
-    });
-};
-
 const getHeroTreePromise = function(searchEmail: string) {
   let hero: Hero;
 
@@ -110,6 +98,18 @@ const getHeroPromise = function(email: string) {
       return hero;
       // return Promise.resolve(hero);
     })
+    .catch((error: AxiosError) => {
+      console.error(`Developer Error: Async Data Error: ${error.message}`);
+      // throw new Error('User Facing Error: Something bad happened');
+      return Promise.reject('User Facing Error: Something bad happened');
+    });
+};
+
+const getOrdersPromise = function(heroId: number) {
+  const url = heroId ? `${API}/orders/${heroId}` : `${API}/orders`;
+  return axios
+    .get(url)
+    .then((response: AxiosResponse<any>) => parseList<Order>(response))
     .catch((error: AxiosError) => {
       console.error(`Developer Error: Async Data Error: ${error.message}`);
       // throw new Error('User Facing Error: Something bad happened');

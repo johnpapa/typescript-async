@@ -1,6 +1,6 @@
 import './design/index.scss';
 
-import { getOrdersAsync, Hero, getHeroAsync, getHeroTreePromise } from './lib';
+import { getHeroAsync, getOrdersAsync, Hero, getHeroTreePromise } from './lib';
 
 enum Mode {
   callback,
@@ -19,20 +19,18 @@ const mode: Mode = Mode.promise;
 const searchEmailElement = document.getElementById(
   'search-email'
 ) as HTMLInputElement;
+const button = document.querySelector('.search-button');
+let refreshHandler: () => void;
+const renderHeroes = async () => {
+  showFetching();
+  refreshHandler();
+};
+searchEmailElement.addEventListener('keydown', (e: KeyboardEvent) => {
+  if (e.code === 'Enter') renderHeroes();
+});
+button.addEventListener('click', renderHeroes);
 
 async function render() {
-  let refreshHandler: () => void;
-
-  const button = document.querySelector('.search-button');
-  const renderHeroes = async () => {
-    showFetching();
-    refreshHandler();
-  };
-  searchEmailElement.addEventListener('keydown', (e: KeyboardEvent) => {
-    if (e.code === 'Enter') renderHeroes();
-  });
-  button.addEventListener('click', renderHeroes);
-
   switch (mode) {
     case Mode.callback:
       refreshHandler = refreshPageCallback;
