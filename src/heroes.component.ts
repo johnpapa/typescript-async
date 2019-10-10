@@ -110,9 +110,9 @@ function replaceHeroListComponent(heroes?: Hero[]) {
 
 function createHeroCardFromTemplate(hero: Hero) {
   const heroClone = cloneElementsFromTemplate('hero-template');
-  heroClone.querySelector('.description').textContent = hero.description;
-  heroClone.querySelector('.name').textContent = hero.name;
-  heroClone.querySelector('.email').textContent = hero.email;
+  setText(heroClone, '.description', hero.description);
+  setText(heroClone, '.name', hero.name);
+  setText(heroClone, '.email', hero.email);
   heroClone.querySelector('.card').classList.add(hero.name);
 
   const button = heroClone.querySelector('.card-content button.expand-button');
@@ -159,12 +159,16 @@ function createHeroOrderItems(order: {
 }) {
   return order.items.map(item => {
     const itemClone = cloneElementsFromTemplate('order-item-template');
-    itemClone.querySelector('.order-number').textContent = `${order.num}`;
-    itemClone.querySelector('.item-name').textContent = item.name;
-    itemClone.querySelector('.item-qty').textContent = item.qty.toString();
-    itemClone.querySelector('.item-price').textContent = item.price.toString();
+    setText(itemClone, '.order-number', order.num);
+    setText(itemClone, '.item-name', item.name);
+    setText(itemClone, '.item-qty', item.qty.toString());
+    setText(itemClone, '.item-price', item.price.toString());
     return itemClone;
   });
+}
+
+function setText(el: DocumentFragment, selector: string, text: any) {
+  el.querySelector(selector).textContent = text.toString();
 }
 
 const createDiv = (...classList: string[]) => {
