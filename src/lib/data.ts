@@ -18,30 +18,6 @@ import { Order, Callback, CallbackError, Hero } from './interfaces';
 //   return data;
 // };
 
-const getHeroesAsync = async function() {
-  await delay(DELAY);
-  try {
-    const response = await axios.get(`${API}/heroes`);
-    const data = parseList<Hero>(response);
-    return data;
-  } catch (error) {
-    // This is a technical error, targeting the developers.
-    // You should always log it here (lowest level). This serves the developer.
-    // If I want to propogate this back to the callers,
-    // I should determine how to propogate it out and if I want to transform it.
-    console.error(`Developer Error: Async Data Error: ${error.message}`);
-
-    // How do I feel about errors in this path?
-    // option 1: log the error here,
-    // and let the caller know an error occurred, but dont change the return type
-    throw new Error('User Facing Error: Something bad happened');
-
-    // option 2: log the error here,
-    // return the error object to the caller
-    // return {error: msg}; // return something
-  }
-};
-
 const getHeroAsync = async function(email: string) {
   await delay(DELAY);
   try {
@@ -93,17 +69,15 @@ const getOrdersPromise = function(heroId: number) {
 
 const getHeroTreePromise = function(searchEmail: string) {
   let hero: Hero;
-  return getHeroPromise(searchEmail)
-    .then(h => {
-      hero = h;
-      return h ? getOrdersPromise(h.id) : undefined;
-    })
-    .then(orders => {
+  return getHeroPromise(searchEmail).then(h => {
+    hero = h;
+    return getOrdersPromise(h ? h.id : undefined).then(orders => {
       if (orders) {
         hero.orders = orders;
       }
       return hero;
     });
+  });
 };
 
 const getHeroPromise = function(email: string) {

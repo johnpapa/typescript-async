@@ -14,7 +14,7 @@ import {
   showMessage,
 } from './heroes.component';
 
-const mode: Mode = Mode.async;
+const mode: Mode = Mode.promise;
 
 const searchEmailElement = document.getElementById(
   'search-email'
