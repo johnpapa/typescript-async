@@ -46,13 +46,6 @@ import { createDiv, setText, cloneElementsFromTemplate } from './dom';
 //   // });
 // };
 
-function createHeroesComponent() {
-  const wrapper = createDiv('hero-list-wrapper');
-  // wrapper.appendChild(createHeroHeaderComponent());
-  wrapper.appendChild(createDiv('hero-list'));
-  return wrapper;
-}
-
 function showFetching() {
   const heroPlaceholder = document.querySelector('.hero-list');
   const progressClone = cloneElementsFromTemplate('progress-template');
@@ -93,28 +86,6 @@ function showMessage(text: string, title = 'Info') {
 }
 
 // code below here is not interesting
-
-// function createHeroHeaderComponent() {
-//   const header = createDiv('content-title-group');
-//   const h2 = document.createElement('h2');
-
-//   h2.classList.add('title');
-//   h2.innerText = 'Heroes';
-//   header.appendChild(h2);
-//   const refreshButton = createRefreshButton();
-//   header.appendChild(refreshButton);
-
-//   return header;
-// }
-
-// function createRefreshButton() {
-//   const button = document.createElement('button');
-//   button.classList.add('button', 'refresh-button');
-//   const icon = document.createElement('i');
-//   icon.classList.add('fas', 'fa-sync');
-//   button.appendChild(icon);
-//   return button;
-// }
 
 function createHeroCardFromTemplate(hero: Hero) {
   const heroClone = cloneElementsFromTemplate('hero-template');
@@ -169,9 +140,4 @@ function createHeroOrderItems(order: {
   });
 }
 
-export {
-  createHeroesComponent,
-  replaceHeroListComponent,
-  showFetching,
-  showMessage,
-};
+export { replaceHeroListComponent, showFetching, showMessage };

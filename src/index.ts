@@ -10,7 +10,6 @@ enum Mode {
 
 import {
   replaceHeroListComponent,
-  createHeroesComponent,
   showFetching,
   showMessage,
 } from './heroes.component';
@@ -18,11 +17,6 @@ import {
 const mode: Mode = Mode.async;
 
 async function render() {
-  const mainContent = document.querySelector('.main-content');
-  // Create heroes component with placeholder for the list
-  const heroesComponent = createHeroesComponent();
-  mainContent.appendChild(heroesComponent);
-
   let refreshHandler: () => void;
 
   const button = document.querySelector('.search-button');
@@ -69,10 +63,6 @@ function refreshPagePromise() {
 async function refreshPageAsync() {
   let heroes: Hero[];
   try {
-    // component knows how to get its own data.
-    // const heroesComponent = await getHeroesComponentAsync();
-    // mainContent.appendChild(heroesComponent);
-
     heroes = await getHeroesAsync();
 
     // guest = await getGuest('wes@gmail.com'); first call
@@ -92,15 +82,10 @@ async function refreshPageAsync() {
     for (const hero of heroes) {
       hero.orders = await getOrdersAsync(hero.id);
     }
-
-    // div.innerText = ''
-    // get data
-    // if data, then create compo(data)
   } catch (error) {
     // report to the user, a nice message
     console.log(error);
     showMessage(error);
-    // div.innerText = 'sumtin happened'
   } finally {
     replaceHeroListComponent(heroes);
   }
