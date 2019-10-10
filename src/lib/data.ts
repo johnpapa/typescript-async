@@ -47,7 +47,8 @@ const getHeroAsync = async function(email: string) {
   try {
     const response = await axios.get(`${API}/heroes?email=${email}`);
     const data = parseList<Hero>(response);
-    return data;
+    const hero = data[0];
+    return hero;
   } catch (error) {
     // This is a technical error, targeting the developers.
     // You should always log it here (lowest level). This serves the developer.
@@ -66,7 +67,7 @@ const getHeroAsync = async function(email: string) {
   }
 };
 
-const getOrdersAsync = async function(heroId?: number) {
+const getOrdersAsync = async function(heroId: number) {
   try {
     const url = heroId ? `${API}/orders/${heroId}` : `${API}/orders`;
     const response = await axios.get(url);
@@ -78,30 +79,56 @@ const getOrdersAsync = async function(heroId?: number) {
   }
 };
 
-const getHeroesPromise = function() {
+const getOrdersPromise = function(heroId: number) {
+  const url = heroId ? `${API}/orders/${heroId}` : `${API}/orders`;
   return axios
-    .get<Hero[]>(`${API}/heroes`)
+    .get(url)
+    .then((response: AxiosResponse<any>) => parseList<Order>(response))
+    .catch((error: AxiosError) => {
+      console.error(`Developer Error: Async Data Error: ${error.message}`);
+      // throw new Error('User Facing Error: Something bad happened');
+      return Promise.reject('User Facing Error: Something bad happened');
+    });
+};
+
+const getHeroTreePromise = function(searchEmail: string) {
+  let hero: Hero;
+  return getHeroPromise(searchEmail)
+    .then(h => {
+      hero = h;
+      return h ? getOrdersPromise(h.id) : undefined;
+    })
+    .then(orders => {
+      if (orders) {
+        hero.orders = orders;
+      }
+      return hero;
+    });
+};
+
+const getHeroPromise = function(email: string) {
+  return axios
+    .get<Hero[]>(`${API}/heroes?email=${email}`)
     .then((response: AxiosResponse<any>) => {
       const data = parseList<Hero>(response);
-      return Promise.resolve(data);
+      const hero = data[0];
+      return hero;
+      // return Promise.resolve(hero);
     })
     .catch((error: AxiosError) => {
-      const msg = `Promise Data Error: ${error.message}`;
-      console.error(msg);
-      //TODO: handle both dev and user error
-
-      return Promise.reject(msg);
-
-      // resolve is the response object
+      console.error(`Developer Error: Async Data Error: ${error.message}`);
+      // throw new Error('User Facing Error: Something bad happened');
+      return Promise.reject('User Facing Error: Something bad happened');
     });
 };
 
 const getHeroesCallback = function(
+  email: string,
   callback: Callback<Hero[]>,
   callbackError?: CallbackError
 ) {
   axios
-    .get<Hero[]>(`${API}/heroes`)
+    .get<Hero[]>(`${API}/heroes?email=${email}`)
     .then((response: AxiosResponse<any>) => {
       const data = parseList<Hero>(response);
       callback(data);
@@ -123,16 +150,6 @@ const parseList = <T>(response: any) => {
     list = [];
   }
   return list;
-};
-
-const parseData = <T>(response: any) => {
-  if (response.status !== 200) throw Error(response.message);
-  if (!response.data) return undefined;
-  let data: T = response.data;
-  if (typeof data !== 'object') {
-    data = undefined;
-  }
-  return data;
 };
 
 const getHeroesDelayedAsync = async function() {
@@ -163,9 +180,8 @@ const getHeroesDelayedAsync = async function() {
 
 export {
   getHeroAsync,
+  getHeroTreePromise,
   getHeroesCallback,
-  getHeroesAsync,
   getOrdersAsync,
-  getHeroesPromise,
   getHeroesDelayedAsync,
 };

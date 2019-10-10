@@ -57,18 +57,18 @@ function showFetching() {
   heroPlaceholder.replaceWith(progressClone);
 }
 
-function replaceHeroListComponent(heroes?: Hero[]) {
+function replaceHeroListComponent(hero?: Hero) {
   const heroPlaceholder = document.querySelector('.hero-list');
-  const el = heroes && heroes.length ? createList() : createNoneFound();
+  const el = hero ? createList() : createNoneFound();
 
   heroPlaceholder.replaceWith(el);
 
   function createList() {
     const ul = document.createElement('ul');
     ul.classList.add('list', 'hero-list');
-    heroes.forEach((hero: Hero) =>
-      ul.appendChild(createHeroCardFromTemplate(hero))
-    );
+    // heroes.forEach((hero: Hero) =>
+    ul.appendChild(createHeroCardFromTemplate(hero));
+    // );
     return ul;
   }
 

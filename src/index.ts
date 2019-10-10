@@ -1,12 +1,6 @@
 import './design/index.scss';
 
-import {
-  getHeroesAsync,
-  getHeroesPromise,
-  getOrdersAsync,
-  Hero,
-  getHeroAsync,
-} from './lib';
+import { getOrdersAsync, Hero, getHeroAsync, getHeroTreePromise } from './lib';
 
 enum Mode {
   callback,
@@ -21,6 +15,10 @@ import {
 } from './heroes.component';
 
 const mode: Mode = Mode.async;
+
+const searchEmailElement = document.getElementById(
+  'search-email'
+) as HTMLInputElement;
 
 async function render() {
   let refreshHandler: () => void;
@@ -61,22 +59,19 @@ function refreshPageCallback() {
 }
 
 function refreshPagePromise() {
-  getHeroesPromise()
-    .then(heroes => replaceHeroListComponent(heroes))
+  getHeroTreePromise(searchEmailElement.value)
+    .then(hero => replaceHeroListComponent(hero))
     .catch(error => {
       replaceHeroListComponent();
       console.log(error);
     });
 }
 
-const searchEmailElement = document.getElementById(
-  'search-email'
-) as HTMLInputElement;
-
 async function refreshPageAsync() {
-  let heroes: Hero[];
+  let hero: Hero;
   try {
-    heroes = await getHeroAsync(searchEmailElement.value);
+    hero = await getHeroAsync(searchEmailElement.value);
+    if (!hero) return;
     // heroes = await getHeroesAsync();
 
     // guest = await getGuest('wes@gmail.com'); first call
@@ -96,16 +91,16 @@ async function refreshPageAsync() {
     // for (const hero of heroes) {
     //   hero.orders = await getOrdersAsync(hero.id);
     // }
-    if (heroes && heroes.length) {
-      const hero = heroes[0];
-      hero.orders = await getOrdersAsync(hero.id);
-    }
+    // if (heroes && heroes.length) {
+    // const hero = heroes[0];
+    hero.orders = await getOrdersAsync(hero.id);
+    // }
   } catch (error) {
     // report to the user, a nice message
     console.log(error);
     showMessage(error);
   } finally {
-    replaceHeroListComponent(heroes);
+    replaceHeroListComponent(hero);
   }
 }
 
