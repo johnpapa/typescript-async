@@ -119,19 +119,19 @@ const getOrdersPromise = function(heroId: number) {
 
 const getHeroesCallback = function(
   email: string,
-  callback: Callback<Hero[]>,
+  callback: Callback<Hero>,
   callbackError?: CallbackError
 ) {
   axios
     .get<Hero[]>(`${API}/heroes?email=${email}`)
     .then((response: AxiosResponse<any>) => {
       const data = parseList<Hero>(response);
-      callback(data);
+      const hero = data[0];
+      callback(hero);
     })
     .catch((error: AxiosError) => {
-      const msg = `Callback Data Error: ${error.message}`;
-      console.error(msg);
-      callbackError();
+      console.error(`Developer Error: Async Data Error: ${error.message}`);
+      callbackError('User Facing Error: Something bad happened');
     });
 };
 

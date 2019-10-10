@@ -1,6 +1,12 @@
 import './design/index.scss';
 
-import { getHeroAsync, getOrdersAsync, Hero, getHeroTreePromise } from './lib';
+import {
+  getHeroAsync,
+  getOrdersAsync,
+  Hero,
+  getHeroTreePromise,
+  getHeroesCallback,
+} from './lib';
 
 enum Mode {
   callback,
@@ -14,7 +20,7 @@ import {
   showMessage,
 } from './heroes.component';
 
-const mode: Mode = Mode.promise;
+const mode: Mode = Mode.callback;
 
 const searchEmailElement = document.getElementById(
   'search-email'
@@ -48,12 +54,15 @@ async function render() {
 }
 
 function refreshPageCallback() {
-  // getHeroesComponentCallback(
-  //   heroesComponent => {
-  //     mainContent.appendChild(heroesComponent);
-  //   },
-  //   error => console.log(error)
-  // );
+  getHeroesCallback(
+    searchEmailElement.value,
+    hero => replaceHeroListComponent(hero),
+    error => {
+      console.log(error);
+      showMessage(error);
+      replaceHeroListComponent();
+    }
+  );
 }
 
 function refreshPagePromise() {
