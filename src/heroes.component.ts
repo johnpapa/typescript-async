@@ -47,8 +47,8 @@ import { createDiv, setText, cloneElementsFromTemplate } from './dom';
 // };
 
 function showFetching() {
-  const heroPlaceholder = document.querySelector('.hero-list');
   const progressClone = cloneElementsFromTemplate('progress-template');
+  const heroPlaceholder = document.querySelector('.hero-list');
   heroPlaceholder.replaceWith(progressClone);
 }
 
