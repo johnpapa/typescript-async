@@ -48,7 +48,7 @@ import { createDiv, setText, cloneElementsFromTemplate } from './dom';
 
 function createHeroesComponent() {
   const wrapper = createDiv('hero-list-wrapper');
-  wrapper.appendChild(createHeroHeaderComponent());
+  // wrapper.appendChild(createHeroHeaderComponent());
   wrapper.appendChild(createDiv('hero-list'));
   return wrapper;
 }
@@ -85,35 +85,36 @@ function replaceHeroListComponent(heroes?: Hero[]) {
   }
 }
 
-function showMessage(text: string) {
+function showMessage(text: string, title = 'Info') {
   const msgElement = document.getElementById('message-box');
   msgElement.style.visibility = !!text ? 'visible' : 'hidden';
-  msgElement.querySelector('p').innerText = text;
+  msgElement.querySelector('.message-header').innerHTML = title;
+  msgElement.querySelector('.message-body').innerHTML = text;
 }
 
 // code below here is not interesting
 
-function createHeroHeaderComponent() {
-  const header = createDiv('content-title-group');
-  const h2 = document.createElement('h2');
+// function createHeroHeaderComponent() {
+//   const header = createDiv('content-title-group');
+//   const h2 = document.createElement('h2');
 
-  h2.classList.add('title');
-  h2.innerText = 'Heroes';
-  header.appendChild(h2);
-  const refreshButton = createRefreshButton();
-  header.appendChild(refreshButton);
+//   h2.classList.add('title');
+//   h2.innerText = 'Heroes';
+//   header.appendChild(h2);
+//   const refreshButton = createRefreshButton();
+//   header.appendChild(refreshButton);
 
-  return header;
-}
+//   return header;
+// }
 
-function createRefreshButton() {
-  const button = document.createElement('button');
-  button.classList.add('button', 'refresh-button');
-  const icon = document.createElement('i');
-  icon.classList.add('fas', 'fa-sync');
-  button.appendChild(icon);
-  return button;
-}
+// function createRefreshButton() {
+//   const button = document.createElement('button');
+//   button.classList.add('button', 'refresh-button');
+//   const icon = document.createElement('i');
+//   icon.classList.add('fas', 'fa-sync');
+//   button.appendChild(icon);
+//   return button;
+// }
 
 function createHeroCardFromTemplate(hero: Hero) {
   const heroClone = cloneElementsFromTemplate('hero-template');

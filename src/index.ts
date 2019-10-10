@@ -25,7 +25,7 @@ async function render() {
 
   let refreshHandler: () => void;
 
-  const button = document.querySelector('.refresh-button');
+  const button = document.querySelector('.search-button');
   const renderHeroes = async () => {
     showFetching();
     refreshHandler();
