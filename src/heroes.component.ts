@@ -63,7 +63,6 @@ function replaceHeroListComponent(heroes?: Hero[]) {
     ul.classList.add('list', 'hero-list');
     heroes.forEach((hero: Hero) => {
       const li = document.createElement('li');
-      // const card = createHeroCard(hero);
       const card = createHeroCardFromTemplate(hero);
       li.appendChild(card);
       ul.appendChild(li);
