@@ -131,3 +131,10 @@ p.card-header-title {
   border-bottom: 1px solid #ccc;
   margin-top: 1em;
 }
+
+#message-box {
+  margin: 2em;
+  > * {
+    padding: 12px;
+  }
+}

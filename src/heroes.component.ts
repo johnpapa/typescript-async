@@ -85,6 +85,12 @@ function replaceHeroListComponent(heroes?: Hero[]) {
   }
 }
 
+function showMessage(text: string) {
+  const msgElement = document.getElementById('message-box');
+  msgElement.style.visibility = !!text ? 'visible' : 'hidden';
+  msgElement.querySelector('p').innerText = text;
+}
+
 // code below here is not interesting
 
 function createHeroHeaderComponent() {
@@ -162,4 +168,9 @@ function createHeroOrderItems(order: {
   });
 }
 
-export { createHeroesComponent, replaceHeroListComponent, showFetching };
+export {
+  createHeroesComponent,
+  replaceHeroListComponent,
+  showFetching,
+  showMessage,
+};

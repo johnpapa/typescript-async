@@ -12,6 +12,7 @@ import {
   replaceHeroListComponent,
   createHeroesComponent,
   showFetching,
+  showMessage,
 } from './heroes.component';
 
 const mode: Mode = Mode.async;
@@ -98,6 +99,7 @@ async function refreshPageAsync() {
   } catch (error) {
     // report to the user, a nice message
     console.log(error);
+    showMessage(error);
     // div.innerText = 'sumtin happened'
   } finally {
     replaceHeroListComponent(heroes);
