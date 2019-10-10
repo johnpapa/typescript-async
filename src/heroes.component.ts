@@ -1,5 +1,10 @@
-import { Hero, Order } from './data';
-import { createDiv, setText, cloneElementsFromTemplate } from './dom';
+import {
+  createDiv,
+  setText,
+  cloneElementsFromTemplate,
+  Order,
+  Hero,
+} from './lib';
 
 // function getHeroesComponentCallback(
 //   // happy path to work

@@ -1,7 +1,7 @@
 {
   "/api/*": "/$1",
   "/hero": "/heroes",
-  "/heroes/:email": "/orders?email=:email",
+  "/heroes/:email": "/heroes?email=:email",
   "/order": "/orders",
   "/orders/:heroId": "/orders?heroId=:heroId",
   "/reset": "/reset"

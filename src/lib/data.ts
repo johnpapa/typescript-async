@@ -1,36 +1,7 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
 
-const API = '/api';
-const DELAY = 1000;
-
-interface Hero {
-  id: number;
-  name: string;
-  description: string;
-  email: string;
-  orders?: Order[];
-}
-
-interface Order {
-  heroId: number;
-  num: number;
-  items: Item[];
-}
-
-interface Item {
-  orderNum: number;
-  name: string;
-  qty: number;
-  price: number;
-}
-
-interface Callback<T> {
-  (data: T): void;
-}
-
-interface CallbackError {
-  (msg?: string): void;
-}
+import { DELAY, API } from './config';
+import { Order, Callback, CallbackError, Hero } from './interfaces';
 
 // we could pass this back every time.
 // the argument here is you can avoid try/catch everywhere but you instead have to package the error.
@@ -51,6 +22,30 @@ const getHeroesAsync = async function() {
   await delay(DELAY);
   try {
     const response = await axios.get(`${API}/heroes`);
+    const data = parseList<Hero>(response);
+    return data;
+  } catch (error) {
+    // This is a technical error, targeting the developers.
+    // You should always log it here (lowest level). This serves the developer.
+    // If I want to propogate this back to the callers,
+    // I should determine how to propogate it out and if I want to transform it.
+    console.error(`Developer Error: Async Data Error: ${error.message}`);
+
+    // How do I feel about errors in this path?
+    // option 1: log the error here,
+    // and let the caller know an error occurred, but dont change the return type
+    throw new Error('User Facing Error: Something bad happened');
+
+    // option 2: log the error here,
+    // return the error object to the caller
+    // return {error: msg}; // return something
+  }
+};
+
+const getHeroAsync = async function(email: string) {
+  await delay(DELAY);
+  try {
+    const response = await axios.get(`${API}/heroes?email=${email}`);
     const data = parseList<Hero>(response);
     return data;
   } catch (error) {
@@ -130,6 +125,16 @@ const parseList = <T>(response: any) => {
   return list;
 };
 
+const parseData = <T>(response: any) => {
+  if (response.status !== 200) throw Error(response.message);
+  if (!response.data) return undefined;
+  let data: T = response.data;
+  if (typeof data !== 'object') {
+    data = undefined;
+  }
+  return data;
+};
+
 const getHeroesDelayedAsync = async function() {
   await delay(DELAY);
   return await [
@@ -157,14 +162,10 @@ const getHeroesDelayedAsync = async function() {
 };
 
 export {
+  getHeroAsync,
   getHeroesCallback,
   getHeroesAsync,
   getOrdersAsync,
   getHeroesPromise,
   getHeroesDelayedAsync,
-  Hero,
-  Order,
-  Item,
-  Callback,
-  CallbackError,
 };

@@ -1,6 +1,12 @@
 import './design/index.scss';
 
-import { getHeroesAsync, getHeroesPromise, Hero, getOrdersAsync } from './data';
+import {
+  getHeroesAsync,
+  getHeroesPromise,
+  getOrdersAsync,
+  Hero,
+  getHeroAsync,
+} from './lib';
 
 enum Mode {
   callback,
@@ -24,6 +30,9 @@ async function render() {
     showFetching();
     refreshHandler();
   };
+  searchEmailElement.addEventListener('keydown', (e: KeyboardEvent) => {
+    if (e.code === 'Enter') renderHeroes();
+  });
   button.addEventListener('click', renderHeroes);
 
   switch (mode) {
@@ -60,10 +69,15 @@ function refreshPagePromise() {
     });
 }
 
+const searchEmailElement = document.getElementById(
+  'search-email'
+) as HTMLInputElement;
+
 async function refreshPageAsync() {
   let heroes: Hero[];
   try {
-    heroes = await getHeroesAsync();
+    heroes = await getHeroAsync(searchEmailElement.value);
+    // heroes = await getHeroesAsync();
 
     // guest = await getGuest('wes@gmail.com'); first call
     // hotel = await getHotel(guest.id); // 1 2nd call
@@ -79,7 +93,11 @@ async function refreshPageAsync() {
     // shippingStatuses = await orderShippingStatus(orderIds); // level 3 - -> [1: {orderId: 1, status: good}, 2: {orderId: 2, status: bad}]
     // Merge statuses into the data (customer.orders.forEach((o) => { o.status = statuses[o.id].status } ))
 
-    for (const hero of heroes) {
+    // for (const hero of heroes) {
+    //   hero.orders = await getOrdersAsync(hero.id);
+    // }
+    if (heroes && heroes.length) {
+      const hero = heroes[0];
       hero.orders = await getOrdersAsync(hero.id);
     }
   } catch (error) {
