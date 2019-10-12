@@ -21,13 +21,13 @@ enum Mode {
 import { replaceHeroListComponent } from './heroes.component';
 
 const asyncModeElement = document.getElementById(
-  'async-mode',
+  'async-mode'
 ) as HTMLSelectElement;
 const errorModeElement = document.getElementById(
-  'error-mode',
+  'error-mode'
 ) as HTMLSelectElement;
 const searchEmailElement = document.getElementById(
-  'search-email',
+  'search-email'
 ) as HTMLInputElement;
 const button = document.querySelector('.search-button');
 searchEmailElement.addEventListener('keydown', (e: KeyboardEvent) => {
@@ -82,7 +82,7 @@ function refreshPageCallback() {
             console.log(error);
             showMessage(error);
             replaceHeroListComponent(hero);
-          },
+          }
         );
       } else {
         replaceHeroListComponent(hero);
@@ -92,14 +92,14 @@ function refreshPageCallback() {
       console.log(error);
       showMessage(error);
       replaceHeroListComponent();
-    },
+    }
   );
 }
 
 function refreshPagePromise() {
   getHeroTreePromise(searchEmailElement.value)
-    .then(hero => replaceHeroListComponent(hero))
-    .catch(error => {
+    .then((hero: Hero) => replaceHeroListComponent(hero))
+    .catch((error: any) => {
       console.log(error);
       showMessage(error);
       replaceHeroListComponent();

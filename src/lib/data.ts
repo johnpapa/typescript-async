@@ -1,6 +1,6 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
 
-import { DELAY, API } from './config';
+import { API } from './config';
 import { Order, Callback, CallbackError, Hero } from './interfaces';
 
 let apiUrl = API;
@@ -21,7 +21,6 @@ let apiUrl = API;
 // };
 
 const getHeroAsync = async function(email: string) {
-  await delay(DELAY);
   try {
     const response = await axios.get(`${apiUrl}/heroes?email=${email}`);
     const data = parseList<Hero>(response);
@@ -91,7 +90,7 @@ const getHeroTreePromise = function(searchEmail: string) {
 //   });
 // };
 
-const getHeroPromise = function(email: string) {
+const getHeroPromise = (email: string) => {
   return axios
     .get<Hero[]>(`${apiUrl}/heroes?email=${email}`)
     .then((response: AxiosResponse<any>) => {
@@ -155,8 +154,6 @@ const getOrdersCallback = function(
     });
 };
 
-const delay = (ms: any) => new Promise(res => setTimeout(res, ms));
-
 const parseList = <T>(response: any) => {
   if (response.status !== 200) throw Error(response.message);
   if (!response.data) return [];
@@ -167,8 +164,9 @@ const parseList = <T>(response: any) => {
   return list;
 };
 
+const delay = (ms: any) => new Promise(res => setTimeout(res, ms));
 const getHeroesDelayedAsync = async function() {
-  await delay(DELAY);
+  await delay(1250);
   return await [
     {
       id: 10,
