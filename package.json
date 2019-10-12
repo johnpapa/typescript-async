@@ -5,7 +5,7 @@
   "scripts": {
     "dev:start": "webpack-dev-server",
     "build": "webpack --mode production",
-    "backend": "json-server --watch db.json --routes routes.json --port 8081 --middlewares ./node_modules/json-server-reset",
+    "backend": "json-server --watch db.json --routes routes.json --port 8081 --middlewares ./node_modules/json-server-reset --delay 1250",
     "dev:fake-db": "concurrently \"npm run backend\" \"npm run dev:start\""
   },
   "dependencies": {
