@@ -8,6 +8,8 @@ import {
   getHeroesCallback,
   getOrdersCallback,
   dev,
+  showFetching,
+  showMessage,
 } from './lib';
 
 enum Mode {
@@ -16,20 +18,16 @@ enum Mode {
   async = 'async',
 }
 
-import {
-  replaceHeroListComponent,
-  showFetching,
-  showMessage,
-} from './heroes.component';
+import { replaceHeroListComponent } from './heroes.component';
 
 const asyncModeElement = document.getElementById(
-  'async-mode'
+  'async-mode',
 ) as HTMLSelectElement;
 const errorModeElement = document.getElementById(
-  'error-mode'
+  'error-mode',
 ) as HTMLSelectElement;
 const searchEmailElement = document.getElementById(
-  'search-email'
+  'search-email',
 ) as HTMLInputElement;
 const button = document.querySelector('.search-button');
 searchEmailElement.addEventListener('keydown', (e: KeyboardEvent) => {
@@ -50,7 +48,8 @@ errorModeElement.addEventListener('input', () => {
 
 async function render() {
   let renderHeroes: () => void;
-  showFetching();
+  showMessage();
+  showFetching('.hero-list');
   const mode = asyncModeElement.value;
   switch (mode) {
     case Mode.callback:
@@ -83,7 +82,7 @@ function refreshPageCallback() {
             console.log(error);
             showMessage(error);
             replaceHeroListComponent(hero);
-          }
+          },
         );
       } else {
         replaceHeroListComponent(hero);
@@ -93,7 +92,7 @@ function refreshPageCallback() {
       console.log(error);
       showMessage(error);
       replaceHeroListComponent();
-    }
+    },
   );
 }
 
