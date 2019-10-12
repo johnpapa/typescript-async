@@ -51,12 +51,6 @@ import {
 //   // });
 // };
 
-function showFetching() {
-  const progressClone = cloneElementsFromTemplate('progress-template');
-  const heroPlaceholder = document.querySelector('.hero-list');
-  heroPlaceholder.replaceWith(progressClone);
-}
-
 function replaceHeroListComponent(hero?: Hero) {
   const heroPlaceholder = document.querySelector('.hero-list');
   const el = hero ? createList() : createNoneFound();
@@ -77,13 +71,6 @@ function replaceHeroListComponent(hero?: Hero) {
     div.innerText = 'No heroes found';
     return div;
   }
-}
-
-function showMessage(text: string, title = 'Info') {
-  const el = document.getElementById('message-box');
-  el.style.visibility = !!text ? 'visible' : 'hidden';
-  setText(el, '.message-header', title);
-  setText(el, '.message-body', text);
 }
 
 // code below here is not interesting
@@ -135,4 +122,4 @@ function createHeroOrderItems(order: Order) {
   });
 }
 
-export { replaceHeroListComponent, showFetching, showMessage };
+export { replaceHeroListComponent };

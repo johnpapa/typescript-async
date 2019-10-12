@@ -17,3 +17,16 @@ export function cloneElementsFromTemplate(templateName: string) {
   const clone = document.importNode(template.content, true);
   return clone;
 }
+
+export function showMessage(text = '', title = 'Info') {
+  const el = document.getElementById('message-box');
+  el.style.visibility = !!text ? 'visible' : 'hidden';
+  setText(el, '.message-header', title);
+  setText(el, '.message-body', text);
+}
+
+export function showFetching(selector: string) {
+  const progressClone = cloneElementsFromTemplate('progress-template');
+  const heroPlaceholder = document.querySelector(selector);
+  heroPlaceholder.replaceWith(progressClone);
+}
