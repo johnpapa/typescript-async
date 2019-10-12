@@ -5,6 +5,7 @@ export interface Hero {
   email: string;
   orders?: Order[];
 }
+
 export interface Order {
   heroId: number;
   num: number;
@@ -17,9 +18,11 @@ export interface Item {
   qty: number;
   price: number;
 }
+
 export interface Callback<T> {
   (data: T): void;
 }
+
 export interface CallbackError {
   (msg?: string): void;
 }
