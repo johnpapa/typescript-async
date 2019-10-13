@@ -141,7 +141,6 @@ function replaceHeroList(heroes?: Hero[]) {
 function showFetching(show = true) {
   const progressEl = document.getElementById('progress');
   const heroListEl = document.querySelector('.hero-list') as HTMLElement;
-  // el.style.visibility = show ? 'visible' : 'hidden';
   heroListEl.style.visibility = show ? 'hidden' : 'visible';
   progressEl.style.display = show ? 'block' : 'none';
   return;
