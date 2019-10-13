@@ -49,9 +49,13 @@
     <div class="main-section columns">
       <main class="column main-content">
 
-        <div class=" content-title-group">
-          <h2 class="title">Heroes</h2>
+        <div class="columns content-title-group">
+          <div class="column">
+            <h2 class="title">Heroes</h2>
+            <button class="button refresh-button is-narrow is-medium"><i class="fas fa-sync"></i></button>
+          </div>
         </div>
+        <progress id="progress" class="progress is-medium is-info" max="100" style="display:none"></progress>
         <div class="hero-list">
           <!-- Hero Component Goes Here -->
         </div>

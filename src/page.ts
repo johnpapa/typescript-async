@@ -7,7 +7,8 @@ interface Hero {
   description: string;
 }
 
-render();
+const button = document.querySelector('.refresh-button');
+button.addEventListener('click', render);
 
 async function render() {
   showFetching();
@@ -16,7 +17,7 @@ async function render() {
     heroes = await getHeroes();
   } catch (error) {
     console.log(error);
-    showMessage(error);
+    showMessage(error.message);
   } finally {
     replaceHeroList(heroes);
   }
@@ -24,14 +25,14 @@ async function render() {
 
 async function getHeroes() {
   try {
-    const delay = (ms: any) => new Promise(res => setTimeout(res, ms));
-    await delay(2000);
     const response = await axios.get(`api/heroes`);
     const heroes = parseList<Hero>(response);
     return heroes;
   } catch (error) {
     console.error(`Developer Error: Async Data Error: ${error.message}`);
     throw new Error('User Facing Error: Something bad happened');
+  } finally {
+    showFetching(false);
   }
 
   function parseList<T>(response: any) {
@@ -47,23 +48,87 @@ async function getHeroes() {
 
 function replaceHeroList(heroes?: Hero[]) {
   const heroPlaceholder = document.querySelector('.hero-list');
-  const el = heroes && heroes.length ? createList() : createNoneFound();
-  heroPlaceholder.replaceWith(el);
+  if (heroes && heroes.length) {
+    createList();
+  } else {
+    heroPlaceholder.replaceWith(createNoneFound());
+  }
 
   function createList() {
-    const ul = document.createElement('ul');
-    ul.classList.add('list', 'hero-list');
-    heroes.forEach((hero: Hero) => {
-      const template = document.getElementById(
-        'hero-template'
-      ) as HTMLTemplateElement;
-      const heroCard = document.importNode(template.content, true);
-      heroCard.querySelector('.description').textContent = hero.description;
-      heroCard.querySelector('.name').textContent = hero.name;
-      heroCard.querySelector('.card').classList.add(hero.name);
-      ul.appendChild(heroCard);
-    });
-    return ul;
+    const heroPlaceholder = document.querySelector('.hero-list');
+    // eslint-disable-next-line prefer-const
+    let option = 2;
+    switch (option) {
+      case 1:
+        createListWithStrings();
+        break;
+      case 2:
+        createListWithDOMAPI();
+        break;
+      case 3:
+        createListWithTemplate();
+        break;
+    }
+
+    function createListWithStrings() {
+      const rows = heroes.map(hero => {
+        return `<li>
+            <div class="card">
+              <div class="card-content">
+                <div class="content">
+                  <div class="name">${hero.name}</div>
+                  <div class="description">${hero.description}</div>
+                </div>
+              </div>
+            </div>
+          </li>`;
+      });
+      const html = `<ul>${rows.join()}</ul>`;
+      heroPlaceholder.innerHTML = html;
+    }
+
+    function createListWithDOMAPI() {
+      const ul = document.createElement('ul');
+      ul.classList.add('list', 'hero-list');
+      heroes.forEach(hero => {
+        const li = document.createElement('li');
+        const card = document.createElement('div');
+        card.classList.add('card');
+        li.appendChild(card);
+        const cardContent = document.createElement('div');
+        cardContent.classList.add('card-content');
+        card.appendChild(cardContent);
+        const content = document.createElement('div');
+        content.classList.add('content');
+        cardContent.appendChild(content);
+        const name = document.createElement('div');
+        name.classList.add('name');
+        name.textContent = hero.name;
+        cardContent.appendChild(name);
+        const description = document.createElement('div');
+        description.classList.add('description');
+        description.textContent = hero.description;
+        cardContent.appendChild(description);
+        ul.appendChild(li);
+      });
+      heroPlaceholder.replaceWith(ul);
+    }
+
+    function createListWithTemplate() {
+      const ul = document.createElement('ul');
+      ul.classList.add('list', 'hero-list');
+      heroes.forEach((hero: Hero) => {
+        const template = document.getElementById(
+          'hero-template'
+        ) as HTMLTemplateElement;
+        const heroCard = document.importNode(template.content, true);
+        heroCard.querySelector('.description').textContent = hero.description;
+        heroCard.querySelector('.name').textContent = hero.name;
+        // heroCard.querySelector('.card').classList.add(hero.name);
+        ul.appendChild(heroCard);
+      });
+      heroPlaceholder.replaceWith(ul);
+    }
   }
 
   function createNoneFound() {
@@ -73,15 +138,20 @@ function replaceHeroList(heroes?: Hero[]) {
   }
 }
 
-function showFetching() {
+function showFetching(show = true) {
+  const progressEl = document.getElementById('progress');
+  const heroListEl = document.querySelector('.hero-list') as HTMLElement;
+  // el.style.visibility = show ? 'visible' : 'hidden';
+  heroListEl.style.visibility = show ? 'hidden' : 'visible';
+  progressEl.style.display = show ? 'block' : 'none';
+  return;
   const heroPlaceholder = document.querySelector('.hero-list');
   // eslint-disable-next-line prefer-const
-  let option = '2';
+  let option = '3';
   switch (option) {
     case '1':
       heroPlaceholder.innerHTML = `<progress
-            class="hero-list progress is-medium is-info"
-            max="100"
+            class="hero-list progress is-medium is-info" max="100"
           ></progress>
       `;
       break;
