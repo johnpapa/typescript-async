@@ -19,6 +19,7 @@ async function render() {
     console.log(error);
     showMessage(error.message);
   } finally {
+    showFetching(false);
     replaceHeroList(heroes);
   }
 }
@@ -31,8 +32,6 @@ async function getHeroes() {
   } catch (error) {
     console.error(`Developer Error: Async Data Error: ${error.message}`);
     throw new Error('User Facing Error: Something bad happened');
-  } finally {
-    showFetching(false);
   }
 
   function parseList<T>(response: any) {
@@ -124,7 +123,6 @@ function replaceHeroList(heroes?: Hero[]) {
         const heroCard = document.importNode(template.content, true);
         heroCard.querySelector('.description').textContent = hero.description;
         heroCard.querySelector('.name').textContent = hero.name;
-        // heroCard.querySelector('.card').classList.add(hero.name);
         ul.appendChild(heroCard);
       });
       heroPlaceholder.replaceWith(ul);
