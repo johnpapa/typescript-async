@@ -3,7 +3,7 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const index = 'page';
+const index = 'index';
 
 module.exports = {
   entry: `./src/${index}.ts`,
