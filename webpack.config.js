@@ -3,8 +3,10 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+const index = 'page';
+
 module.exports = {
-  entry: './src/index.ts',
+  entry: `./src/${index}.ts`,
   devtool: 'inline-source-map',
   module: {
     rules: [
@@ -36,7 +38,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       {
-        from: './index.html',
+        from: `./${index}.html`,
       },
     ]),
   ],

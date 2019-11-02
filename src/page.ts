@@ -59,7 +59,7 @@ function replaceHeroList(heroes?: Hero[]) {
     let option = 2;
     switch (option) {
       case 1:
-        createListWithStrings();
+        createListWithInnerHTML();
         break;
       case 2:
         createListWithDOMAPI();
@@ -69,7 +69,7 @@ function replaceHeroList(heroes?: Hero[]) {
         break;
     }
 
-    function createListWithStrings() {
+    function createListWithInnerHTML() {
       const rows = heroes.map(hero => {
         return `<li>
             <div class="card">
