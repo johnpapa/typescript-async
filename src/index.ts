@@ -1,13 +1,13 @@
 import './design/index.scss';
 
 import {
+  dev,
   getHeroAsync,
   getOrdersAsync,
-  Hero,
   getHeroTreePromise,
   getHeroesCallback,
   getOrdersCallback,
-  dev,
+  Hero,
   showFetching,
   showMessage,
 } from './lib';
