@@ -6,51 +6,6 @@ import {
   Hero,
 } from './lib';
 
-// function getHeroesComponentCallback(
-//   // happy path to work
-//   // on error rethrow
-//   // always create component tho
-
-//   // const getHeroesComponentCallback = function(
-//   // ,
-//   callback: Callback<HTMLElement>,
-//   callbackError?: CallbackError
-// ) {
-//   let heroes: Hero[] = [];
-//   getHeroesCallback(
-//     data => {
-//       heroes = data;
-//       const component = createHeroesComponent(); //heroes);
-//       callback(component);
-//     },
-//     msg => {
-//       const component = createHeroesComponent(); //heroes);
-//       callback(component);
-//       callbackError(msg);
-//     }
-//   );
-// }
-
-// const getHeroesComponentPromise = function() {
-//   let heroes: Hero[] = [];
-//   return getHeroesPromise()
-//     .then(data => {
-//       heroes = data;
-//       const ul = createHeroesComponent(); //heroes);
-//       return ul;
-//     })
-//     .catch(() => {
-//       const ul = createHeroesComponent(); //heroes);
-//       // return Promise.reject();
-//       return Promise.resolve(ul);
-//     });
-//   // .finally(() => {
-//   //   // promise finally does not return
-//   //   // const ul = createHeroesComponent(heroes);
-//   //   return undefined;
-//   // });
-// };
-
 function replaceHeroListComponent(hero?: Hero) {
   const heroPlaceholder = document.querySelector('.hero-list');
   const el = hero ? createList() : createNoneFound();
@@ -73,7 +28,10 @@ function replaceHeroListComponent(hero?: Hero) {
   }
 }
 
-// code below here is not interesting
+/**
+ * Code below here are private functions to this module
+ * that support the replaceHeroListComponent function.
+ */
 
 function createHeroCardFromTemplate(hero: Hero) {
   const heroClone = cloneElementsFromTemplate('hero-template');
