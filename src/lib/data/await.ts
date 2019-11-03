@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { apiUrl } from './config';
+import { apiUrl, parseList } from './config';
 import { Order, Hero } from '../interfaces';
 
 // we could pass this back every time.
@@ -54,41 +54,31 @@ const getOrdersAsync = async function(heroId: number) {
   }
 };
 
-const parseList = <T>(response: any) => {
-  if (response.status !== 200) throw Error(response.message);
-  if (!response.data) return [];
-  let list: T[] = response.data;
-  if (typeof list !== 'object') {
-    list = [];
-  }
-  return list;
-};
+// const delay = (ms: any) => new Promise(res => setTimeout(res, ms));
+// const getHeroesDelayedAsync = async function() {
+//   await delay(1250);
+//   return await [
+//     {
+//       id: 10,
+//       name: 'Madelyn',
+//       description: 'the cat whisperer',
+//     },
+//     {
+//       id: 20,
+//       name: 'Haley',
+//       description: 'pen wielder',
+//     },
+//     {
+//       id: 30,
+//       name: 'Ella',
+//       description: 'fashionista',
+//     },
+//     {
+//       id: 40,
+//       name: 'Landon',
+//       description: 'arc trooper',
+//     },
+//   ];
+// };
 
-const delay = (ms: any) => new Promise(res => setTimeout(res, ms));
-const getHeroesDelayedAsync = async function() {
-  await delay(1250);
-  return await [
-    {
-      id: 10,
-      name: 'Madelyn',
-      description: 'the cat whisperer',
-    },
-    {
-      id: 20,
-      name: 'Haley',
-      description: 'pen wielder',
-    },
-    {
-      id: 30,
-      name: 'Ella',
-      description: 'fashionista',
-    },
-    {
-      id: 40,
-      name: 'Landon',
-      description: 'arc trooper',
-    },
-  ];
-};
-
-export { getHeroesDelayedAsync, getHeroAsync, getOrdersAsync };
+export { getHeroAsync, getOrdersAsync };

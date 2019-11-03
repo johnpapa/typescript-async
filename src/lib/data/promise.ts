@@ -1,7 +1,7 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
 
 import { Order, Hero } from '../interfaces';
-import { apiUrl } from './config';
+import { apiUrl, parseList } from './config';
 
 const getHeroTreePromise = function(searchEmail: string) {
   let hero: Hero;
@@ -63,16 +63,6 @@ const getOrdersPromise = function(heroId: number) {
       // throw new Error('User Facing Error: Something bad happened');
       return Promise.reject('User Facing Error: Something bad happened');
     });
-};
-
-const parseList = <T>(response: any) => {
-  if (response.status !== 200) throw Error(response.message);
-  if (!response.data) return [];
-  let list: T[] = response.data;
-  if (typeof list !== 'object') {
-    list = [];
-  }
-  return list;
 };
 
 export { getHeroTreePromise };

@@ -13,4 +13,14 @@ const dev = {
   },
 };
 
-export { apiUrl, DELAY, dev };
+const parseList = <T>(response: any) => {
+  if (response.status !== 200) throw Error(response.message);
+  if (!response.data) return [];
+  let list: T[] = response.data;
+  if (typeof list !== 'object') {
+    list = [];
+  }
+  return list;
+};
+
+export { apiUrl, DELAY, dev, parseList };

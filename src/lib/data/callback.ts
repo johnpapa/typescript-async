@@ -1,7 +1,7 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
 
 import { Order, Callback, CallbackError, Hero } from '../interfaces';
-import { apiUrl } from './config';
+import { apiUrl, parseList } from './config';
 
 const getHeroesCallback = function(
   email: string,
@@ -37,16 +37,6 @@ const getOrdersCallback = function(
       console.error(`Developer Error: Async Data Error: ${error.message}`);
       callbackError('User Facing Error: Something bad happened');
     });
-};
-
-const parseList = <T>(response: any) => {
-  if (response.status !== 200) throw Error(response.message);
-  if (!response.data) return [];
-  let list: T[] = response.data;
-  if (typeof list !== 'object') {
-    list = [];
-  }
-  return list;
 };
 
 export { getHeroesCallback, getOrdersCallback };
