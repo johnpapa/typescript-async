@@ -83,6 +83,41 @@ const getShippingStatusAsync = async function(orderNumber: number) {
   }
 };
 
+const getHeroTreeAsync = async function(email: string) {
+  // Level 1 - Get the hero record
+  const hero = await getHeroAsync(email);
+  if (!hero) return;
+
+  // Level 2 - Get the orders and account reps
+  const [orders, accountRep] = await Promise.all([
+    getOrdersAsync(hero.id),
+    getAccountRepAsync(hero.id),
+  ]);
+  hero.orders = orders;
+  hero.accountRep = accountRep;
+
+  if (false) {
+    // Level 3 - Get the shipping statuses
+    // Now let's create an array of async functions to get the order statuses.
+    // We'll call them and wait for all to return.
+    const getStatusesAsync = orders.map(async (o: Order) =>
+      getShippingStatusAsync(o.num),
+    );
+    const shippingStatuses = await Promise.all(getStatusesAsync);
+    const sso = shippingStatuses.reduce((acc, ss) => {
+      return {
+        ...acc,
+        [ss.orderNum]: ss,
+      };
+    }, {} as ShippingStatus);
+    hero.orders.forEach(o => {
+      sso[o.num].status;
+      o.shippingStatus = sso[o.num];
+    });
+  }
+  return hero;
+};
+
 // const delay = (ms: any) => new Promise(res => setTimeout(res, ms));
 // const getHeroesDelayedAsync = async function() {
 //   await delay(1250);
@@ -110,9 +145,4 @@ const getShippingStatusAsync = async function(orderNumber: number) {
 //   ];
 // };
 
-export {
-  getHeroAsync,
-  getOrdersAsync,
-  getAccountRepAsync,
-  getShippingStatusAsync,
-};
+export { getHeroTreeAsync };
