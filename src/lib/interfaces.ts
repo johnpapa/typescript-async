@@ -4,12 +4,25 @@ export interface Hero {
   description: string;
   email: string;
   orders?: Order[];
+  accountRep?: AccountRepresentative;
 }
 
 export interface Order {
   heroId: number;
   num: number;
   items: Item[];
+  shippingStatus: ShippingStatus;
+}
+
+export interface AccountRepresentative {
+  repId: number;
+  name: string;
+}
+
+export interface ShippingStatus {
+  [index: number]: ShippingStatus;
+  orderNum: number;
+  status: string;
 }
 
 export interface Item {
