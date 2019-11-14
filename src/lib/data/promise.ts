@@ -55,10 +55,14 @@ const getHeroPromise = (email: string) => {
       const data = parseList<Hero>(response);
       const hero = data[0];
       return hero;
+      // no need to resolve as it is the default behavior
       // return Promise.resolve(hero);
     })
     .catch((error: AxiosError) => {
       console.error(`Developer Error: Async Data Error: ${error.message}`);
+      // Option - you can throw an error,
+      // but it won't be caught if you are inside
+      // of another async callback. So it is safer to reject.
       // throw new Error('User Facing Error: Something bad happened');
       return Promise.reject('User Facing Error: Something bad happened');
     });
@@ -71,7 +75,6 @@ const getOrdersPromise = function(heroId: number) {
     .then((response: AxiosResponse<any>) => parseList<Order>(response))
     .catch((error: AxiosError) => {
       console.error(`Developer Error: Async Data Error: ${error.message}`);
-      // throw new Error('User Facing Error: Something bad happened');
       return Promise.reject('User Facing Error: Something bad happened');
     });
 };
@@ -86,7 +89,6 @@ const getAccountRepPromise = function(heroId: number) {
     })
     .catch((error: AxiosError) => {
       console.error(`Developer Error: Async Data Error: ${error.message}`);
-      // throw new Error('User Facing Error: Something bad happened');
       return Promise.reject('User Facing Error: Something bad happened');
     });
 };
