@@ -6,6 +6,7 @@ export function setText(
   el.querySelector(selector).textContent = text.toString();
   return el;
 }
+
 export const createDiv = (...classList: string[]) => {
   const el = document.createElement('div');
   el.classList.add(...classList);
