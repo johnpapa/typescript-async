@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   env: {
-    node: true,
+    node: false,
   },
   parser: '@typescript-eslint/parser', // Specifies the ESLint parser
   extends: [
@@ -17,7 +17,6 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
     quotes: [2, 'single', { avoidEscape: true, allowTemplateLiterals: true }],
     'prettier/prettier': [
       'error',
