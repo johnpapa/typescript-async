@@ -2,8 +2,7 @@ import './design/index.scss';
 
 import {
   dev,
-  getHeroesCallback,
-  getOrdersCallback,
+  getHeroTreeCallback,
   getHeroTreePromise,
   getHeroTreeAsync,
   Hero,
@@ -67,25 +66,10 @@ async function render() {
 }
 
 function refreshPageCallback() {
-  getHeroesCallback(
+  getHeroTreeCallback(
     searchEmailElement.value,
     hero => {
-      if (hero) {
-        getOrdersCallback(
-          hero.id,
-          orders => {
-            hero.orders = orders;
-            replaceHeroListComponent(hero);
-          },
-          error => {
-            console.log(error);
-            showMessage(error);
-            replaceHeroListComponent(hero);
-          },
-        );
-      } else {
-        replaceHeroListComponent(hero);
-      }
+      replaceHeroListComponent(hero);
     },
     error => {
       console.log(error);

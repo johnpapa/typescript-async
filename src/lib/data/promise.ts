@@ -3,7 +3,7 @@ import axios, { AxiosResponse, AxiosError } from 'axios';
 import { Order, Hero, AccountRepresentative } from '../interfaces';
 import { apiUrl, parseList } from './config';
 
-const getHeroTreePromise = function(searchEmail: string) {
+export const getHeroTreePromise = function(searchEmail: string) {
   let hero: Hero;
 
   // Level 1 - Get the hero record
@@ -64,7 +64,7 @@ const getHeroPromise = (email: string) => {
       // but it won't be caught if you are inside
       // of another async callback. So it is safer to reject.
       // throw new Error('User Facing Error: Something bad happened');
-      return Promise.reject('User Facing Error: Something bad happened');
+      return Promise.reject(`Oh no! We're unable to fetch the Hero`);
     });
 };
 
@@ -75,7 +75,7 @@ const getOrdersPromise = function(heroId: number) {
     .then((response: AxiosResponse<any>) => parseList<Order>(response))
     .catch((error: AxiosError) => {
       console.error(`Developer Error: Async Data Error: ${error.message}`);
-      return Promise.reject('User Facing Error: Something bad happened');
+      return Promise.reject(`Oh no! We're unable to fetch the Orders`);
     });
 };
 
@@ -89,8 +89,8 @@ const getAccountRepPromise = function(heroId: number) {
     })
     .catch((error: AxiosError) => {
       console.error(`Developer Error: Async Data Error: ${error.message}`);
-      return Promise.reject('User Facing Error: Something bad happened');
+      return Promise.reject(`Oh no! We're unable to fetch the Account Rep`);
     });
 };
 
-export { getHeroTreePromise };
+// export { getHeroTreePromise };

@@ -39,7 +39,7 @@ const getHeroAsync = async function(email: string) {
     // How do I feel about errors in this path?
     // option 1: log the error here,
     // and let the caller know an error occurred, but dont change the return type
-    throw new Error('User Facing Error: Something bad happened');
+    throw new Error(`Oh no! We're unable to fetch the Hero`);
 
     // option 2: log the error here,
     // return the error object to the caller
@@ -55,7 +55,7 @@ const getOrdersAsync = async function(heroId: number) {
     return data;
   } catch (error) {
     console.error(`Developer Error: Async Data Error: ${error.message}`);
-    throw new Error('User Facing Error: Something bad happened');
+    throw new Error(`Oh no! We're unable to fetch the Orders`);
   }
 };
 
@@ -67,7 +67,7 @@ const getAccountRepAsync = async function(heroId: number) {
     return data[0];
   } catch (error) {
     console.error(`Developer Error: Async Data Error: ${error.message}`);
-    throw new Error('User Facing Error: Something bad happened');
+    throw new Error(`Oh no! We're unable to fetch the Account Rep`);
   }
 };
 
@@ -79,7 +79,7 @@ const getShippingStatusAsync = async function(orderNumber: number) {
     return data[0];
   } catch (error) {
     console.error(`Developer Error: Async Data Error: ${error.message}`);
-    throw new Error('User Facing Error: Something bad happened');
+    throw new Error(`Oh no! We're unable to fetch the Shipping Status`);
   }
 };
 

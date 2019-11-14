@@ -1,12 +1,46 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
 
-import { Order, Callback, CallbackError, Hero } from '../interfaces';
+import {
+  Order,
+  Callback,
+  CallbackError,
+  Hero,
+  AccountRepresentative,
+} from '../interfaces';
 import { apiUrl, parseList } from './config';
 
-const getHeroesCallback = function(
+const getHeroTreeCallback = function(
   email: string,
   callback: Callback<Hero>,
-  callbackError?: CallbackError
+  callbackError?: CallbackError,
+) {
+  getHeroCallback(
+    email,
+    hero => {
+      getOrdersCallback(
+        hero.id,
+        orders => {
+          hero.orders = orders;
+          getAccountRepCallback(
+            hero.id,
+            accountRep => {
+              hero.accountRep = accountRep;
+              callback(hero);
+            },
+            error => callbackError(error),
+          );
+        },
+        error => callbackError(error),
+      );
+    },
+    error => callbackError(error),
+  );
+};
+
+const getHeroCallback = function(
+  email: string,
+  callback: Callback<Hero>,
+  callbackError?: CallbackError,
 ) {
   axios
     .get<Hero[]>(`${apiUrl}/heroes?email=${email}`)
@@ -17,14 +51,14 @@ const getHeroesCallback = function(
     })
     .catch((error: AxiosError) => {
       console.error(`Developer Error: Async Data Error: ${error.message}`);
-      callbackError('User Facing Error: Something bad happened');
+      callbackError(`Oh no! We're unable to fetch the Hero`);
     });
 };
 
 const getOrdersCallback = function(
   heroId: number,
   callback: Callback<Order[]>,
-  callbackError?: CallbackError
+  callbackError?: CallbackError,
 ) {
   const url = heroId ? `${apiUrl}/orders/${heroId}` : `${apiUrl}/orders`;
   axios
@@ -35,8 +69,27 @@ const getOrdersCallback = function(
     })
     .catch((error: AxiosError) => {
       console.error(`Developer Error: Async Data Error: ${error.message}`);
-      callbackError('User Facing Error: Something bad happened');
+      callbackError(`Oh no! We're unable to fetch the Orders`);
     });
 };
 
-export { getHeroesCallback, getOrdersCallback };
+const getAccountRepCallback = function(
+  heroId: number,
+  callback: Callback<AccountRepresentative>,
+  callbackError?: CallbackError,
+) {
+  const url = `${apiUrl}/accountreps/${heroId}`;
+  axios
+    .get(url)
+    .then((response: AxiosResponse<any>) => {
+      const list = parseList<AccountRepresentative>(response);
+      const accountRep = list[0];
+      callback(accountRep);
+    })
+    .catch((error: AxiosError) => {
+      console.error(`Developer Error: Async Data Error: ${error.message}`);
+      callbackError(`Oh no! We're unable to fetch the Account Rep`);
+    });
+};
+
+export { getHeroTreeCallback };
