@@ -3,7 +3,7 @@ import axios, { AxiosResponse, AxiosError } from 'axios';
 import { Order, Hero, AccountRepresentative } from '../interfaces';
 import { apiUrl, parseList } from './config';
 
-export const getHeroTreePromise = function(searchEmail: string) {
+const getHeroTreePromise = function(searchEmail: string) {
   let hero: Hero;
 
   // Level 1 - Get the hero record
@@ -11,7 +11,7 @@ export const getHeroTreePromise = function(searchEmail: string) {
     getHeroPromise(searchEmail)
       // Level 2 - Get the orders and account reps
       .then((hero: Hero) => Promise.all([getOrders(hero), getAccountRep(hero)]))
-      .then(result => mergeData(result))
+      .then((result: [Order[], AccountRepresentative]) => mergeData(result))
   );
 
   function getOrders(h: Hero): Promise<Order[]> {
@@ -51,7 +51,7 @@ export const getHeroTreePromise = function(searchEmail: string) {
 const getHeroPromise = (email: string) => {
   return axios
     .get<Hero[]>(`${apiUrl}/heroes?email=${email}`)
-    .then((response: AxiosResponse<any>) => {
+    .then((response: AxiosResponse<Hero[]>) => {
       const data = parseList<Hero>(response);
       const hero = data[0];
       return hero;
@@ -72,7 +72,7 @@ const getOrdersPromise = function(heroId: number) {
   const url = heroId ? `${apiUrl}/orders/${heroId}` : `${apiUrl}/orders`;
   return axios
     .get(url)
-    .then((response: AxiosResponse<any>) => parseList<Order>(response))
+    .then((response: AxiosResponse<Order[]>) => parseList<Order>(response))
     .catch((error: AxiosError) => {
       console.error(`Developer Error: Async Data Error: ${error.message}`);
       return Promise.reject(`Oh no! We're unable to fetch the Orders`);
@@ -83,7 +83,7 @@ const getAccountRepPromise = function(heroId: number) {
   const url = `${apiUrl}/accountreps/${heroId}`;
   return axios
     .get(url)
-    .then((response: AxiosResponse<any>) => {
+    .then((response: AxiosResponse<AccountRepresentative>) => {
       const list = parseList<AccountRepresentative>(response);
       return list[0];
     })
@@ -93,4 +93,4 @@ const getAccountRepPromise = function(heroId: number) {
     });
 };
 
-// export { getHeroTreePromise };
+export { getHeroTreePromise };

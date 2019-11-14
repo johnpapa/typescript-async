@@ -1,3 +1,28 @@
+import { promisify } from 'es6-promisify';
+
+// Promisified call
+function promiseTest() {
+  const getHeroTreePromisified = (email: string) => {
+    return new Promise((resolve, reject) => {
+      getHeroTreeCallback(
+        email,
+        (hero: Hero) => resolve(hero),
+        (msg?: string) => reject(msg),
+      );
+    });
+  };
+  getHeroTreePromisified('madelyn@acme.com').then(() => {});
+}
+
+// Asyncified call
+async function callbackToAsync() {
+  const getHeroTreeAsyncified = promisify(getHeroTreeCallback);
+
+  await getHeroTreeAsyncified('madelyn@acme.com');
+}
+
+// -----------
+
 import axios, { AxiosResponse, AxiosError } from 'axios';
 
 import {
@@ -44,7 +69,7 @@ const getHeroCallback = function(
 ) {
   axios
     .get<Hero[]>(`${apiUrl}/heroes?email=${email}`)
-    .then((response: AxiosResponse<any>) => {
+    .then((response: AxiosResponse<Hero[]>) => {
       const data = parseList<Hero>(response);
       const hero = data[0];
       callback(hero);
@@ -63,7 +88,7 @@ const getOrdersCallback = function(
   const url = heroId ? `${apiUrl}/orders/${heroId}` : `${apiUrl}/orders`;
   axios
     .get(url)
-    .then((response: AxiosResponse<any>) => {
+    .then((response: AxiosResponse<Order[]>) => {
       const orders = parseList<Order>(response);
       callback(orders);
     })
@@ -81,7 +106,7 @@ const getAccountRepCallback = function(
   const url = `${apiUrl}/accountreps/${heroId}`;
   axios
     .get(url)
-    .then((response: AxiosResponse<any>) => {
+    .then((response: AxiosResponse<AccountRepresentative>) => {
       const list = parseList<AccountRepresentative>(response);
       const accountRep = list[0];
       callback(accountRep);

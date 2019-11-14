@@ -1,7 +1,7 @@
 export function setText(
   el: DocumentFragment | HTMLElement,
   selector: string,
-  text: any
+  text: string,
 ) {
   el.querySelector(selector).textContent = text.toString();
   return el;

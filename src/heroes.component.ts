@@ -106,7 +106,7 @@ function createHeroOrders(ordersArea: HTMLElement, hero: Hero) {
 
   hero.orders.forEach(order => {
     const orderClone = cloneElementsFromTemplate('order-template');
-    setText(orderClone, '.order-number', order.num);
+    setText(orderClone, '.order-number', order.num.toString());
     setText(orderClone, '.status', order.shippingStatus?.status ?? 'n/a');
     const itemClones = createHeroOrderItems(order);
     itemClones.forEach(ic => orderClone.appendChild(ic));
@@ -117,7 +117,7 @@ function createHeroOrders(ordersArea: HTMLElement, hero: Hero) {
 function createHeroOrderItems(order: Order) {
   return order.items.map(item => {
     const itemClone = cloneElementsFromTemplate('order-item-template');
-    setText(itemClone, '.order-number', order.num);
+    setText(itemClone, '.order-number', order.num.toString());
     setText(itemClone, '.item-name', item.name);
     setText(itemClone, '.item-qty', item.qty.toString());
     setText(itemClone, '.item-price', item.price.toString());
