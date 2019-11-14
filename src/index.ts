@@ -10,6 +10,10 @@ import {
   Hero,
   showFetching,
   showMessage,
+  getAccountRepAsync,
+  getShippingStatusAsync,
+  ShippingStatus,
+  Order,
 } from './lib';
 
 enum Mode {
@@ -21,13 +25,13 @@ enum Mode {
 import { replaceHeroListComponent } from './heroes.component';
 
 const asyncModeElement = document.getElementById(
-  'async-mode'
+  'async-mode',
 ) as HTMLSelectElement;
 const errorModeElement = document.getElementById(
-  'error-mode'
+  'error-mode',
 ) as HTMLSelectElement;
 const searchEmailElement = document.getElementById(
-  'search-email'
+  'search-email',
 ) as HTMLInputElement;
 const button = document.querySelector('.search-button');
 searchEmailElement.addEventListener('keydown', (e: KeyboardEvent) => {
@@ -82,7 +86,7 @@ function refreshPageCallback() {
             console.log(error);
             showMessage(error);
             replaceHeroListComponent(hero);
-          }
+          },
         );
       } else {
         replaceHeroListComponent(hero);
@@ -92,7 +96,7 @@ function refreshPageCallback() {
       console.log(error);
       showMessage(error);
       replaceHeroListComponent();
-    }
+    },
   );
 }
 
@@ -109,31 +113,32 @@ function refreshPagePromise() {
 async function refreshPageAsync() {
   let hero: Hero;
   try {
+    // Level 1 - Get the hero record
     hero = await getHeroAsync(searchEmailElement.value);
     if (!hero) return;
-    // heroes = await getHeroesAsync();
 
-    // guest = await getGuest('wes@gmail.com'); first call
-    // hotel = await getHotel(guest.id); // 1 2nd call
-    // bags = await getbags(guest.id); // 1 2nd call
-    // friends = await getFriends(guest.id); // list 2nd call
-    // friendIDs = collectFriendIds()
-    // friendsBags = await getFriendsBags(friendIds); // list - 1 call, merge the results - 3rd call
+    // Level 2 - Get the orders and account reps
+    const [orders, accountRep] = await Promise.all([
+      getOrdersAsync(hero.id),
+      getAccountRepAsync(hero.id),
+    ]);
+    hero.orders = orders;
+    hero.accountRep = accountRep;
 
-    // customer = await getCustomer('haley@johnpapa.net'); // level 1 - why? maybe id is not on the page? its a search box? -> Craig
-    // acctRep = await getAcctRep(customer.id); // level 2 - -> Heidi
-    // orders = await getOrders(customer.id); // // level 2 - -> Craig's orders and details
-    // orderIds = []; // collect the IDs
-    // shippingStatuses = await orderShippingStatus(orderIds); // level 3 - -> [1: {orderId: 1, status: good}, 2: {orderId: 2, status: bad}]
-    // Merge statuses into the data (customer.orders.forEach((o) => { o.status = statuses[o.id].status } ))
-
-    // for (const hero of heroes) {
-    //   hero.orders = await getOrdersAsync(hero.id);
-    // }
-    // if (heroes && heroes.length) {
-    // const hero = heroes[0];
-    hero.orders = await getOrdersAsync(hero.id);
-    // }
+    // Level 3 - Get the shipping statuses
+    // Now let's create an array of async functions to get the order statuses.
+    // We'll call them and wait for all to return.
+    const getStatusesAsync = orders.map(async (o: Order) =>
+      getShippingStatusAsync(o.num),
+    );
+    const shippingStatuses = await Promise.all(getStatusesAsync);
+    const sso = shippingStatuses.reduce((acc, ss) => {
+      return { ...acc, [ss.orderNum]: ss };
+    }, {} as ShippingStatus);
+    hero.orders.forEach(o => {
+      sso[o.num].status;
+      o.shippingStatus = sso[o.num];
+    });
   } catch (error) {
     console.log(error);
     showMessage(error);

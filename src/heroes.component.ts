@@ -80,6 +80,7 @@ function createHeroCardFromTemplate(hero: Hero) {
   setText(heroClone, '.description', hero.description);
   setText(heroClone, '.name', hero.name);
   setText(heroClone, '.email', hero.email);
+  setText(heroClone, '.accountrep', hero.accountRep?.name);
   heroClone.querySelector('.card').classList.add(hero.name);
 
   const selector = `.card.${hero.name} .order-area`;
@@ -105,6 +106,8 @@ function createHeroOrders(ordersArea: HTMLElement, hero: Hero) {
 
   hero.orders.forEach(order => {
     const orderClone = cloneElementsFromTemplate('order-template');
+    setText(orderClone, '.order-number', order.num);
+    setText(orderClone, '.status', order.shippingStatus?.status ?? '');
     const itemClones = createHeroOrderItems(order);
     itemClones.forEach(ic => orderClone.appendChild(ic));
     ordersArea.appendChild(orderClone);

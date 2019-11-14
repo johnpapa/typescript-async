@@ -2,8 +2,6 @@ export const API = '/api';
 
 let apiUrl = API;
 
-const DELAY = 1000;
-
 const dev = {
   breakAPI() {
     apiUrl = '/badapiurl';
@@ -23,4 +21,4 @@ const parseList = <T>(response: any) => {
   return list;
 };
 
-export { apiUrl, DELAY, dev, parseList };
+export { apiUrl, dev, parseList };

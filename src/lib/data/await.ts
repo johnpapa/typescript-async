@@ -1,7 +1,12 @@
 import axios from 'axios';
 
 import { apiUrl, parseList } from './config';
-import { Order, Hero } from '../interfaces';
+import {
+  Order,
+  Hero,
+  AccountRepresentative,
+  ShippingStatus,
+} from '../interfaces';
 
 // we could pass this back every time.
 // the argument here is you can avoid try/catch everywhere but you instead have to package the error.
@@ -54,6 +59,30 @@ const getOrdersAsync = async function(heroId: number) {
   }
 };
 
+const getAccountRepAsync = async function(heroId: number) {
+  try {
+    const url = `${apiUrl}/accountreps/${heroId}`;
+    const response = await axios.get(url);
+    const data = parseList<AccountRepresentative>(response);
+    return data[0];
+  } catch (error) {
+    console.error(`Developer Error: Async Data Error: ${error.message}`);
+    throw new Error('User Facing Error: Something bad happened');
+  }
+};
+
+const getShippingStatusAsync = async function(orderNumber: number) {
+  try {
+    const url = `${apiUrl}/shippingstatuses/${orderNumber}`;
+    const response = await axios.get(url);
+    const data = parseList<ShippingStatus>(response);
+    return data[0];
+  } catch (error) {
+    console.error(`Developer Error: Async Data Error: ${error.message}`);
+    throw new Error('User Facing Error: Something bad happened');
+  }
+};
+
 // const delay = (ms: any) => new Promise(res => setTimeout(res, ms));
 // const getHeroesDelayedAsync = async function() {
 //   await delay(1250);
@@ -81,4 +110,9 @@ const getOrdersAsync = async function(heroId: number) {
 //   ];
 // };
 
-export { getHeroAsync, getOrdersAsync };
+export {
+  getHeroAsync,
+  getOrdersAsync,
+  getAccountRepAsync,
+  getShippingStatusAsync,
+};

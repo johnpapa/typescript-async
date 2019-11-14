@@ -88,17 +88,19 @@ ul.list {
 }
 div.card-content {
   background-color: $shade-light;
+  color: #999;
   .name {
     font-size: 28px;
     color: #000;
   }
   .description {
     font-size: 20px;
-    color: #999;
   }
   .email {
     font-size: 14px;
-    color: #999;
+  }
+  .accountrep {
+    font-size: 14px;
   }
   background-color: $shade-light;
 }
@@ -124,6 +126,10 @@ p.card-header-title {
 
 .navbar {
   margin-right: -6px;
+}
+
+.order-info {
+  margin-bottom: -0.5rem;
 }
 
 .columns.order-header,
