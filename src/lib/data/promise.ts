@@ -1,24 +1,35 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
 
-import { Order, Hero } from '../interfaces';
+import { Order, Hero, AccountRepresentative } from '../interfaces';
 import { apiUrl, parseList } from './config';
 
 const getHeroTreePromise = function(searchEmail: string) {
   let hero: Hero;
 
-  return getHeroPromise(searchEmail)
-    .then(getOrders)
-    .then(mergeData);
+  // Level 1 - Get the hero record
+  return (
+    getHeroPromise(searchEmail)
+      // Level 2 - Get the orders and account reps
+      .then((hero: Hero) => Promise.all([getOrders(hero), getAccountRep(hero)]))
+      .then(result => mergeData(result))
+  );
 
   function getOrders(h: Hero): Promise<Order[]> {
     hero = h;
     return h ? getOrdersPromise(h.id) : undefined;
   }
 
-  function mergeData(orders: Order[]): Hero {
+  function getAccountRep(h: Hero): Promise<AccountRepresentative> {
+    hero = h;
+    return h ? getAccountRepPromise(h.id) : undefined;
+  }
+
+  function mergeData(result: [Order[], AccountRepresentative]): Hero {
+    const [orders, accountRep] = result;
     if (orders) {
       hero.orders = orders;
     }
+    hero.accountRep = accountRep;
     return hero;
   }
 };
@@ -58,6 +69,21 @@ const getOrdersPromise = function(heroId: number) {
   return axios
     .get(url)
     .then((response: AxiosResponse<any>) => parseList<Order>(response))
+    .catch((error: AxiosError) => {
+      console.error(`Developer Error: Async Data Error: ${error.message}`);
+      // throw new Error('User Facing Error: Something bad happened');
+      return Promise.reject('User Facing Error: Something bad happened');
+    });
+};
+
+const getAccountRepPromise = function(heroId: number) {
+  const url = `${apiUrl}/accountreps/${heroId}`;
+  return axios
+    .get(url)
+    .then((response: AxiosResponse<any>) => {
+      const list = parseList<AccountRepresentative>(response);
+      return list[0];
+    })
     .catch((error: AxiosError) => {
       console.error(`Developer Error: Async Data Error: ${error.message}`);
       // throw new Error('User Facing Error: Something bad happened');
