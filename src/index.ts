@@ -73,11 +73,11 @@ function refreshPageCallback() {
       if (hero) {
         getOrdersCallback(
           hero.id,
-          function(orders) {
+          orders => {
             hero.orders = orders;
             replaceHeroListComponent(hero);
           },
-          function(error) {
+          error => {
             console.log(error);
             showMessage(error);
             replaceHeroListComponent(hero);
