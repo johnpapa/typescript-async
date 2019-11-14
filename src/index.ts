@@ -125,20 +125,22 @@ async function refreshPageAsync() {
     hero.orders = orders;
     hero.accountRep = accountRep;
 
-    // Level 3 - Get the shipping statuses
-    // Now let's create an array of async functions to get the order statuses.
-    // We'll call them and wait for all to return.
-    const getStatusesAsync = orders.map(async (o: Order) =>
-      getShippingStatusAsync(o.num),
-    );
-    const shippingStatuses = await Promise.all(getStatusesAsync);
-    const sso = shippingStatuses.reduce((acc, ss) => {
-      return { ...acc, [ss.orderNum]: ss };
-    }, {} as ShippingStatus);
-    hero.orders.forEach(o => {
-      sso[o.num].status;
-      o.shippingStatus = sso[o.num];
-    });
+    if (false) {
+      // Level 3 - Get the shipping statuses
+      // Now let's create an array of async functions to get the order statuses.
+      // We'll call them and wait for all to return.
+      const getStatusesAsync = orders.map(async (o: Order) =>
+        getShippingStatusAsync(o.num),
+      );
+      const shippingStatuses = await Promise.all(getStatusesAsync);
+      const sso = shippingStatuses.reduce((acc, ss) => {
+        return { ...acc, [ss.orderNum]: ss };
+      }, {} as ShippingStatus);
+      hero.orders.forEach(o => {
+        sso[o.num].status;
+        o.shippingStatus = sso[o.num];
+      });
+    }
   } catch (error) {
     console.log(error);
     showMessage(error);

@@ -107,7 +107,7 @@ function createHeroOrders(ordersArea: HTMLElement, hero: Hero) {
   hero.orders.forEach(order => {
     const orderClone = cloneElementsFromTemplate('order-template');
     setText(orderClone, '.order-number', order.num);
-    setText(orderClone, '.status', order.shippingStatus?.status ?? '');
+    setText(orderClone, '.status', order.shippingStatus?.status ?? 'n/a');
     const itemClones = createHeroOrderItems(order);
     itemClones.forEach(ic => orderClone.appendChild(ic));
     ordersArea.appendChild(orderClone);
