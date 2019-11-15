@@ -15,9 +15,7 @@ function replaceHeroListComponent(hero?: Hero) {
   function createList() {
     const ul = document.createElement('ul');
     ul.classList.add('list', 'hero-list');
-    // heroes.forEach((hero: Hero) =>
     ul.appendChild(createHeroCardFromTemplate(hero));
-    // );
     return ul;
   }
 
