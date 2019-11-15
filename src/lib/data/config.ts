@@ -1,8 +1,8 @@
+import { AxiosResponse } from 'axios';
+
 export const API = '/api';
 
 let apiUrl = API;
-
-const DELAY = 1000;
 
 const dev = {
   breakAPI() {
@@ -13,8 +13,8 @@ const dev = {
   },
 };
 
-const parseList = <T>(response: any) => {
-  if (response.status !== 200) throw Error(response.message);
+const parseList = <T>(response: AxiosResponse) => {
+  if (response.status !== 200) throw Error(response.statusText);
   if (!response.data) return [];
   let list: T[] = response.data;
   if (typeof list !== 'object') {
@@ -23,4 +23,4 @@ const parseList = <T>(response: any) => {
   return list;
 };
 
-export { apiUrl, DELAY, dev, parseList };
+export { apiUrl, dev, parseList };

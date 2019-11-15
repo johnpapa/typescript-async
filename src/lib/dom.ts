@@ -1,11 +1,12 @@
 export function setText(
   el: DocumentFragment | HTMLElement,
   selector: string,
-  text: any
+  text: string,
 ) {
   el.querySelector(selector).textContent = text.toString();
   return el;
 }
+
 export const createDiv = (...classList: string[]) => {
   const el = document.createElement('div');
   el.classList.add(...classList);
