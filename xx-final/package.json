@@ -3,10 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev:start": "webpack-dev-server",
+    "dev": "concurrently \"npm run backend\" \"webpack-dev-server\"",
     "build": "webpack --mode production",
-    "backend": "json-server --watch db.json --routes routes.json --port 8081 --middlewares ./node_modules/json-server-reset --delay 500",
-    "dev:fake-db": "concurrently \"npm run backend\" \"npm run dev:start\""
+    "backend": "json-server --watch db.json --routes routes.json --port 8081 --middlewares ./node_modules/json-server-reset --delay 500"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.18",
