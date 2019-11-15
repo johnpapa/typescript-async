@@ -96,7 +96,7 @@ const getHeroTreeAsync = async function(email: string) {
   hero.orders = orders;
   hero.accountRep = accountRep;
 
-  if (false) {
+  if (true) {
     // Level 3 - Get the shipping statuses
     // Now let's create an array of async functions to get the order statuses.
     // We'll call them and wait for all to return.
