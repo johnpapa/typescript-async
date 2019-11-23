@@ -100,16 +100,23 @@ const getHeroTreeAsync = async function(email: string) {
     // Level 3 - Get the shipping statuses
     // Now let's create an array of async functions to get the order statuses.
     // We'll call them and wait for all to return.
-    const getStatusesAsync = orders.map(async (o: Order) =>
+    const getAllStatusesAsync = orders.map(async (o: Order) =>
       getShippingStatusAsync(o.num),
     );
-    const shippingStatuses = await Promise.all(getStatusesAsync);
+
+    // Example of "for await of". Which is great if we want to do something when each returns.
+    // for await (let x of getAllStatusesAsync) {
+    //   console.log(x);
+    // }
+
+    const shippingStatuses = await Promise.all(getAllStatusesAsync);
     const sso = shippingStatuses.reduce((acc, ss) => {
       return {
         ...acc,
         [ss.orderNum]: ss,
       };
     }, {} as ShippingStatus);
+
     hero.orders.forEach(o => {
       sso[o.num].status;
       o.shippingStatus = sso[o.num];
