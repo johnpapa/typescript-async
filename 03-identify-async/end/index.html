@@ -61,6 +61,22 @@
         </nav>
       </header>
 
+      <script>
+        const foo = () => {
+          console.group('async demo');
+          console.log('This');
+          setTimeout(() => {
+            console.log('is');
+          }, 1000);
+          console.log('Hello');
+          setTimeout(() => {
+            console.log('World');
+          }, 1000);
+          console.groupEnd('async demo');
+        };
+        foo();
+      </script>
+
       <div class="main-section columns">
         <main class="column main-content">
           <div class="columns content-title-group">
@@ -97,6 +113,29 @@
         <p class="message-body"></p>
       </div>
     </div>
+
+    <!-- Begin Templates -->
+
+    <template id="progress-template">
+      <progress
+        class="hero-list progress is-medium is-info"
+        max="100"
+      ></progress>
+    </template>
+
+    <template id="hero-template">
+      <li>
+        <div class="card">
+          <div class="card-content">
+            <div class="content">
+              <div class="name"></div>
+              <div class="description"></div>
+              <div class="email"></div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </template>
 
     <script src="bundle.js"></script>
     <link rel="stylesheet" href="main.bundle.css" />
