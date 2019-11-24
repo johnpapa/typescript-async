@@ -61,22 +61,6 @@
         </nav>
       </header>
 
-      <script>
-        const foo = () => {
-          console.group('async demo');
-          console.log('This');
-          setTimeout(() => {
-            console.log('is');
-          }, 1000);
-          console.log('Hello');
-          setTimeout(() => {
-            console.log('World');
-          }, 1000);
-          console.groupEnd('async demo');
-        };
-        foo();
-      </script>
-
       <div class="main-section columns">
         <main class="column main-content">
           <div class="columns content-title-group">
@@ -106,11 +90,30 @@
           <div class="hero-list">
             <!-- Hero Component Goes Here -->
           </div>
+          <button id="open-modal" class="button is-primary">
+            Open Modal
+          </button>
         </main>
       </div>
       <div id="message-box" style="visibility: hidden" class="message is-info">
         <h3 class="message-header"></h3>
         <p class="message-body"></p>
+      </div>
+
+      <div id="modal" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Confirm</p>
+          </header>
+          <section class="modal-card-body">Having fun?</section>
+          <footer class="modal-card-foot">
+            <button class="button modal-no">No</button>
+            <button class="button is-primary modal-yes">
+              Yes
+            </button>
+          </footer>
+        </div>
       </div>
     </div>
 

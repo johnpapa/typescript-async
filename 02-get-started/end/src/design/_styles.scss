@@ -31,7 +31,7 @@ header {
       color: #ccc;
     }
     &.heroes {
-      color: $primary;
+      color: $javascript;
     }
   }
   .navbar-item.nav-home {
@@ -45,7 +45,7 @@ header {
   .fab {
     font-size: 24px;
     &.js-logo {
-      color: $primary;
+      color: $javascript;
     }
   }
   .buttons {
@@ -76,6 +76,11 @@ header {
     }
   }
 }
+
+// #open-modal {
+//   background-color: $accent-color;
+// }
+
 button.button {
   border: 0;
   color: $accent-color;
@@ -156,4 +161,17 @@ p.card-header-title {
 
 nav .field select {
   width: 150px;
+}
+
+.modal-card {
+  width: 400px;
+}
+.modal-card-foot button {
+  display: inline-block;
+  width: 80px;
+}
+
+.modal-card-head,
+.modal-card-body {
+  text-align: center;
 }

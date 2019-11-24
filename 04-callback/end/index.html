@@ -62,50 +62,12 @@
       </header>
 
       <div class="main-section columns">
-        <nav class="column is-2 menu">
-          <p class="menu-label">Options</p>
-          <!-- <ul class="menu-list">
-          <p>Heroes</p>
-          <p>About</p>
-        </ul> -->
-          <br />
-          <div>
-            <div class="field">
-              <div class="control has-icons-left">
-                <div class="select is-small is-warning">
-                  <select id="async-mode">
-                    <option value="callback" selected>Callback</option>
-                    <option value="promise">Promise</option>
-                    <option value="async">Async/Await</option>
-                  </select>
-                </div>
-                <div class="icon is-small is-left">
-                  <i class="fas fa-exchange-alt"></i>
-                </div>
-              </div>
-            </div>
-            <div class="field">
-              <div class="control has-icons-left">
-                <div class="select is-small is-warning">
-                  <select id="error-mode">
-                    <option selected value="ok">HTTP Works!</option>
-                    <option value="404">HTTP 404</option>
-                  </select>
-                </div>
-                <div class="icon is-small is-left">
-                  <i class="fas fa-sync-alt"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </nav>
         <main class="column main-content">
           <div class="columns content-title-group">
             <div class="column">
               <h2 class="title">Heroes</h2>
-              <!-- <label class="column label" for="find">search by email address</label> -->
               <div class="columns search-box">
-                <div class="column field is-one-fourth">
+                <div class="column field is-one-quarter">
                   <p class="control has-icons-left has-icons-right">
                     <input
                       id="search-email"
@@ -153,40 +115,10 @@
               <div class="name"></div>
               <div class="description"></div>
               <div class="email"></div>
-              <div>
-                Rep:
-                <span class="accountrep"></span>
-              </div>
-              <button class="button expand-button">
-                <i class="fas fa-angle-double-down"></i>
-              </button>
-              <div class="order-area"></div>
             </div>
           </div>
         </div>
       </li>
-    </template>
-
-    <template id="order-template">
-      <div class="order-info">
-        <div>Order Num: <span class="order-number"></span></div>
-        <div>Status: <span class="status"></span></div>
-      </div>
-      <div class="columns order-header">
-        <div class="column">Order #</div>
-        <div class="column">Item</div>
-        <div class="column">Qty</div>
-        <div class="column">Price</div>
-      </div>
-    </template>
-
-    <template id="order-item-template">
-      <div class="columns order-item">
-        <div class="column order-number"></div>
-        <div class="column item-name"></div>
-        <div class="column item-qty"></div>
-        <div class="column item-price"></div>
-      </div>
     </template>
 
     <script src="bundle.js"></script>

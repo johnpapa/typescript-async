@@ -9,7 +9,6 @@ import {
   showFetching,
   showMessage,
 } from './lib';
-import { openModal } from './lib/modal';
 
 const searchEmailElement = document.getElementById(
   'search-email',
@@ -19,11 +18,6 @@ searchEmailElement.addEventListener('keydown', (e: KeyboardEvent) => {
   if (e.code === 'Enter') render();
 });
 button.addEventListener('click', render);
-
-document.querySelector('#open-modal').addEventListener('click', async () => {
-  const response = await openModal();
-  showMessage(response, 'Response from Modal');
-});
 
 async function render() {
   showMessage();
@@ -62,7 +56,7 @@ function replaceHeroListComponent(hero?: Hero) {
 /**
  * Code below here are private functions to this module
  * that support the replaceHeroListComponent function.
- **/
+ */
 
 function createHeroCardFromTemplate(hero: Hero) {
   const heroClone = cloneElementsFromTemplate('hero-template');
