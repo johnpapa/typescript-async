@@ -1,19 +1,22 @@
 import { showMessage } from './dom';
 
 export const sayHelloTimer = function(ms: number) {
-  let counter = 1;
+  let counter = 0;
+  showMessage(`Starting the timer`, 'Response from Timer');
   const callback = (ms: number) => {
+    counter++;
     showMessage(
       `Hello every ${ms} milliseconds. (${counter} iterations)`,
       'Response from Timer',
+      true,
     );
-    counter++;
     if (counter === 5) {
-      clearInterval(intervalId);
       showMessage(
         `Goodbye. We said hello every ${ms} milliseconds. (${counter} iterations)`,
         'Response from Timer',
+        true,
       );
+      clearInterval(intervalId);
     }
   };
 
