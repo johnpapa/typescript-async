@@ -1,15 +1,5 @@
 import './design/index.scss';
 
-import {
-  cloneElementsFromTemplate,
-  createDiv,
-  Hero,
-  getHeroAsync,
-  setText,
-  showFetching,
-  showMessage,
-} from './lib';
-
 const searchEmailElement = document.getElementById(
   'search-email',
 ) as HTMLInputElement;
@@ -18,6 +8,10 @@ searchEmailElement.addEventListener('keydown', (e: KeyboardEvent) => {
   if (e.code === 'Enter') render();
 });
 button.addEventListener('click', render);
+
+document.querySelector('#start-here').addEventListener('click', async () => {
+  render();
+});
 
 async function render() {
   console.group('async demo');
