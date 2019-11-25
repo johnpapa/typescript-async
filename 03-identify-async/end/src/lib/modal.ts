@@ -17,16 +17,14 @@ export const openModal = async function() {
   return responsePromise;
 
   function closeModal(yesno: 'yes' | 'no') {
-    const modalWindow = document.getElementById('modal');
-
     if (modalWindow.classList) {
       modalWindow.classList.remove('is-active');
     }
 
-    document
+    modalWindow
       .querySelector('.modal-yes')
       .removeEventListener('click', listenerYes);
-    document
+    modalWindow
       .querySelector('.modal-no')
       .removeEventListener('click', listenerNo);
 

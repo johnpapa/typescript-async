@@ -5,11 +5,12 @@ import {
   createDiv,
   Hero,
   getHeroAsync,
+  openModal,
+  sayHelloTimer,
   setText,
   showFetching,
   showMessage,
 } from './lib';
-import { openModal } from './lib/modal';
 
 const searchEmailElement = document.getElementById(
   'search-email',
@@ -22,7 +23,11 @@ button.addEventListener('click', render);
 
 document.querySelector('#open-modal').addEventListener('click', async () => {
   const response = await openModal();
-  showMessage(response, 'Response from Modal');
+  showMessage(`${response}, fun was had`, 'Response from Modal');
+});
+
+document.querySelector('#run-timer').addEventListener('click', async () => {
+  sayHelloTimer(1000);
 });
 
 async function render() {
