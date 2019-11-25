@@ -32,7 +32,11 @@ searchEmailElement.addEventListener('keydown', (e: KeyboardEvent) => {
   if (e.code === 'Enter') render();
 });
 button.addEventListener('click', render);
+asyncModeElement.addEventListener('input', () => {
+  replaceHeroListComponent();
+});
 errorModeElement.addEventListener('input', () => {
+  replaceHeroListComponent();
   switch (errorModeElement.value) {
     case '404':
       dev.breakAPI();
