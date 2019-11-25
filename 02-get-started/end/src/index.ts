@@ -1,27 +1,22 @@
 import './design/index.scss';
+import { showMessage } from '../dom';
 
-const searchEmailElement = document.getElementById(
-  'search-email',
-) as HTMLInputElement;
-const button = document.querySelector('.search-button');
-searchEmailElement.addEventListener('keydown', (e: KeyboardEvent) => {
-  if (e.code === 'Enter') render();
-});
-button.addEventListener('click', render);
-
-document.querySelector('#start-here').addEventListener('click', async () => {
-  render();
+document.querySelector('#bake-cookies').addEventListener('click', async () => {
+  bake();
 });
 
-async function render() {
-  console.group('async demo');
-  console.log('This');
+async function bake() {
+  console.clear();
+  console.group('baking cookies');
+  console.log('Add ingredients');
+  showMessage('Add ingredients', 'Baking Cookies');
   setTimeout(() => {
-    console.log('is');
+    console.log('Mix ingredients');
+    showMessage('Mix ingredients', 'Baking Cookies', true);
   }, 1000);
-  console.log('Hello');
-  setTimeout(() => {
-    console.log('World');
-  }, 1000);
+  console.log('Bake at 325 degrees for 10 minutes');
+  showMessage('Bake at 325 degrees for 10 minutes', 'Baking Cookies', true);
+  console.log('Eat cake');
+  showMessage('Eat cake', 'Baking Cookies', true);
   console.groupEnd();
 }
