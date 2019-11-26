@@ -6,17 +6,28 @@ document.querySelector('#bake-cookies').addEventListener('click', async () => {
 });
 
 async function bake() {
+  const title = 'Baking cookies';
+  let counter = 0;
   console.clear();
-  console.group('baking cookies');
-  console.log('Add ingredients');
-  showMessage('Add ingredients', 'Baking Cookies');
-  console.log('Mix ingredients');
-  showMessage('Mix ingredients', 'Baking Cookies', true);
+  console.group(title);
+
+  counter++;
+  console.log(`${counter} - Add ingredients`);
+  showMessage(`${counter} - Add ingredients`, title);
+
+  counter++;
+  console.log(`${counter} - Mix ingredients`);
+  showMessage(`${counter} - Mix ingredients`, title, true);
+
   setTimeout(() => {
-    console.log('Bake at 325 degrees for 10 minutes');
-    showMessage('Bake at 325 degrees for 10 minutes', 'Baking Cookies', true);
+    counter++;
+    console.log(`${counter} - Bake at 325 degrees for 10 minutes`);
+    showMessage(`${counter} - Bake at 325 degrees for 10 minutes`, title, true);
   }, 1000);
-  console.log('Eat cake');
-  showMessage('Eat cake', 'Baking Cookies', true);
+
+  counter++;
+  console.log(`${counter} - Eat cake`);
+  showMessage(`${counter} - Eat cake`, title, true);
+
   console.groupEnd();
 }
