@@ -24,8 +24,8 @@ async function bake() {
   showMessage(`${counter} - Bake at 325 degrees for 10 minutes`, title, true);
 
   counter++;
-  console.log(`${counter} - Eat cake`);
-  showMessage(`${counter} - Eat cake`, title, true);
+  console.log(`${counter} - Eat cookies`);
+  showMessage(`${counter} - Eat cookies`, title, true);
 
   console.groupEnd();
 }

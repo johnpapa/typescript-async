@@ -26,8 +26,8 @@ async function bake() {
   }, 1000);
 
   counter++;
-  console.log(`${counter} - Eat cake`);
-  showMessage(`${counter} - Eat cake`, title, true);
+  console.log(`${counter} - Eat cookies`);
+  showMessage(`${counter} - Eat cookies`, title, true);
 
   console.groupEnd();
 }
