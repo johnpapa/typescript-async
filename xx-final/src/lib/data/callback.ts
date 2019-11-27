@@ -11,7 +11,9 @@ function promiseTest() {
       );
     });
   };
-  getHeroTreePromisified('madelyn@acme.com').then(() => {});
+  getHeroTreePromisified('madelyn@acme.com').then(() => {
+    console.log('next');
+  });
 }
 
 // Asyncified call
@@ -19,6 +21,7 @@ async function callbackToAsync() {
   const getHeroTreeAsyncified = promisify(getHeroTreeCallback);
 
   await getHeroTreeAsyncified('madelyn@acme.com');
+  console.log('next');
 }
 
 // -----------
