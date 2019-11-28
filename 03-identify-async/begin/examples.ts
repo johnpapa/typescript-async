@@ -3,7 +3,7 @@
  *
  * This code does not run.
  * It is here as an example
- * of a mixed sync and async process.
+ * of a mixed sync and async flow.
  */
 const ingredients = [
   '2 1/4 cups all-purpose flour',
@@ -14,7 +14,7 @@ const ingredients = [
   '3/4 cup packed brown sugar',
   '1 teaspoon vanilla extract',
   '2 large eggs',
-  '2 cups (12-oz. pkg.) chocolate chips',
+  '2 cups (12-oz. pkg.) chocolate chips'
 ];
 
 function bakeCookies() {
@@ -32,6 +32,8 @@ function bakeCookies() {
     eat(cookies);
   });
 
+  // private functions below
+
   function combine(i: any) {
     // Logic to combine the ingredients
     return i;
@@ -40,10 +42,7 @@ function bakeCookies() {
     // Logic to mix the ingredients
     return i;
   }
-  function bake(
-    baking: { batter: any; temp: number; minutes: number },
-    cb: (cookies: any) => void,
-  ) {
+  function bake(baking: { batter: any; temp: number; minutes: number }, cb: (cookies: any) => void) {
     // Logic to bake the cookies and then we return them
     cb('cookies');
   }
