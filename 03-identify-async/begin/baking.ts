@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Baking Cookies
  *
@@ -14,10 +16,10 @@ const ingredients = [
   '3/4 cup packed brown sugar',
   '1 teaspoon vanilla extract',
   '2 large eggs',
-  '2 cups (12-oz. pkg.) chocolate chips'
+  '2 cups (12-oz. pkg.) chocolate chips',
 ];
 
-function bakeCookies() {
+export function bakeCookies() {
   const combined = combine(ingredients);
 
   const batter = mix(combined);
@@ -45,6 +47,7 @@ function bakeCookies() {
     };
     return combined;
   }
+
   function mix(c: any) {
     // Logic to mix the ingredients
     const batter = {
@@ -52,32 +55,19 @@ function bakeCookies() {
     };
     return batter;
   }
-  function bake(cookieSheet: { batter: any; temp: number; minutes: number }, cb: (cookies: any) => void) {
+
+  function bake(
+    cookieSheet: { batter: any; temp: number; minutes: number },
+    cb: (cookies: any) => void,
+  ) {
     // Logic to bake the cookies and then we return them
-    const cookies = [
+    const cookies: any[] = [
       /*Cook the cookies on the cookie sheet */
     ];
     cb(cookies);
   }
+
   function eat(cookies: any) {
     console.log('yummy!');
   }
-}
-
-function forEachExample() {
-  let index = 0;
-  ingredients.forEach(name => {
-    console.log(`${index} - ${name}`);
-  });
-}
-
-function setTimeoutExample() {
-  console.clear();
-  console.log('Me: How are you?');
-  setTimeout(() => {
-    console.log('You: I am fine, thank you! How are you?');
-    setTimeout(() => {
-      console.log('Me: Well, thanks!');
-    }, 1500);
-  }, 1500);
 }

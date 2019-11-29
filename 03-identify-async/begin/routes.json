@@ -1,0 +1,10 @@
+{
+  "/api/*": "/$1",
+  "/hero": "/heroes",
+  "/heroes/:email": "/heroes?email=:email",
+  "/order": "/orders",
+  "/orders/:heroId": "/orders?heroId=:heroId",
+  "/accountreps/:heroId": "/accountreps?heroId=:heroId",
+  "/shippingstatuses/:orderNum": "/shippingstatuses?orderNum=:orderNum",
+  "/reset": "/reset"
+}
