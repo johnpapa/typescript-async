@@ -20,9 +20,9 @@ const ingredients = [
 ];
 
 export function bakeCookies() {
-  const combined = combine(ingredients);
+  const bowl = combine(ingredients);
 
-  const batter = mix(combined);
+  const batter = mix(bowl);
 
   const cookieSheet = { batter, temp: 375, minutes: 10 };
 
@@ -42,13 +42,13 @@ export function bakeCookies() {
 
   function combine(i: any) {
     // Logic to combine the ingredients
-    const combined = {
+    const bowl = {
       /* combined indgredients */
     };
-    return combined;
+    return bowl;
   }
 
-  function mix(c: any) {
+  function mix(bowl: any) {
     // Logic to mix the ingredients
     const batter = {
       /* mixed ingredients */
