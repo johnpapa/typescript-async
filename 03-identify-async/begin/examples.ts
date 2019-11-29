@@ -19,11 +19,12 @@ const ingredients = [
 
 function bakeCookies() {
   const combined = combine(ingredients);
+
   const batter = mix(combined);
 
-  const intoTheOven = { batter, temp: 375, minutes: 10 };
+  const cookieSheet = { batter, temp: 375, minutes: 10 };
 
-  bake(intoTheOven, cookies => {
+  bake(cookieSheet, cookies => {
     /**
      * we must wait 10 minutes for the oven
      * to bake the cookies
@@ -32,19 +33,31 @@ function bakeCookies() {
     eat(cookies);
   });
 
-  // private functions below
+  /**
+   * private functions are below
+   *
+   **/
 
   function combine(i: any) {
     // Logic to combine the ingredients
-    return i;
+    const combined = {
+      /* combined indgredients */
+    };
+    return combined;
   }
-  function mix(i: any) {
+  function mix(c: any) {
     // Logic to mix the ingredients
-    return i;
+    const batter = {
+      /* mixed ingredients */
+    };
+    return batter;
   }
-  function bake(baking: { batter: any; temp: number; minutes: number }, cb: (cookies: any) => void) {
+  function bake(cookieSheet: { batter: any; temp: number; minutes: number }, cb: (cookies: any) => void) {
     // Logic to bake the cookies and then we return them
-    cb('cookies');
+    const cookies = [
+      /*Cook the cookies on the cookie sheet */
+    ];
+    cb(cookies);
   }
   function eat(cookies: any) {
     console.log('yummy!');
