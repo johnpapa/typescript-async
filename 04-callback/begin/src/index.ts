@@ -35,7 +35,7 @@ function getIngredients() {
 async function render() {
   showMessage();
   showFetching('.hero-list');
-  
+
   /**
    * TODO:
    * Get the heroes.
