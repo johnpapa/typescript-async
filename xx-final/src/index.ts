@@ -72,12 +72,14 @@ async function render() {
 function refreshPageCallback() {
   getHeroTreeCallback(
     searchEmailElement.value,
-    hero => {
+
+    (hero: Hero) => {
       replaceHeroListComponent(hero);
     },
-    error => {
-      console.log(error);
-      showMessage(error);
+
+    (errorMsg: string) => {
+      console.log(errorMsg);
+      showMessage(errorMsg);
       replaceHeroListComponent();
     },
   );
