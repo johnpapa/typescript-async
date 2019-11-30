@@ -4,10 +4,10 @@ import {
   cloneElementsFromTemplate,
   createDiv,
   Hero,
-  getHeroAsync,
   setText,
   showFetching,
   showMessage,
+  getHeroTreeCallback,
 } from './lib';
 
 const searchEmailElement = document.getElementById(
@@ -22,15 +22,19 @@ button.addEventListener('click', render);
 async function render() {
   showMessage();
   showFetching('.hero-list');
-  let hero: Hero;
-  try {
-    hero = await getHeroAsync(searchEmailElement.value);
-  } catch (error) {
-    console.log(error);
-    showMessage(error);
-  } finally {
-    replaceHeroListComponent(hero);
-  }
+  getHeroTreeCallback(
+    searchEmailElement.value,
+
+    (hero: Hero) => {
+      replaceHeroListComponent(hero);
+    },
+
+    (errorMsg: string) => {
+      console.log(errorMsg);
+      showMessage(errorMsg);
+      replaceHeroListComponent();
+    },
+  );
 }
 
 function replaceHeroListComponent(hero?: Hero) {
