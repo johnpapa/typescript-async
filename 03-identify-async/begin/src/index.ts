@@ -25,6 +25,7 @@ document.querySelector('#open-modal').addEventListener('click', async () => {
       response === 'yes'
         ? `Yay! This is fun! 😄`
         : `Aw, that is sad. Let's try harder to have fun 😞`;
+
     showMessage(msg, 'Response from Modal');
   });
 });
