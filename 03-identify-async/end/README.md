@@ -1,0 +1,1 @@
+Code is the same as BEGIN
