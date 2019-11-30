@@ -2,7 +2,7 @@ import { ingredients } from './ingredients';
 
 export function getDataAfterDelay(
   delayMs: number,
-  callback: (data: any[]) => void,
+  callback: (data: string[]) => void,
 ) {
   setTimeout(() => {
     const data = ingredients;
