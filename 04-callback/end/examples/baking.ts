@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Baking Cookies
  *
  * This code does not run.
  * It is here as an example
- * of a mixed sync and async process.
+ * of a mixed sync and async flow.
  */
 const ingredients = [
   '2 1/4 cups all-purpose flour',
@@ -17,13 +19,14 @@ const ingredients = [
   '2 cups (12-oz. pkg.) chocolate chips',
 ];
 
-function bakeCookies() {
-  const combined = combine(ingredients);
-  const batter = mix(combined);
+export function bakeCookies() {
+  const bowl = combine(ingredients);
 
-  const intoTheOven = { batter, temp: 375, minutes: 10 };
+  const batter = mix(bowl);
 
-  bake(intoTheOven, cookies => {
+  const cookieSheet = { batter, temp: 375, minutes: 10 };
+
+  bake(cookieSheet, cookies => {
     /**
      * we must wait 10 minutes for the oven
      * to bake the cookies
@@ -32,21 +35,38 @@ function bakeCookies() {
     eat(cookies);
   });
 
+  /**
+   * private functions are below
+   *
+   **/
+
   function combine(i: any) {
     // Logic to combine the ingredients
-    return i;
+    const bowl = {
+      /* combined indgredients */
+    };
+    return bowl;
   }
-  function mix(i: any) {
+
+  function mix(bowl: any) {
     // Logic to mix the ingredients
-    return i;
+    const batter = {
+      /* mixed ingredients */
+    };
+    return batter;
   }
+
   function bake(
-    baking: { batter: any; temp: number; minutes: number },
+    cookieSheet: { batter: any; temp: number; minutes: number },
     cb: (cookies: any) => void,
   ) {
     // Logic to bake the cookies and then we return them
-    cb('cookies');
+    const cookies: any[] = [
+      /*Cook the cookies on the cookie sheet */
+    ];
+    cb(cookies);
   }
+
   function eat(cookies: any) {
     console.log('yummy!');
   }
