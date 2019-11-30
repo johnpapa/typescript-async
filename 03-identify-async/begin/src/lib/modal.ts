@@ -14,6 +14,10 @@ export const openModal = async function() {
   const responsePromise = new Promise<string>((res, rej) => {
     resolve = res;
   });
+  /**
+   * This next line returns the promise.
+   * The caller then waits for the promise to resolve.
+   */
   return responsePromise;
 
   function closeModal(yesno: 'yes' | 'no') {
