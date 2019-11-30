@@ -43,7 +43,7 @@ const getHeroCallback = function(
   callbackError?: CallbackError,
 ) {
   axios
-    .get<Hero[]>(`${apiUrl}/123heroes?email=${email}`)
+    .get<Hero[]>(`${apiUrl}/heroes?email=${email}`)
     .then((response: AxiosResponse<Hero[]>) => {
       const data = parseList<Hero>(response);
       const hero = data[0];
