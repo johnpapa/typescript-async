@@ -3,6 +3,7 @@ import { showMessage } from './dom';
 export const sayHelloTimer = function(ms: number) {
   let counter = 0;
   showMessage(`Starting the timer`, 'Response from Timer');
+
   const callback = (ms: number) => {
     counter++;
     showMessage(
@@ -10,6 +11,7 @@ export const sayHelloTimer = function(ms: number) {
       'Response from Timer',
       true,
     );
+
     if (counter === 5) {
       showMessage(
         `Goodbye. We said hello every ${ms} milliseconds. (after ${counter} iterations)`,

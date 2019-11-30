@@ -22,7 +22,9 @@ button.addEventListener('click', render);
 document.querySelector('#open-modal').addEventListener('click', async () => {
   const response = await openModal();
   const msg =
-    response === 'yes' ? `Yay! This is fun! 😄` : `Aw, that is sad. Let's try harder to have fun 😞`;
+    response === 'yes'
+      ? `Yay! This is fun! 😄`
+      : `Aw, that is sad. Let's try harder to have fun 😞`;
   showMessage(msg, 'Response from Modal');
 });
 
