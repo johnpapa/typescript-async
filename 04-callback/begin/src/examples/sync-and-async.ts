@@ -4,6 +4,7 @@ import { ingredients } from './ingredients';
 export function forEachExample() {
   let index = 0;
   ingredients.forEach(name => {
+    index++;
     showMessage(`${index} - ${name}`);
     console.log(`${index} - ${name}`);
   });
