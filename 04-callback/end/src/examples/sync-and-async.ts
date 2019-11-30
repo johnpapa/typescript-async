@@ -1,20 +1,5 @@
-import { showMessage, cloneElementsFromTemplate } from '../lib';
-
-/**
- * Examples of sync and async callbacks.
- *
- */
-const ingredients = [
-  '2 1/4 cups all-purpose flour',
-  '1 teaspoon baking soda',
-  '1 teaspoon salt',
-  '1 cup (2 sticks) butter',
-  '3/4 cup granulated sugar',
-  '3/4 cup packed brown sugar',
-  '1 teaspoon vanilla extract',
-  '2 large eggs',
-  '2 cups (12-oz. pkg.) chocolate chips',
-];
+import { showMessage } from '../lib';
+import { ingredients } from './ingredients';
 
 export function forEachExample() {
   let index = 0;
@@ -40,14 +25,4 @@ export function setTimeoutExample() {
       }, 1500);
     }, 1500);
   }, 1500);
-}
-
-export function getDataAfterDelay(
-  delayMs: number,
-  callback: (data: any[]) => void,
-) {
-  setTimeout(() => {
-    const data = ingredients;
-    callback(data);
-  }, delayMs);
 }

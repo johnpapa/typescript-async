@@ -9,7 +9,7 @@ import {
   showMessage,
   getHeroTreeCallback,
 } from './lib';
-import { getDataAfterDelay } from './examples/sync-and-async';
+import { getDataAfterDelay } from "./examples/get-ingredients";
 import { replaceHeroListComponent } from './heroes.component';
 
 const searchEmailElement = document.getElementById(
