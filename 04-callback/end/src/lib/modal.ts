@@ -1,4 +1,4 @@
-export const openModal = async function() {
+export const openModal = async function () {
   const listenerYes = () => closeModal('yes');
   const listenerNo = () => closeModal('no');
   document.querySelector('.modal-yes').addEventListener('click', listenerYes);
@@ -14,6 +14,10 @@ export const openModal = async function() {
   const responsePromise = new Promise<string>((res, rej) => {
     resolve = res;
   });
+  /**
+   * This next line returns the promise.
+   * The caller then waits for the promise to resolve.
+   */
   return responsePromise;
 
   function closeModal(yesno: 'yes' | 'no') {
