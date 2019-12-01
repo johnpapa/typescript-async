@@ -2,10 +2,10 @@ import './design/index.scss';
 
 import { getHeroTreePromise, Hero, showFetching, showMessage } from './lib';
 
-import { replaceHeroListComponent } from './heroes.component';
+import { replaceHeroListComponent, clearList } from './heroes.component';
 import {
   getHeroesViaNewPromise,
-  getHeroesViaPromiseResolve,
+  getHeroesViaPromise,
   getHeroesViaPromiseReject,
   getHeroesViaPromiseRejectShorter,
 } from '../examples/promise';
@@ -38,7 +38,7 @@ document
 function resolvedPromise() {
   showFetching();
   showMessage();
-  getHeroesViaPromiseResolve()
+  getHeroesViaPromise()
     .then(heroes => {
       console.log('get hero via promise');
       console.table(heroes);
@@ -98,11 +98,6 @@ function rejectedPromiseShorter() {
 async function render() {
   showMessage();
   showFetching();
-  renderHeroes();
-}
-
-function renderHeroes() {
-  replaceHeroListComponent(undefined, '');
   getHeroTreePromise(searchEmailElement.value)
     .then((hero: Hero) => replaceHeroListComponent(hero))
     .catch((error: any) => {
