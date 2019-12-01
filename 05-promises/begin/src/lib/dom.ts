@@ -38,5 +38,15 @@ export function showMessage(text = '', title = 'Info', append = false) {
 }
 
 export function showFetching(show: boolean = true) {
+  if (show) {
+    clearList();
+  }
   document.getElementById('progress').style.display = show ? 'block' : 'none';
+}
+
+export function clearList() {
+  const heroPlaceholder = document.querySelector('.hero-list');
+  const div = createDiv('hero-list');
+  div.innerText = '';
+  heroPlaceholder.replaceWith(div);
 }
