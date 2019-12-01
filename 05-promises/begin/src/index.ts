@@ -74,6 +74,7 @@ function rejectedPromise() {
     .catch(error => {
       console.error('Oh no! rejected promise!');
       console.error(error);
+      showMessage(`Something bad happened`, 'Error');
     })
     .finally(() => showFetching(false));
 }
@@ -89,6 +90,7 @@ function rejectedPromiseShorter() {
     .catch(error => {
       console.error('Oh no! rejected promise!');
       console.error(error);
+      showMessage(`Something bad happened`, 'Error');
     })
     .finally(() => showFetching(false));
 }
