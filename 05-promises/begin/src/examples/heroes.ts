@@ -1,4 +1,4 @@
-import { Hero } from "../src/lib";
+import { Hero } from "../lib";
 
 export const heroes: Hero[] = [
   {

@@ -1,31 +1,4 @@
 import { promisify } from 'es6-promisify';
-
-// Promisified call
-function promiseTest() {
-  const getHeroTreePromisified = (email: string) => {
-    return new Promise((resolve, reject) => {
-      getHeroTreeCallback(
-        email,
-        (hero: Hero) => resolve(hero),
-        (msg?: string) => reject(msg),
-      );
-    });
-  };
-  getHeroTreePromisified('madelyn@acme.com').then(() => {
-    console.log('next');
-  });
-}
-
-// Asyncified call
-async function callbackToAsync() {
-  const getHeroTreeAsyncified = promisify(getHeroTreeCallback);
-
-  await getHeroTreeAsyncified('madelyn@acme.com');
-  console.log('next');
-}
-
-// -----------
-
 import axios, { AxiosResponse, AxiosError } from 'axios';
 
 import {
@@ -120,4 +93,31 @@ const getAccountRepCallback = function(
     });
 };
 
-export { getHeroTreeCallback };
+/**
+ * Promisified call
+ **/
+function promisifiedCallback() {
+  const getHeroTreePromisified = (email: string) => {
+    return new Promise((resolve, reject) => {
+      getHeroTreeCallback(
+        email,
+        (hero: Hero) => resolve(hero),
+        (msg?: string) => reject(msg),
+      );
+    });
+  };
+  getHeroTreePromisified('madelyn@acme.com').then(() => {
+    console.log('next');
+  });
+}
+
+/**
+ * Asyncified call
+ */
+async function asyncifiedCallback() {
+  const getHeroTreeAsyncified = promisify(getHeroTreeCallback);
+
+  await getHeroTreeAsyncified('madelyn@acme.com');
+  console.log('next');
+}
+export { getHeroTreeCallback, promisifiedCallback, asyncifiedCallback };

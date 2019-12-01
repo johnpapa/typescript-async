@@ -1,5 +1,5 @@
 import { heroes } from './heroes';
-import { Hero } from '../src/lib';
+import { Hero } from '../lib';
 
 /**
  * Return a fulfilled promise after a given delay.

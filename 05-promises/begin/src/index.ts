@@ -2,13 +2,13 @@ import './design/index.scss';
 
 import { getHeroTreePromise, Hero, showFetching, showMessage } from './lib';
 
-import { replaceHeroListComponent, clearList } from './heroes.component';
+import { replaceHeroListComponent } from './heroes.component';
 import {
   getHeroesViaNewPromise,
   getHeroesViaPromise,
   getHeroesViaPromiseReject,
   getHeroesViaPromiseRejectShorter,
-} from '../examples/promise';
+} from './examples/promise';
 
 const searchEmailElement = document.getElementById(
   'search-email',
