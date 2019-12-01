@@ -11,6 +11,7 @@ const getHeroTreePromise = function(searchEmail: string) {
     getHeroPromise(searchEmail)
       // Level 2 - Get the orders and account reps
       .then((hero: Hero) => Promise.all([getOrders(hero), getAccountRep(hero)]))
+      // Extract the orders and account reps and put them on their respective Hero objects
       .then((result: [Order[], AccountRepresentative]) => mergeData(result))
   );
 
