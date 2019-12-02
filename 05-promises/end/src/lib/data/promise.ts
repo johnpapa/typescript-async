@@ -3,6 +3,10 @@ import axios, { AxiosResponse, AxiosError } from 'axios';
 import { Order, Hero, AccountRepresentative } from '../interfaces';
 import { apiUrl, parseList } from './config';
 
+/**
+ * Get the hero and his/her related orders and account rep
+ * using promises
+ */
 const getHeroTreePromise = function(searchEmail: string) {
   let hero: Hero;
 
@@ -30,7 +34,9 @@ const getHeroTreePromise = function(searchEmail: string) {
     if (orders) {
       hero.orders = orders;
     }
-    hero.accountRep = accountRep;
+    if (accountRep) {
+      hero.accountRep = accountRep;
+    }
     return hero;
   }
 };

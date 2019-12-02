@@ -35,64 +35,55 @@ document
   .getElementById('rejected-promise-shorter')
   .addEventListener('click', rejectedPromiseShorter);
 
+function wrapUp() {
+  showFetching(false);
+}
+
+function handleErrors(error: any) {
+  console.error('Oh no! rejected promise!');
+  console.error(error);
+  showMessage(`Something bad happened`, 'Error');
+}
+
+function showHeroesInConsole(heroes: Hero[]) {
+  console.table(heroes);
+  showMessage(`Returned ${heroes.length} heroes`);
+}
+
 function resolvedPromise() {
   showFetching();
   showMessage();
   getHeroesViaPromise()
-    .then(heroes => {
-      console.log('get hero via promise');
-      console.table(heroes);
-      showMessage(`Returned ${heroes.length} heroes`);
-    })
-    .catch(error => {
-      console.error('Oh no! rejected promise!');
-      console.error(error);
-    })
-    .finally(() => showFetching(false));
+    .then(showHeroesInConsole)
+    .catch(handleErrors)
+    .finally(wrapUp);
 }
 
 function resolvedUsingPromiseConstructor() {
   showFetching();
   showMessage();
   getHeroesViaNewPromise()
-    .then(heroes => {
-      console.log('get new promise');
-      console.table(heroes);
-      showMessage(`Returned ${heroes.length} heroes`);
-    })
-    .finally(() => showFetching(false));
+    .then(showHeroesInConsole)
+    .catch(handleErrors)
+    .finally(wrapUp);
 }
 
 function rejectedPromise() {
   showFetching();
   showMessage();
   getHeroesViaPromiseReject()
-    .then(heroes => {
-      console.log('get hero via promise');
-      console.table(heroes);
-    })
-    .catch(error => {
-      console.error('Oh no! rejected promise!');
-      console.error(error);
-      showMessage(`Something bad happened`, 'Error');
-    })
-    .finally(() => showFetching(false));
+    .then(showHeroesInConsole)
+    .catch(handleErrors)
+    .finally(wrapUp);
 }
 
 function rejectedPromiseShorter() {
   showFetching();
   showMessage();
   getHeroesViaPromiseRejectShorter()
-    .then(heroes => {
-      console.log('get hero via promise');
-      console.table(heroes);
-    })
-    .catch(error => {
-      console.error('Oh no! rejected promise!');
-      console.error(error);
-      showMessage(`Something bad happened`, 'Error');
-    })
-    .finally(() => showFetching(false));
+    .then(showHeroesInConsole)
+    .catch(handleErrors)
+    .finally(wrapUp);
 }
 
 async function render() {
@@ -105,7 +96,5 @@ async function render() {
       showMessage(error);
       replaceHeroListComponent();
     })
-    .finally(() => {
-      showFetching(false);
-    });
+    .finally(wrapUp);
 }

@@ -35,77 +35,65 @@ document
   .getElementById('rejected-promise-shorter')
   .addEventListener('click', rejectedPromiseShorter);
 
+function wrapUp() {
+  showFetching(false);
+}
+
+function handleErrors(error: any) {
+  console.error('Oh no! rejected promise!');
+  console.error(error);
+  showMessage(`Something bad happened`, 'Error');
+}
+
+function showHeroesInConsole(heroes: Hero[]) {
+  console.table(heroes);
+  showMessage(`Returned ${heroes.length} heroes`);
+}
+
 function resolvedPromise() {
   showFetching();
   showMessage();
   getHeroesViaPromise()
-    .then(heroes => {
-      console.log('get hero via promise');
-      console.table(heroes);
-      showMessage(`Returned ${heroes.length} heroes`);
-    })
-    .catch(error => {
-      console.error('Oh no! rejected promise!');
-      console.error(error);
-    })
-    .finally(() => showFetching(false));
+    .then(showHeroesInConsole)
+    .catch(handleErrors)
+    .finally(wrapUp);
 }
 
 function resolvedUsingPromiseConstructor() {
   showFetching();
   showMessage();
   getHeroesViaNewPromise()
-    .then(heroes => {
-      console.log('get new promise');
-      console.table(heroes);
-      showMessage(`Returned ${heroes.length} heroes`);
-    })
-    .finally(() => showFetching(false));
+    .then(showHeroesInConsole)
+    .catch(handleErrors)
+    .finally(wrapUp);
 }
 
 function rejectedPromise() {
   showFetching();
   showMessage();
   getHeroesViaPromiseReject()
-    .then(heroes => {
-      console.log('get hero via promise');
-      console.table(heroes);
-    })
-    .catch(error => {
-      console.error('Oh no! rejected promise!');
-      console.error(error);
-      showMessage(`Something bad happened`, 'Error');
-    })
-    .finally(() => showFetching(false));
+    .then(showHeroesInConsole)
+    .catch(handleErrors)
+    .finally(wrapUp);
 }
 
 function rejectedPromiseShorter() {
   showFetching();
   showMessage();
   getHeroesViaPromiseRejectShorter()
-    .then(heroes => {
-      console.log('get hero via promise');
-      console.table(heroes);
-    })
-    .catch(error => {
-      console.error('Oh no! rejected promise!');
-      console.error(error);
-      showMessage(`Something bad happened`, 'Error');
-    })
-    .finally(() => showFetching(false));
+    .then(showHeroesInConsole)
+    .catch(handleErrors)
+    .finally(wrapUp);
 }
 
 async function render() {
   showMessage();
   showFetching();
-  getHeroTreePromise(searchEmailElement.value)
-    .then((hero: Hero) => replaceHeroListComponent(hero))
-    .catch((error: any) => {
-      console.log(error);
-      showMessage(error);
-      replaceHeroListComponent();
-    })
-    .finally(() => {
-      showFetching(false);
-    });
+  /**
+   * Get all of the hero data.
+   * Then show the hero with the hero component.
+   * Handle any errors
+   * Always turn off the fetching indicator.
+   */
+  // TODO
 }
