@@ -65,25 +65,15 @@ const getHeroPromise = (email: string) => {
       // no need to resolve as it is the default behavior
       // return Promise.resolve(hero);
     })
-    .catch((error: AxiosError) => {
-      console.error(`Developer Error: Async Data Error: ${error.message}`);
-      // Option - you can throw an error,
-      // but it won't be caught if you are inside
-      // of another async callback. So it is safer to reject.
-      // throw new Error('User Facing Error: Something bad happened');
-      return Promise.reject(`Oh no! We're unable to fetch the Hero`);
-    });
+    .catch((error: AxiosError) => handleAxiosErrors(error, 'Hero'));
 };
 
 const getOrdersPromise = function(heroId: number) {
-  const url = heroId ? `${apiUrl}/orders/${heroId}` : `${apiUrl}/orders`;
+  const url = `${apiUrl}/orders/${heroId}`;
   return axios
     .get(url)
     .then((response: AxiosResponse<Order[]>) => parseList<Order>(response))
-    .catch((error: AxiosError) => {
-      console.error(`Developer Error: Async Data Error: ${error.message}`);
-      return Promise.reject(`Oh no! We're unable to fetch the Orders`);
-    });
+    .catch((error: AxiosError) => handleAxiosErrors(error, 'Orders'));
 };
 
 const getAccountRepPromise = function(heroId: number) {
@@ -94,10 +84,21 @@ const getAccountRepPromise = function(heroId: number) {
       const list = parseList<AccountRepresentative>(response);
       return list[0];
     })
-    .catch((error: AxiosError) => {
-      console.error(`Developer Error: Async Data Error: ${error.message}`);
-      return Promise.reject(`Oh no! We're unable to fetch the Account Rep`);
-    });
+    .catch((error: AxiosError) => handleAxiosErrors(error, 'Account Rep'));
 };
+
+function handleAxiosErrors(error: AxiosError, model: string) {
+  console.error(`Developer Error: Async Data Error: ${error.message}`);
+  return Promise.reject(`Oh no! We're unable to fetch the ${model}`);
+
+  /**
+   * Option - you could throw an error,
+   *
+   * but it won't be caught if you are inside
+   * of another async callback.
+   * So it is safer to reject.
+   * throw new Error('User Facing Error: Something bad happened');
+   */
+}
 
 export { getHeroTreePromise };
