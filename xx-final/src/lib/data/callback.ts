@@ -94,9 +94,9 @@ const getAccountRepCallback = function(
 };
 
 /**
- * Promisified call
+ * Promisified callback
  **/
-function promisifiedCallback() {
+function promisifiedCallback1() {
   const getHeroTreePromisified = (email: string) => {
     return new Promise((resolve, reject) => {
       getHeroTreeCallback(
@@ -106,7 +106,21 @@ function promisifiedCallback() {
       );
     });
   };
+
+  // Now call it
   getHeroTreePromisified('madelyn@acme.com').then(() => {
+    console.log('next');
+  });
+}
+
+/**
+ * Promisified callback
+ **/
+async function promisifiedCallback2() {
+  const getHeroTreePromisified = promisify(getHeroTreeCallback);
+
+  // Now call it
+  return getHeroTreePromisified('madelyn@acme.com').then(() => {
     console.log('next');
   });
 }
@@ -117,7 +131,14 @@ function promisifiedCallback() {
 async function asyncifiedCallback() {
   const getHeroTreeAsyncified = promisify(getHeroTreeCallback);
 
+  // Now call it
   await getHeroTreeAsyncified('madelyn@acme.com');
   console.log('next');
 }
-export { getHeroTreeCallback, promisifiedCallback, asyncifiedCallback };
+
+export {
+  getHeroTreeCallback,
+  promisifiedCallback1,
+  promisifiedCallback2,
+  asyncifiedCallback,
+};
