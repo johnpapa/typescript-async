@@ -71,7 +71,7 @@ function rejectedPromise() {
 function rejectedPromiseShorter() {
   showFetching();
   showMessage();
-  // TODO - rejected promis, but shorter
+  // TODO - rejected promise, but shorter
 }
 
 async function render() {
