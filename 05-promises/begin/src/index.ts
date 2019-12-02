@@ -53,37 +53,25 @@ function showHeroesInConsole(heroes: Hero[]) {
 function resolvedPromise() {
   showFetching();
   showMessage();
-  getHeroesViaPromise()
-    .then(showHeroesInConsole)
-    .catch(handleErrors)
-    .finally(wrapUp);
+  // TODO - get heroes, with a Promise
 }
 
 function resolvedUsingPromiseConstructor() {
   showFetching();
   showMessage();
-  getHeroesViaNewPromise()
-    .then(showHeroesInConsole)
-    .catch(handleErrors)
-    .finally(wrapUp);
+  // TODO - get heroes, with new Promise
 }
 
 function rejectedPromise() {
   showFetching();
   showMessage();
-  getHeroesViaPromiseReject()
-    .then(showHeroesInConsole)
-    .catch(handleErrors)
-    .finally(wrapUp);
+  // TODO - rejected promise
 }
 
 function rejectedPromiseShorter() {
   showFetching();
   showMessage();
-  getHeroesViaPromiseRejectShorter()
-    .then(showHeroesInConsole)
-    .catch(handleErrors)
-    .finally(wrapUp);
+  // TODO - rejected promis, but shorter
 }
 
 async function render() {
