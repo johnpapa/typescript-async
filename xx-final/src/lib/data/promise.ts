@@ -30,7 +30,9 @@ const getHeroTreePromise = function(searchEmail: string) {
     if (orders) {
       hero.orders = orders;
     }
-    hero.accountRep = accountRep;
+    if (accountRep) {
+      hero.accountRep = accountRep;
+    }
     return hero;
   }
 };
