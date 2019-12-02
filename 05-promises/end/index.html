@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Tour of Heroes</title>
+  </head>
+
+  <body>
+    <div>
+      <header>
+        <nav class="navbar has-background-dark is-dark">
+          <div class="navbar-brand">
+            <a
+              class="navbar-item"
+              href="https://typescriptlang.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fab js-logo fa-js fa-2x" aria-hidden="true"></i>
+            </a>
+            <div class="navbar-item nav-home">
+              <span class="tour">TOUR</span>
+              <span class="of">OF</span>
+              <span class="heroes">HEROES</span>
+            </div>
+            <button
+              class="link navbar-burger burger"
+              aria-label="menu"
+              aria-expanded="false"
+              data-target="navbarBasicExample"
+            >
+              <span aria-hidden="true" />
+              <span aria-hidden="true" />
+              <span aria-hidden="true" />
+            </button>
+          </div>
+          <div class="navbar-menu">
+            <div class="navbar-end">
+              <div class="navbar-item">
+                <div class="buttons">
+                  <a
+                    href="https://github.com/johnpapa"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i class="fab fa-github fa-2x" aria-hidden="true"></i>
+                  </a>
+                  <a
+                    href="https://twitter.com/john_papa"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i class="fab fa-twitter fa-2x" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+      <div class="main-section columns">
+        <main class="column main-content">
+          <div class="columns content-title-group">
+            <div class="column">
+              <h2 class="title">Heroes</h2>
+              <div class="columns search-box">
+                <div class="column field is-one-fourth">
+                  <p class="control has-icons-left has-icons-right">
+                    <input
+                      id="search-email"
+                      class="input"
+                      type="email"
+                      placeholder="Email"
+                      value="madelyn@acme.com"
+                    />
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-envelope"></i>
+                    </span>
+                  </p>
+                </div>
+                <button class="column button search-button is-narrow is-medium">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="button-bar">
+            <button id="resolved-promise" class="button is-primary">
+              Resolved Promise
+            </button>
+            <button id="resolved-using-promise-ctor" class="button is-primary">
+              Resolved using promise Ctor
+            </button>
+            <button id="rejected-promise" class="button is-primary">
+              Rejected Promise
+            </button>
+            <button id="rejected-promise-shorter" class="button is-primary">
+              Rejected Promise (shorter)
+            </button>
+            <div id="progress" style="display: none;">
+              <progress class="progress is-medium is-info" max="100"></progress>
+            </div>
+          </div>
+          <div class="hero-list">
+            <!-- Hero Component Goes Here -->
+          </div>
+        </main>
+      </div>
+      <div id="message-box" style="visibility: hidden" class="message is-info">
+        <h3 class="message-header"></h3>
+        <p class="message-body"></p>
+      </div>
+    </div>
+
+    <!-- Begin Templates -->
+
+    <template id="hero-template">
+      <li>
+        <div class="card">
+          <div class="card-content">
+            <div class="content">
+              <div class="name"></div>
+              <div class="description"></div>
+              <div class="email"></div>
+              <div>
+                Rep:
+                <span class="accountrep"></span>
+              </div>
+              <button class="button expand-button">
+                <i class="fas fa-angle-double-down"></i>
+              </button>
+              <div class="order-area"></div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </template>
+
+    <template id="order-template">
+      <div class="order-info">
+        <div>Order Num: <span class="order-number"></span></div>
+        <div>Status: <span class="status"></span></div>
+      </div>
+      <div class="columns order-header">
+        <div class="column">Order #</div>
+        <div class="column">Item</div>
+        <div class="column">Qty</div>
+        <div class="column">Price</div>
+      </div>
+    </template>
+
+    <template id="order-item-template">
+      <div class="columns order-item">
+        <div class="column order-number"></div>
+        <div class="column item-name"></div>
+        <div class="column item-qty"></div>
+        <div class="column item-price"></div>
+      </div>
+    </template>
+
+    <script src="bundle.js"></script>
+    <link rel="stylesheet" href="main.bundle.css" />
+  </body>
+</html>
