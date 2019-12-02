@@ -41,20 +41,6 @@ const getHeroTreePromise = function(searchEmail: string) {
   }
 };
 
-// PROMISE NESTING
-// const getHeroTreePromise = function(searchEmail: string) {
-//   let hero: Hero;
-//   return getHeroPromise(searchEmail).then(h => {
-//     hero = h;
-//     return getOrdersPromise(h ? h.id : undefined).then(orders => {
-//       if (orders) {
-//         hero.orders = orders;
-//       }
-//       return hero;
-//     });
-//   });
-// };
-
 const getHeroPromise = (email: string) => {
   return axios
     .get<Hero[]>(`${apiUrl}/heroes?email=${email}`)
