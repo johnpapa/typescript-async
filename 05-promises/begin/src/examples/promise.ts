@@ -4,7 +4,8 @@ import { Hero } from '../lib';
 /**
  * Return a fulfilled promise after a given delay.
  */
-const delay = (ms: any) => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms: any) =>
+  new Promise<void>(resolve => setTimeout(resolve, ms));
 
 /**
  * Return a fulfilled promise of heroes
@@ -16,6 +17,13 @@ const getHeroesDelayedAsync = () =>
  * Return a fulfilled promise of empty array
  */
 const getHeroesEmpty = () => Promise.resolve([]);
+
+/**
+ * Get the heroes via a Promise
+ */
+export const getHeroesViaPromise = function() {
+  return delay(1000).then(() => getHeroesDelayedAsync());
+};
 
 /**
  * Create and return a promise.
@@ -36,13 +44,6 @@ export function getHeroesViaNewPromise() {
   });
   return newPromise;
 }
-
-/**
- * Get the heroes via a Promise
- */
-export const getHeroesViaPromise = function() {
-  return delay(1000).then(() => getHeroesDelayedAsync());
-};
 
 /**
  * Get the heroes,
@@ -68,3 +69,16 @@ export const getHeroesViaPromiseRejectShorter = function() {
     Promise.reject('bad error occured getting the heroes');
   return delay(1000).then(() => getHeroesDelayedAsync());
 };
+
+// function example() {
+//   showFetching(true);
+
+//   return getHeroes()
+//     .then((hero: Hero) => replaceHeroListComponent(hero))
+//     .catch((error: any) => {
+//       showMessage(error);
+//     })
+//     .finally(() => {
+//       showFetching(false);
+//     });
+// }
