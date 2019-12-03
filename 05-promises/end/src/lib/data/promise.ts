@@ -10,24 +10,15 @@ import { apiUrl, parseList } from './config';
 const getHeroTreePromise = function(searchEmail: string) {
   let hero: Hero;
 
-  // Level 1 - Get the hero record
-  return (
-    getHeroPromise(searchEmail)
-      // Level 2 - Get the orders and account reps
-      .then((hero: Hero) => Promise.all([getOrders(hero), getAccountRep(hero)]))
-      // Extract the orders and account reps and put them on their respective Hero objects
-      .then((result: [Order[], AccountRepresentative]) => mergeData(result))
-  );
-
-  function getOrders(h: Hero): Promise<Order[]> {
-    hero = h;
-    return h ? getOrdersPromise(h.id) : undefined;
-  }
-
-  function getAccountRep(h: Hero): Promise<AccountRepresentative> {
-    hero = h;
-    return h ? getAccountRepPromise(h.id) : undefined;
-  }
+  return getHeroPromise(searchEmail)
+    .then((h: Hero) => {
+      hero = h;
+      return h;
+    })
+    .then((hero: Hero) =>
+      Promise.all([getOrdersPromise(hero.id), getAccountRepPromise(hero.id)]),
+    )
+    .then((result: [Order[], AccountRepresentative]) => mergeData(result));
 
   function mergeData(result: [Order[], AccountRepresentative]): Hero {
     const [orders, accountRep] = result;
@@ -41,6 +32,9 @@ const getHeroTreePromise = function(searchEmail: string) {
   }
 };
 
+/**
+ * Get the hero
+ */
 const getHeroPromise = (email: string) => {
   return axios
     .get<Hero[]>(`${apiUrl}/heroes?email=${email}`)
@@ -48,29 +42,31 @@ const getHeroPromise = (email: string) => {
       const data = parseList<Hero>(response);
       const hero = data[0];
       return hero;
-      // no need to resolve as it is the default behavior
-      // return Promise.resolve(hero);
     })
     .catch((error: AxiosError) => handleAxiosErrors(error, 'Hero'));
 };
 
+/**
+ * Get the hero's orders
+ */
 const getOrdersPromise = function(heroId: number) {
-  const url = `${apiUrl}/orders/${heroId}`;
   return axios
-    .get(url)
+    .get<Order[]>(`${apiUrl}/orders/${heroId}`)
     .then((response: AxiosResponse<Order[]>) => parseList<Order>(response))
     .catch((error: AxiosError) => handleAxiosErrors(error, 'Orders'));
 };
 
+/**
+ * Get the hero's account rep
+ */
 const getAccountRepPromise = function(heroId: number) {
-  const url = `${apiUrl}/accountreps/${heroId}`;
   return axios
-    .get(url)
+    .get<AccountRepresentative>(`${apiUrl}/accountreps/${heroId}`)
     .then((response: AxiosResponse<AccountRepresentative>) => {
-      const list = parseList<AccountRepresentative>(response);
-      return list[0];
+      const data = parseList<AccountRepresentative>(response);
+      return data[0];
     })
-    .catch((error: AxiosError) => handleAxiosErrors(error, 'Account Rep'));
+    .catch((error: AxiosError) => handleAxiosErrors(error, 'Account Reps'));
 };
 
 function handleAxiosErrors(error: AxiosError, model: string) {
