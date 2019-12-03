@@ -4,23 +4,24 @@ import { Hero } from '../lib';
 /**
  * Return a fulfilled promise after a given delay.
  */
-let delay = (ms: any) => new Promise<void>(resolve => setTimeout(resolve, ms));
+const delay = (ms: any) =>
+  new Promise<void>(resolve => setTimeout(resolve, ms));
 
 /**
  * Return a fulfilled promise of heroes
  */
-let getHeroesDelayedAsync = () =>
+const getHeroesDelayedAsync = () =>
   new Promise<Hero[]>(resolve => resolve(heroes));
 
 /**
  * Return a fulfilled promise of empty array
  */
-let getHeroesEmpty = () => Promise.resolve([]);
+const getHeroesEmpty = () => Promise.resolve([]);
 
 /**
  * Get the heroes via a Promise
  */
-export let getHeroesViaPromise = function() {
+export const getHeroesViaPromise = function() {
   return delay(1000).then(() => getHeroesDelayedAsync());
 };
 
@@ -48,7 +49,7 @@ export function getHeroesViaNewPromise() {
  * Get the heroes,
  * except this always causes a Promise to reject
  */
-export let getHeroesViaPromiseReject = function() {
+export const getHeroesViaPromiseReject = function() {
   const newPromise = new Promise<Hero[]>((resolve, reject) => {
     return delay(1000)
       .then(() => getHeroesEmpty())
@@ -67,7 +68,7 @@ export let getHeroesViaPromiseReject = function() {
  * Get the heroes
  * Except this always causes a Promise to reject, too
  */
-export let getHeroesViaPromiseRejectShorter = function() {
+export const getHeroesViaPromiseRejectShorter = function() {
   const getHeroesDelayedAsync = () =>
     Promise.reject('bad error occured getting the heroes');
   return delay(1000).then(() => getHeroesDelayedAsync());
