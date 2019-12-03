@@ -45,9 +45,10 @@ function handleErrors(error: any) {
   showMessage(`Something bad happened`, 'Error');
 }
 
-function showHeroesInConsole(heroes: Hero[]) {
+function showHeroes(heroes: Hero[]) {
   console.table(heroes);
   showMessage(`Returned ${heroes.length} heroes`);
+  heroes.forEach(h => showMessage(JSON.stringify(h), 'heroes', true));
 }
 
 function resolvedPromise() {

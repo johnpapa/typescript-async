@@ -45,16 +45,17 @@ function handleErrors(error: any) {
   showMessage(`Something bad happened`, 'Error');
 }
 
-function showHeroesInConsole(heroes: Hero[]) {
+function showHeroes(heroes: Hero[]) {
   console.table(heroes);
   showMessage(`Returned ${heroes.length} heroes`);
+  heroes.forEach(h => showMessage(JSON.stringify(h), 'heroes', true));
 }
 
 function resolvedPromise() {
   showFetching();
   showMessage();
   getHeroesViaPromise()
-    .then(showHeroesInConsole)
+    .then(showHeroes)
     .catch(handleErrors)
     .finally(wrapUp);
 }
@@ -63,7 +64,7 @@ function resolvedUsingPromiseConstructor() {
   showFetching();
   showMessage();
   getHeroesViaNewPromise()
-    .then(showHeroesInConsole)
+    .then(showHeroes)
     .catch(handleErrors)
     .finally(wrapUp);
 }
@@ -72,7 +73,7 @@ function rejectedPromise() {
   showFetching();
   showMessage();
   getHeroesViaPromiseReject()
-    .then(showHeroesInConsole)
+    .then(showHeroes)
     .catch(handleErrors)
     .finally(wrapUp);
 }
@@ -81,7 +82,7 @@ function rejectedPromiseShorter() {
   showFetching();
   showMessage();
   getHeroesViaPromiseRejectShorter()
-    .then(showHeroesInConsole)
+    .then(showHeroes)
     .catch(handleErrors)
     .finally(wrapUp);
 }
