@@ -4,7 +4,7 @@ import { Hero } from '../lib';
 /**
  * Return a fulfilled promise after a given delay.
  */
-const delay = (ms: any) =>
+const delay = (ms: number) =>
   new Promise<void>(resolve => setTimeout(resolve, ms));
 
 /**
