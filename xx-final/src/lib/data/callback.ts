@@ -1,4 +1,3 @@
-import { promisify } from 'es6-promisify';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 
 import {
@@ -96,49 +95,22 @@ const getAccountRepCallback = function(
 /**
  * Promisified callback
  **/
-function promisifiedCallback1() {
-  const getHeroTreePromisified = (email: string) => {
-    return new Promise((resolve, reject) => {
-      getHeroTreeCallback(
-        email,
-        (hero: Hero) => resolve(hero),
-        (msg?: string) => reject(msg),
-      );
-    });
-  };
-
-  // Now call it
-  getHeroTreePromisified('madelyn@acme.com').then(() => {
-    console.log('next');
+const getHeroTreePromisified = (email: string) => {
+  return new Promise((resolve, reject) => {
+    getHeroTreeCallback(
+      email,
+      (hero: Hero) => resolve(hero),
+      (msg?: string) => reject(msg),
+    );
   });
-}
-
-/**
- * Promisified callback
- **/
-async function promisifiedCallback2() {
-  const getHeroTreePromisified = promisify(getHeroTreeCallback);
-
-  // Now call it
-  return getHeroTreePromisified('madelyn@acme.com').then(() => {
-    console.log('next');
-  });
-}
+};
 
 /**
  * Asyncified call
  */
 async function asyncifiedCallback() {
-  const getHeroTreeAsyncified = promisify(getHeroTreeCallback);
-
-  // Now call it
-  await getHeroTreeAsyncified('madelyn@acme.com');
+  return await getHeroTreePromisified('madelyn@acme.com');
   console.log('next');
 }
 
-export {
-  getHeroTreeCallback,
-  promisifiedCallback1,
-  promisifiedCallback2,
-  asyncifiedCallback,
-};
+export { getHeroTreeCallback, asyncifiedCallback };
