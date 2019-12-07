@@ -84,26 +84,21 @@ const getHeroTreeAsync = async function(email: string) {
      * Find and attach the status to the order,
      * when each async call returns.
      */
-    for await (let sso of getAllStatusesAsync) {
-      const order = hero.orders.find((o: Order) => o.num === sso.orderNum);
-      order.shippingStatus = sso;
+    for await (let ss of getAllStatusesAsync) {
+      const order = hero.orders.find((o: Order) => o.num === ss.orderNum);
+      order.shippingStatus = ss;
     }
   } else {
     /**
-     * Alternate optoin ... use Promise.all.
+     * Alternate option ... use Promise.all.
      * Make all the calls, then merge results when done.
      */
     const shippingStatuses = await Promise.all(getAllStatusesAsync);
-    const sso = shippingStatuses.reduce((acc, ss) => {
-      return {
-        ...acc,
-        [ss.orderNum]: ss,
-      };
-    }, {} as ShippingStatus);
-    hero.orders.forEach(o => {
-      sso[o.num].status;
-      o.shippingStatus = sso[o.num];
-    });
+
+    for (let ss of shippingStatuses) {
+      const order = hero.orders.find((o: Order) => o.num === ss.orderNum);
+      order.shippingStatus = ss;
+    }
   }
   return hero;
 };
