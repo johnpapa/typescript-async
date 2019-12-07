@@ -82,14 +82,11 @@ async function renderHeroesAndTryCatch() {
 async function render() {
   showMessage();
   showFetching();
-  let hero: Hero;
-  try {
-    hero = await getHeroTreeAsync(searchEmailElement.value);
-    replaceHeroListComponent(hero);
-  } catch (error) {
-    console.log(error);
-    showMessage(error);
-  } finally {
-    wrapUp();
-  }
+  /**
+   * Get all of the hero data.
+   * Then show the hero with the hero component.
+   * Handle any errors
+   * Always turn off the fetching indicator.
+   */
+  // TODO
 }
