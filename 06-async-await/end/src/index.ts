@@ -106,6 +106,7 @@ async function render() {
   let hero: Hero;
   try {
     hero = await getHeroTreeAsync(searchEmailElement.value);
+    replaceHeroListComponent(hero);
   } catch (error) {
     console.log(error);
     showMessage(error);
