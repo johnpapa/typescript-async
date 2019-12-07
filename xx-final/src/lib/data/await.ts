@@ -77,6 +77,10 @@ const getHeroTreeAsync = async function(email: string) {
   const getAllStatusesAsync = orders.map(
     async (o: Order) => await getShippingStatusAsync(o.num),
   );
+
+  /**
+   * Now we choose between for await of vs Promise.all
+   */
   if (false) {
     /**
      * Example of "for await of".
