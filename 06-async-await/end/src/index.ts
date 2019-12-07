@@ -51,7 +51,8 @@ async function renderHeroesAsync() {
   showFetching();
   showMessage();
   try {
-    await getHeroesViaAsyncAwait();
+    const heroes = await getHeroesViaAsyncAwait();
+    showHeroes(heroes);
   } catch (error) {
     handleErrors(error);
   } finally {
@@ -62,20 +63,22 @@ async function renderHeroesAsync() {
 async function renderHeroesButThrow() {
   showFetching();
   showMessage();
-  try {
-    await getHeroesAndThrow();
-  } catch (error) {
-    handleErrors(error);
-  } finally {
-    wrapUp();
-  }
+  // try {
+  const heroes = await getHeroesAndThrow();
+  showHeroes(heroes);
+  // } catch (error) {
+  //   handleErrors(error);
+  // } finally {
+  wrapUp();
+  // }
 }
 
 async function renderHeroesAndTryCatch() {
   showFetching();
   showMessage();
   try {
-    await getHeroesAndTryCatch();
+    const heroes = await getHeroesAndTryCatch();
+    showHeroes(heroes);
   } catch (error) {
     handleErrors(error);
   } finally {

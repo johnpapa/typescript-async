@@ -32,7 +32,7 @@ export async function getHeroesViaAsyncAwait() {
 export async function getHeroesAndThrow() {
   await delay(1000);
   const heroes = await getHeroesEmpty();
-  if (!heroes ?? !heroes.length) {
+  if (!heroes || !heroes.length) {
     throw Error('Uh oh! Errors!');
   }
   return heroes;
