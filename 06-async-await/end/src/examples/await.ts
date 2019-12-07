@@ -10,7 +10,7 @@ const delay = (ms: number) =>
 /**
  * Get the heroes after a delay
  */
-export async function getHeroesViaAsyncAwait(): Promise<Hero[]> {
+export async function getHeroesViaAsyncAwait() {
   await delay(1000);
   return heroes;
 }
