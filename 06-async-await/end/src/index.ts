@@ -47,6 +47,11 @@ function showHeroes(heroes: Hero[]) {
   heroes.forEach(h => showMessage(JSON.stringify(h), 'heroes', true));
 }
 
+/**
+ * Get the heroes, renders them.
+ * Handle errors gracefully.
+ * Always end by turning off progress indicator.
+ */
 async function renderHeroesAsync() {
   showFetching();
   showMessage();
@@ -60,6 +65,11 @@ async function renderHeroesAsync() {
   }
 }
 
+/**
+ * Get the heroes, but an error is thrown!
+ * Handle errors gracefully?
+ * Always end by turning off progress indicator.
+ */
 async function renderHeroesButThrow() {
   showFetching();
   showMessage();
@@ -73,6 +83,10 @@ async function renderHeroesButThrow() {
   // }
 }
 
+/**
+ * Get the heroes
+ * all calls use a try/catch
+ */
 async function renderHeroesAndTryCatch() {
   showFetching();
   showMessage();
