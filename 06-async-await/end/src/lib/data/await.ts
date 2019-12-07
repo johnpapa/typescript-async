@@ -77,35 +77,34 @@ const getHeroTreeAsync = async function(email: string) {
   const getAllStatusesAsync = orders.map(
     async (o: Order) => await getShippingStatusAsync(o.num),
   );
-
-  /**
-   * Example of "for await of".
-   * Make one async call at a time.
-   * Find and attach the status to the order,
-   * when each async call returns.
-   */
-  for await (let sso of getAllStatusesAsync) {
-    const order = hero.orders.find((o: Order) => o.num === sso.orderNum);
-    order.shippingStatus = sso;
+  if (false) {
+    /**
+     * Example of "for await of".
+     * Make one async call at a time.
+     * Find and attach the status to the order,
+     * when each async call returns.
+     */
+    for await (let sso of getAllStatusesAsync) {
+      const order = hero.orders.find((o: Order) => o.num === sso.orderNum);
+      order.shippingStatus = sso;
+    }
+  } else {
+    /**
+     * Alternate optoin ... use Promise.all.
+     * Make all the calls, then merge results when done.
+     */
+    const shippingStatuses = await Promise.all(getAllStatusesAsync);
+    const sso = shippingStatuses.reduce((acc, ss) => {
+      return {
+        ...acc,
+        [ss.orderNum]: ss,
+      };
+    }, {} as ShippingStatus);
+    hero.orders.forEach(o => {
+      sso[o.num].status;
+      o.shippingStatus = sso[o.num];
+    });
   }
-
-  /**
-   * Alternate optoin ... use Promise.all.
-   * Make all the calls, then merge results when done.
-   */
-  // const shippingStatuses = await Promise.all(getAllStatusesAsync);
-  // const sso = shippingStatuses.reduce((acc, ss) => {
-  //   return {
-  //     ...acc,
-  //     [ss.orderNum]: ss,
-  //   };
-  // }, {} as ShippingStatus);
-
-  // hero.orders.forEach(o => {
-  //   sso[o.num].status;
-  //   o.shippingStatus = sso[o.num];
-  // });
-
   return hero;
 };
 
