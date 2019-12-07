@@ -21,8 +21,7 @@ const getHeroAsync = async function(email: string) {
 
 const getOrdersAsync = async function(heroId: number) {
   try {
-    const url = heroId ? `${apiUrl}/orders/${heroId}` : `${apiUrl}/orders`;
-    const response = await axios.get(url);
+    const response = await axios.get(`${apiUrl}/orders/${heroId}`);
     const data = parseList<Order>(response);
     return data;
   } catch (error) {
@@ -32,8 +31,7 @@ const getOrdersAsync = async function(heroId: number) {
 
 const getAccountRepAsync = async function(heroId: number) {
   try {
-    const url = `${apiUrl}/accountreps/${heroId}`;
-    const response = await axios.get(url);
+    const response = await axios.get(`${apiUrl}/accountreps/${heroId}`);
     const data = parseList<AccountRepresentative>(response);
     return data[0];
   } catch (error) {
@@ -43,8 +41,9 @@ const getAccountRepAsync = async function(heroId: number) {
 
 const getShippingStatusAsync = async function(orderNumber: number) {
   try {
-    const url = `${apiUrl}/shippingstatuses/${orderNumber}`;
-    const response = await axios.get(url);
+    const response = await axios.get(
+      `${apiUrl}/shippingstatuses/${orderNumber}`,
+    );
     const data = parseList<ShippingStatus>(response);
     return data[0];
   } catch (error) {
