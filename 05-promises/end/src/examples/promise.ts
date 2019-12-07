@@ -68,10 +68,13 @@ export const getHeroesViaPromiseReject = function() {
  * Get the heroes
  * Except this always causes a Promise to reject, too
  */
-export const getHeroesViaPromiseRejectShorter = function() {
-  const getHeroesDelayedAsync = () =>
-    Promise.reject('bad error occured getting the heroes');
-  return delay(1000).then(() => getHeroesDelayedAsync());
+export const getHeroesViaPromiseRejectShorter: () => Promise<
+  Hero[]
+> = function() {
+  const getsHeroesOrDoesIt = () =>
+    Promise.reject('bad error occurred getting the heroes');
+
+  return delay(1000).then(() => getsHeroesOrDoesIt());
 };
 
 // function example() {
