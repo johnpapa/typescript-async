@@ -116,12 +116,12 @@
     { "repId": 40, "name": "Grace Graham" }
   ],
   "shippingStatuses": [
-    { "orderNum": "71000", "status": "delivered" },
-    { "orderNum": "71001", "status": "in process" },
-    { "orderNum": "71002", "status": "delayed" },
-    { "orderNum": "71003", "status": "delivered" },
-    { "orderNum": "71004", "status": "delivered" },
-    { "orderNum": "71005", "status": "delivered" },
-    { "orderNum": "71006", "status": "delivered" }
+    { "orderNum": 71000, "status": "delivered" },
+    { "orderNum": 71001, "status": "in process" },
+    { "orderNum": 71002, "status": "delayed" },
+    { "orderNum": 71003, "status": "delivered" },
+    { "orderNum": 71004, "status": "delivered" },
+    { "orderNum": 71005, "status": "delivered" },
+    { "orderNum": 71006, "status": "delivered" }
   ]
 }
