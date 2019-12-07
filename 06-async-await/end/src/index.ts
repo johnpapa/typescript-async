@@ -1,6 +1,6 @@
 import './design/index.scss';
 
-import { getHeroTreePromise, Hero, showFetching, showMessage } from './lib';
+import { Hero, showFetching, showMessage } from './lib';
 
 import { replaceHeroListComponent } from './heroes.component';
 import {

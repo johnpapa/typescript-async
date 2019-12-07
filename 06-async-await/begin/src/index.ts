@@ -1,6 +1,6 @@
 import './design/index.scss';
 
-import { getHeroTreePromise, Hero, showFetching, showMessage } from './lib';
+import { Hero, showFetching, showMessage } from './lib';
 
 import { replaceHeroListComponent } from './heroes.component';
 import {
@@ -55,14 +55,7 @@ function showHeroes(heroes: Hero[]) {
 async function renderHeroesAsync() {
   showFetching();
   showMessage();
-  try {
-    const heroes = await getHeroesViaAsyncAwait();
-    showHeroes(heroes);
-  } catch (error) {
-    handleErrors(error);
-  } finally {
-    wrapUp();
-  }
+  // TODO - getHeroesViaAsyncAwait
 }
 
 /**
@@ -73,14 +66,7 @@ async function renderHeroesAsync() {
 async function renderHeroesButThrow() {
   showFetching();
   showMessage();
-  // try {
-  const heroes = await getHeroesAndThrow();
-  showHeroes(heroes);
-  // } catch (error) {
-  //   handleErrors(error);
-  // } finally {
-  wrapUp();
-  // }
+  // TODO - getHeroesAndThrow
 }
 
 /**
@@ -90,14 +76,7 @@ async function renderHeroesButThrow() {
 async function renderHeroesAndTryCatch() {
   showFetching();
   showMessage();
-  try {
-    const heroes = await getHeroesAndTryCatch();
-    showHeroes(heroes);
-  } catch (error) {
-    handleErrors(error);
-  } finally {
-    wrapUp();
-  }
+  // TODO - getHeroesAndTryCatch
 }
 
 async function render() {
