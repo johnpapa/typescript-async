@@ -1,8 +1,6 @@
 import { heroes } from './heroes';
 import { Hero } from '../lib';
 
-const emptyHeroes: Hero[] = [];
-
 /**
  * Return a fulfilled promise after a given delay.
  */
@@ -12,18 +10,19 @@ const delay = (ms: number) =>
 /**
  * Get the heroes after a delay
  */
-export async function getHeroesViaAsyncAwait() {
+export async function getHeroesViaAsyncAwait(): Promise<Hero[]> {
   await delay(1000);
-  return await heroes;
+  return heroes;
 }
 
 /**
  * Get the heroes,
  * except this always causes an error
+ * because it always is []
  */
 export async function getHeroesAndThrow() {
   await delay(1000);
-  const heroes = await emptyHeroes;
+  const heroes = [] as Hero[];
   if (!heroes || !heroes.length) {
     throw Error('Uh oh! Errors!');
   }
@@ -36,7 +35,7 @@ export async function getHeroesAndThrow() {
 export async function getHeroesAndTryCatch() {
   try {
     await delay(1000);
-    return await heroes;
+    return heroes;
   } catch (error) {
     console.error(error);
     throw Error('Uh oh! Errors!');
