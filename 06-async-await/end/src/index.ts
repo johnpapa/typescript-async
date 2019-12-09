@@ -73,25 +73,8 @@ async function renderHeroesAsync() {
 async function renderHeroesButThrow() {
   showFetching();
   showMessage();
-  // try {
-  const heroes = await getHeroesAndThrow();
-  showHeroes(heroes);
-  // } catch (error) {
-  //   handleErrors(error);
-  // } finally {
-  wrapUp();
-  // }
-}
-
-/**
- * Get the heroes
- * all calls use a try/catch
- */
-async function renderHeroesAndTryCatch() {
-  showFetching();
-  showMessage();
   try {
-    const heroes = await getHeroesAndTryCatch();
+    const heroes = await getHeroesAndThrow();
     showHeroes(heroes);
   } catch (error) {
     handleErrors(error);
