@@ -27,10 +27,6 @@ document
   .getElementById('async-throw')
   .addEventListener('click', renderHeroesButThrow);
 
-document
-  .getElementById('async-try')
-  .addEventListener('click', renderHeroesAndTryCatch);
-
 function wrapUp() {
   showFetching(false);
 }
@@ -67,16 +63,6 @@ async function renderHeroesButThrow() {
   showFetching();
   showMessage();
   // TODO - getHeroesAndThrow
-}
-
-/**
- * Get the heroes
- * all calls use a try/catch
- */
-async function renderHeroesAndTryCatch() {
-  showFetching();
-  showMessage();
-  // TODO - getHeroesAndTryCatch
 }
 
 async function render() {
