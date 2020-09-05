@@ -28,7 +28,7 @@
     "json-server": "^0.15.1",
     "json-server-reset": "^1.2.0",
     "mini-css-extract-plugin": "^0.8.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "prettier": "^1.19.1",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",
